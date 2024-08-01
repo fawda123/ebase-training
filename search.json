@@ -1,0 +1,129 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Ecosystem Metabolism Workshop",
+    "section": "",
+    "text": "About this Workshop\nThis course will provide an overview of new techniques to estimate metabolic processes in estuaries using open-source software. We will describe the theory and application of the new Estuarine BAyesian Single-station Estimation (EBASE) method that applies a Bayesian framework to a simple process-based model and dissolved oxygen observations, allowing the estimation of critical metabolic parameters as informed by a set of prior distributions. We will also compare EBASE to existing models for evaluating metabolism to demonstrate the advantages of the new framework. Some prior experience with R is expected. By the end of the course, you will understand how to prepare SWMP data for use with EBASE and to interpret the results to better understand processes that influence ecosystem status and condition.\nAlso see:",
+    "crumbs": [
+      "About this Workshop"
+    ]
+  },
+  {
+    "objectID": "index.html#agenda",
+    "href": "index.html#agenda",
+    "title": "Ecosystem Metabolism Workshop",
+    "section": "Agenda",
+    "text": "Agenda\n\n\n\n\nTime\nTopic\n\n\n\n10:00\nIntroduction\n\n\n3:00\nadjourn",
+    "crumbs": [
+      "About this Workshop"
+    ]
+  },
+  {
+    "objectID": "index.html#important-links",
+    "href": "index.html#important-links",
+    "title": "Ecosystem Metabolism Workshop",
+    "section": "Important links",
+    "text": "Important links\n\nWorkshop Website: link\n\nPosit Cloud: link\nLive coding: link",
+    "crumbs": [
+      "About this Workshop"
+    ]
+  },
+  {
+    "objectID": "index.html#setup",
+    "href": "index.html#setup",
+    "title": "Ecosystem Metabolism Workshop",
+    "section": "Setup",
+    "text": "Setup\nPlease visit the setup page for instructions on preparing for this workshop. You will be required to install R, RStudio, JAGS, and several R packages prior to the workshop.",
+    "crumbs": [
+      "About this Workshop"
+    ]
+  },
+  {
+    "objectID": "index.html#presenters",
+    "href": "index.html#presenters",
+    "title": "Ecosystem Metabolism Workshop",
+    "section": "Presenters",
+    "text": "Presenters\nMarcus Beck, Ph.D.\n\n\n\n\n\nMarcus Beck is the Program Scientist for the Tampa Bay Estuary Program in St. Petersburg, Florida and is developing data analysis and visualization methods for Bay health indicators. Marcus has experience researching environmental indicators and developing open science products to support environmental decision-making. He has been using the R statistical programming language for over 15 years and has taught several workshops on its application to environmental sciences. Marcus has also developed several R packages and currently maintains 7 on CRAN. He received a PhD in Conservation Biology with a minor in Statistics from the University of Minnesota in 2013, his Masters in Conservation Biology from the University of Minnesota in 2009, and his Bachelors in Zoology from the University of Florida in 2007.",
+    "crumbs": [
+      "About this Workshop"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "\n1  Introduction\n",
+    "section": "",
+    "text": "2 Dynamic and Interactive applications\nThis workshop will expose you to the basics of creating interactive dashboards in R. Before we begin, it’s useful to distinguish between dynamic and interactive dashboards.\nFirst, dynamic applications can have the look and feel of an interactive Shiny dashboard, but are fundamentally different. They are standalone and do not include a server component. Any interactive functionality is pre-built into the application and they are built before being hosted on a web platform as an HTML file. Applications such as Quarto (and its predecessor RMarkdown) can be used to create dynamic applications. Here’s an example.\nBy comparison, a Shiny application is fully interactive - it has both a user interface (UI) and server allowing a user to send requests to the server through the UI. This allows reactivity of the application components, where the content that a user sees on the UI is controlled by their inputs in a fully interactive experience. These applications require combined or separate R scripts that define the UI and server components. Here’s an example.\nThis workshop will cover both dynamic and interactive applications. Your needs for creating an application will determine which approach you use. In general, more complexity will require an interactive approach, but the rapidly evolving toolbox has greatly expanded the capabilities of dynamic applications. You may find that you can build a simpler dynamic application without having to integrate interactive Shiny components.\nThroughout this workshop, we’ll cover the fundamentals of web-based applications in R for actionable science. We’ll first talk about Quarto dynamic applications in ?sec-quarto and then dive into Shiny interactive applications in ?sec-shiny. We’ll also discuss often overlooked but important concepts of the user experience when developing and engaging with a web application in ?sec-codesign. Throughout, we’ll highlight real applications that demonstrate how these operate in the wild for their intended uses, many of which are highlighted on our resources page.",
+    "crumbs": [
+      "Modules",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#reactivity",
+    "href": "intro.html#reactivity",
+    "title": "\n1  Introduction\n",
+    "section": "\n2.1 Reactivity",
+    "text": "2.1 Reactivity\nFor dynamic applications, there’s not much you need to understand about coding beyond what you might already now about R. Creating the interactive components generally follows a familiar format. However, creating interactive applications in Shiny requires a fundamental shift in how you think about coding. It’s all done in R, but the pieces interact differently. You’re used to an R script from running top to bottom - code for a Shiny app runs up, down, and sideways depending on how you structure the components.\nA Shiny app runs from an R script, but instead of executing code linearly, it uses reactive programming that detects when an input is changed on the application, runs the minimal amount of code that uses that input, then updates the output as needed. So, rather than thinking of the script as linear, think of it as having interconnected components that share pieces of information to produce the results.\nThis can be daunting at first because it requires you to think about which pieces of your code require inputs from other pieces and how that information is used to create output. Reactivity creates the building blocks of a Shiny app. Every Shiny app has the following:\n\n\nUser interface (UI): Includes all inputs and outputs, as well as the appearance of the dashboard. Here, when we say “output” we mean the final product (e.g. a plot, table, etc.) that is placed on the ui, but created by processing inputs sent to the server. In web-speak, this is the front end.\n\nServer: The guts or engine of how the inputs are used to create the outputs, this is where the working parts of your analysis live. It can be as simple or as complicated as you like. In web-speak, this is the back end.\n\nAt it’s core, a Shiny app is an R script that contains The ui and server components. In practice, it looks like this:\n\nlibrary(shiny)\nui &lt;- fluidPage()\nserver &lt;- function(input, output){}\nshinyApp(ui = ui, server = server)\n\nYou “launch” or run the dashboard by sourcing the script or hitting the green “Run App” button on the top right.\n\nIf you run this code, you’ll see a local web browser pop up. It will be empty because this app does nothing - it’s just a template. All we need to do is populate the ui and server objects with code to do some things.",
+    "crumbs": [
+      "Modules",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html#a-simple-example",
+    "href": "intro.html#a-simple-example",
+    "title": "\n1  Introduction\n",
+    "section": "\n2.2 A simple example",
+    "text": "2.2 A simple example\nNow let’s make our simple example do something. As with most problems, it’s good to start with identifying where you want to go and then work backwards to figure out how to get there. Let’s end with a simple histogram to visualize some data for the normal distribution, but with different sample sizes.\n\ndat &lt;- rnorm(100)\nhist(dat)\n\n\n\n\n\n\n\nChanging the sample size:\n\ndat &lt;- rnorm(10)\nhist(dat)\n\n\n\n\n\n\n\nTo make a Shiny app out of this, we need to identify our inputs and outputs. The input in this case is what we want to be able to modify (the sample size) and the output is the plot. Inputs/outputs go in the ui object. The server takes the inputs, does something with them, then sends the results back to the ui. Putting this into our template would look something like this:\n\nlibrary(shiny)\n\nui &lt;- fluidPage(\n  numericInput(inputId = 'n', label = 'Sample size', value = 50),\n  plotOutput('myplot')\n)\n\nserver &lt;- function(input, output){\n  output$myplot &lt;- renderPlot({\n    dat &lt;- rnorm(input$n)\n    hist(dat)\n  })\n}\n\nshinyApp(ui = ui, server = server)\n\nOkay, so what is happening under the hood when you change the sample size?\n\nThe input value n (you name it) from the ui is sent to the server, seen as input$n.\nThe dat object is created as a random sample with size n and then a histogram is created as reactive output with renderPlot\n\nThe plot output named myplot (you name it) is appended to the output list of objects in the server function\nThe plot is then rendered on the ui using plotOutput by referencing the myplot name from the output object\n\n\nAll of this happens each time the input values are changed, such that the output reacts to any change in the input. This is a fundamental principle of Shiny functionality, simplified as follows.",
+    "crumbs": [
+      "Modules",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
+    "objectID": "setup.html#install-r-and-rstudio",
+    "href": "setup.html#install-r-and-rstudio",
+    "title": "Appendix A — Setup for the workshop",
+    "section": "A.1 Install R and RStudio",
+    "text": "A.1 Install R and RStudio\nR and RStudio are separate downloads and installations. R is the underlying statistical computing software. RStudio is a graphical integrated development environment (IDE) that makes using R much easier and more interactive. You need to install R before you install RStudio.\nThanks to the USGS-R Training group and Data Carpentry for making their installation materials available. The following instructions come directly from their materials, with a few minor edits to help you get set up.\n\nA.1.1 Windows: Download and install R\nGo to CRAN and download the R installer for Windows. Make sure to choose the latest stable version (v4.2.3 as of April 2023).\nOnce the installer downloads, Right-click on it and select “Run as administrator”.\nType in your credentials and click yes (or if you don’t have administrator access have your IT rep install with Admin privileges).\n\nYou can click next through the standard dialogs and accept most defaults. But at the destination screen, please verify that it is installing it to C:\\Program Files\\R\n\nAt the “Select Components” screen, you can accept the default and install both 32-bit and 64-bit versions.\n\nAt this screen, uncheck ‘Create a desktop icon’ because non-admin users in Windows will be unable to delete it.\n\n\n\nA.1.2 Windows: Download and install RStudio\nDownload RStudio from here.\nAfter download, double-click the installer. It will ask for your administrator credentials to install (you might need to have your IT rep install again).\nAccept all the default options for the RStudio install.\n\n\n\nA.1.3 macOS: Download and install R\n\nDownload and install R from the CRAN website for Mac here.\nSelect the .pkg file for the latest R version\nDouble click on the downloaded file to install R\nIt is also a good idea to install XQuartz (needed by some packages)\n\n\n\nA.1.4 macOS: Download and install RStudio\n\nGo to the RStudio download page\nUnder Installers select the appropriate RStudio download file for macOS\nDouble click the file to install RStudio\n\n\n\nA.1.5 Check Install\nOnce installed, RStudio should be accessible from the start menu. Start up RStudio. Once running it should look something like this:",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Setup for the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "setup.html#sec-instjags",
+    "href": "setup.html#sec-instjags",
+    "title": "Appendix A — Setup for the workshop",
+    "section": "A.2 Install JAGS",
+    "text": "A.2 Install JAGS",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Setup for the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "setup.html#sec-instpackages",
+    "href": "setup.html#sec-instpackages",
+    "title": "Appendix A — Setup for the workshop",
+    "section": "A.3 Install R packages",
+    "text": "A.3 Install R packages",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Setup for the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "setup.html#sec-cloud",
+    "href": "setup.html#sec-cloud",
+    "title": "Appendix A — Setup for the workshop",
+    "section": "A.4 Posit Cloud (optional)",
+    "text": "A.4 Posit Cloud (optional)\nPosit Cloud provides an environment to use RStudio and the resources above through a web browser. We’ve created a workspace on Posit Cloud that includes most of the content described above. Open the following URL in a web browser: https://posit.cloud/content/5544370\nYou will see a login screen that looks like this:\n\nSign up using a personal login or existing account (Google, GitHub, etc.).\nYou’ll see the workspace in your browser once you’ve signed in. You’ll need to make a permanent copy to save your work. Just click the button at the top marked “+ Save as Permanent Copy”. When this is done, the red text at the top indicating “TEMPORARY COPY” will no longer be visible.\n\nNow you can follow along with the workshop content.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Setup for the workshop</span>"
+    ]
+  }
+]
