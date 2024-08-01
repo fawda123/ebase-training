@@ -24,7 +24,7 @@ book:
     - index.qmd
     - part: "Modules"
       chapters:
-        - intro.qmd
+        - rbasics.qmd
   appendices:
     - setup.qmd
     - references.qmd

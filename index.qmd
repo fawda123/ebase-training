@@ -1,7 +1,5 @@
 ---
-filters:
-   - lightbox
-lightbox: auto
+lightbox: true
 execute:
   echo: false
 ---
@@ -12,7 +10,7 @@ This course will provide an overview of new techniques to estimate metabolic pro
 
 Also see:
 
--   [EBASE website](https://tbep-tech.github.io/ebase){target="_blank"}
+-   [EBASE website](https://fawda123.github.io/EBASE/){target="_blank"}
 -   [EBASE paper](https://doi.org/10.1002/lom3.10620){target="_blank"}
 
 ## Agenda {.unnumbered}

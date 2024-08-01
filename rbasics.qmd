@@ -1,0 +1,12 @@
+---
+lightbox: true
+---
+
+# R Basics
+
+## Lesson Outline
+
+## Learning Goals
+
+## Next steps
+ 

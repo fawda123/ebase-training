@@ -1,0 +1,11 @@
+---
+lightbox: true
+---
+
+# Data Preparation
+
+## Lesson Outline
+
+## Learning Goals
+
+## Next steps

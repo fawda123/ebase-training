@@ -1,7 +1,5 @@
 ---
-filters:
-   - lightbox
-lightbox: auto
+lightbox: true
 ---
 
 # Setup for the workshop {#setup}
