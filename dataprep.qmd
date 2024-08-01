@@ -6,6 +6,15 @@ lightbox: true
 
 ## Lesson Outline
 
+This lesson will demonstrate how the SWMPr package can be used to import and prepare data for analysis with EBASE. The EBASE software requires a specific format for input data that includes both water quality and weather data.  SWMPr includes several functions that can facilitate the preparation of data for EBASE analysis.
+
 ## Learning Goals
 
+- Understand the data requirements for EBASE
+- Learn how to import data with SWMPr
+- Learn how to clean and combine SWMP data
+- Learn how to prepare data for EBASE analysis
+
 ## Next steps
+
+The most difficult part of using EBASE is preparing the data.  Now that we have learned how to import and clean the data, we are ready to analyze the data. In the next lesson, we'll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.

@@ -6,6 +6,16 @@ lightbox: true
 
 ## Lesson Outline
 
+This lesson will explain the basic theory behind ecosystem metabolism and how EBASE is used to estimate key parameters.  EBASE is a Bayesian implementation for estimating metabolism that differs from more conventional approaches.  We'll also explore the main functions of EBASE to estimate metabolism, how the Bayesian approach can be used to incorporate prior knowledge, and interpret the results. 
+
 ## Learning Goals
 
+- Understand the basic theory behind ecosystem metabolism
+- Learn how EBASE is used to estimate key parameters
+- Understand the Bayesian approach to estimating metabolism
+- Use the main functions of EBASE to estimate metabolism
+- Interpret the results of EBASE
+
 ## Next steps
+
+You now understand the basics of ecosystem metabolism and how EBASE is used to estimate key parameters using a Bayesian approach.  We've explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and varioius plotting methods.  Next we'll cover a more in depth interpretation of the metabolism results to understand the implications for ecosystem health and function.

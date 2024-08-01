@@ -25,6 +25,9 @@ book:
     - part: "Modules"
       chapters:
         - rbasics.qmd
+        - dataprep.qmd
+        - ebase.qmd
+        - interpet.qmd  
   appendices:
     - setup.qmd
     - references.qmd
