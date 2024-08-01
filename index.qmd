@@ -1,0 +1,47 @@
+---
+filters:
+   - lightbox
+lightbox: auto
+execute:
+  echo: false
+---
+
+# About this Workshop {.unnumbered}
+
+This course will provide an overview of new techniques to estimate metabolic processes in estuaries using open-source software. We will describe the theory and application of the new Estuarine BAyesian Single-station Estimation (EBASE) method that applies a Bayesian framework to a simple process-based model and dissolved oxygen observations, allowing the estimation of critical metabolic parameters as informed by a set of prior distributions.  We will also compare EBASE to existing models for evaluating metabolism to demonstrate the advantages of the new framework.  Some prior experience with R is expected.  By the end of the course, you will understand how to prepare SWMP data for use with EBASE and to interpret the results to better understand processes that influence ecosystem status and condition.  
+
+Also see:
+
+-   [EBASE website](https://fawda123.github.io/ebase){target="_blank"}
+-   [EBASE paper](https://doi.org/10.1002/lom3.10620){target="_blank"}
+
+## Agenda {.unnumbered}
+
+```{r}
+load(file = 'data/agenda.RData')
+knitr::kable(agenda)
+```
+
+## Important links {.unnumbered}
+
+* Workshop Website: [link](https://fawda123.github.io/ebase-training){target="_blank"}
+* Posit Cloud: link
+* Live coding: link
+
+## Setup {.unnumbered}
+
+Please visit the [setup](setup.qmd) page for instructions on preparing for this workshop. You will be required to install R, RStudio, JAGS, and several R packages prior to the workshop.
+
+## Presenters {.unnumbered}
+
+### Marcus Beck, Ph.D.
+
+::: columns
+::: {.column width="30%"}
+![](figs/headshot_marcus.jpg)
+:::
+
+::: {.column .p-right width="70%"}
+Marcus Beck is the Program Scientist for the Tampa Bay Estuary Program in St. Petersburg, Florida and is developing data analysis and visualization methods for Bay health indicators. Marcus has experience researching environmental indicators and developing open science products to support environmental decision-making. He has been using the R statistical programming language for over 15 years and has taught several workshops on its application to environmental sciences. Marcus has also developed several R packages and currently maintains 7 on CRAN. He received a PhD in Conservation Biology with a minor in Statistics from the University of Minnesota in 2013, his Masters in Conservation Biology from the University of Minnesota in 2009, and his Bachelors in Zoology from the University of Florida in 2007.
+:::
+:::

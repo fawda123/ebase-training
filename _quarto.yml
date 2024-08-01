@@ -1,0 +1,46 @@
+project:
+  type: book
+  output-dir: _site
+  resources:
+    - "/.nojekyll"
+
+book:
+  title: "Ecosystem Metabolism Workshop"
+  subtitle: "EBASE training, Sep. 13th, 2024"
+  author: "Marcus Beck"
+  repo-url: https://github.com/fawda123/ebase-training
+  reader-mode: true
+  repo-actions: [edit]
+  search: true
+  date: today
+  date-format: "YYYY-MM-DD"
+  page-navigation: true
+  page-footer:
+    left: |
+      Website created by instructors, with attribution to external content
+    right: |
+      This book was built with <a href="https://quarto.org/" target="_blank">Quarto</a>
+  chapters:
+    - index.qmd
+    - part: "Modules"
+      chapters:
+        - intro.qmd
+  appendices:
+    - setup.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+    css: libs/style.css
+    code-tools:
+      source: repo
+    code-link: true
+    toc-depth: 4
+  # pdf:
+  #   documentclass: scrreprt
+  #   prefer-html: true
+

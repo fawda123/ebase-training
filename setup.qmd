@@ -1,0 +1,96 @@
+---
+filters:
+   - lightbox
+lightbox: auto
+---
+
+# Setup for the workshop {#setup}
+
+Thanks for your interest in the ecosystem metabolism workshop. You will need to do the following, outlined below, before the workshop. 
+
+1. [Install R](#sec-instr)
+1. [Install RStudio](#sec-instrstudio)
+1. [Install JAGS](#sec-instjags)
+1. [Install R packages](#sec-instpackages)
+1. [Posit Cloud](#sec-cloud) (optional)
+
+Most of these steps will require administrative privileges on a computer.  Work with your IT staff to complete the setup if you do not have these privileges.  As an alternative, you can use Posit Cloud to participate (see @sec-cloud), although we strongly encourage you to install the software on your personal computer for use after the workshop.
+
+Please reach out if you have any issues with installation: [mbeck@tbep.org](mailto:mbeck@tbep.org)
+
+## Install R and RStudio 
+
+**R** and **RStudio** are separate downloads and installations. R is the underlying statistical computing software. RStudio is a graphical integrated development environment (IDE) that makes using R much easier and more interactive. *You need to install R before you install RStudio*.
+
+Thanks to the [USGS-R Training group](https://owi.usgs.gov/R/training.html){target="_blank"} and [Data Carpentry](https://datacarpentry.org/R-ecology-lesson/index.html){target="_blank"} for making their installation materials available. The following instructions come directly from their materials, with a few minor edits to help you get set up.
+
+### Windows: Download and install R {#sec-instr}
+
+Go to [CRAN and download](https://cran.rstudio.com/bin/windows/base/){target="_blank"} the R installer for Windows. Make sure to choose the latest stable version (v4.2.3 as of April 2023).
+
+Once the installer downloads, Right-click on it and select "Run as administrator".
+
+Type in your credentials and click yes (or if you don't have administrator access have your IT rep install with Admin privileges).
+
+![](figs/install_open_as_admin.png)
+
+You can click next through the standard dialogs and accept most defaults. But at the destination screen, please verify that it is installing it to C:\\Program Files\\R
+
+![](figs/install_destination.png)
+
+At the "Select Components" screen, you can accept the default and install both 32-bit and 64-bit versions.
+
+![](figs/install_arch_window.png)
+
+At this screen, uncheck 'Create a desktop icon' because non-admin users in Windows will be unable to delete it.
+
+![](figs/install_tasks.png)
+
+### Windows: Download and install RStudio {#sec-instrstudio}
+
+Download RStudio from [here](https://www.rstudio.com/products/rstudio/download/#download){target="_blank"}.
+
+After download, double-click the installer. It will ask for your administrator credentials to install (you might need to have your IT rep install again).
+
+Accept all the default options for the RStudio install.
+
+![](figs/install_rstudio.png)
+
+### macOS: Download and install R
+
+-   Download and install R from the CRAN website for Mac [here](https://cran.r-project.org/bin/macosx/){target="_blank"}.
+-   Select the `.pkg` file for the latest R version
+-   Double click on the downloaded file to install R
+-   It is also a good idea to install [XQuartz](https://www.xquartz.org/){target="_blank"} (needed by some packages)
+
+### macOS: Download and install RStudio
+
+-   Go to the [RStudio](https://www.rstudio.com/products/rstudio/download/#download){target="_blank"} download page
+-   Under Installers select the appropriate RStudio download file for macOS
+-   Double click the file to install RStudio
+
+### Check Install
+
+Once installed, RStudio should be accessible from the start menu. Start up RStudio. Once running it should look something like this:
+
+![](figs/rstudio.png)
+
+## Install JAGS {#sec-instjags}
+
+## Install R packages {#sec-instpackages}
+
+## Posit Cloud (optional) {#sec-cloud}
+
+Posit Cloud provides an environment to use RStudio and the resources above through a web browser.  We've created a workspace on Posit Cloud that includes most of the content described above.  Open the following URL in a web browser: [https://posit.cloud/content/5544370](https://posit.cloud/content/5544370){target="_blank"}
+
+You will see a login screen that looks like this: 
+
+![](figs/positsignup.png)
+
+Sign up using a personal login or existing account (Google, GitHub, etc.).
+
+You'll see the workspace in your browser once you've signed in.  You'll need to make a permanent copy to save your work.  Just click the button at the top marked "+ Save as Permanent Copy".  When this is done, the red text at the top indicating "TEMPORARY COPY" will no longer be visible.    
+
+![](figs/positworkspace.PNG)
+
+Now you can follow along with the workshop content.
