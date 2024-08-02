@@ -27,7 +27,7 @@ book:
         - rbasics.qmd
         - dataprep.qmd
         - ebase.qmd
-        - interpet.qmd  
+        - interpret.qmd  
   appendices:
     - setup.qmd
     - references.qmd
