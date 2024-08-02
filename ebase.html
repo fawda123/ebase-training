@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Appendix A — Setup for the workshop – Ecosystem Metabolism Workshop</title>
+<title>3&nbsp; Using EBASE – Ecosystem Metabolism Workshop</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
-<link href="./interpret.html" rel="prev">
+<link href="./interpret.html" rel="next">
+<link href="./dataprep.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -41,9 +41,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
-<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -85,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./setup.html">Appendices</a></li><li class="breadcrumb-item"><a href="./setup.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Setup for the workshop</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rbasics.html">Modules</a></li><li class="breadcrumb-item"><a href="./ebase.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using EBASE</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -147,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ebase.html" class="sidebar-item-text sidebar-link">
+  <a href="./ebase.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using EBASE</span></span></a>
   </div>
 </li>
@@ -170,7 +167,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./setup.html" class="sidebar-item-text sidebar-link active">
+  <a href="./setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Setup for the workshop</span></span></a>
   </div>
 </li>
@@ -192,26 +189,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#install-r-and-rstudio" id="toc-install-r-and-rstudio" class="nav-link active" data-scroll-target="#install-r-and-rstudio"><span class="header-section-number">A.1</span> Install R and RStudio</a>
-  <ul>
-  <li><a href="#sec-instr" id="toc-sec-instr" class="nav-link" data-scroll-target="#sec-instr"><span class="header-section-number">A.1.1</span> Windows: Download and install R</a></li>
-  <li><a href="#sec-instrstudio" id="toc-sec-instrstudio" class="nav-link" data-scroll-target="#sec-instrstudio"><span class="header-section-number">A.1.2</span> Windows: Download and install RStudio</a></li>
-  <li><a href="#macos-download-and-install-r" id="toc-macos-download-and-install-r" class="nav-link" data-scroll-target="#macos-download-and-install-r"><span class="header-section-number">A.1.3</span> macOS: Download and install R</a></li>
-  <li><a href="#macos-download-and-install-rstudio" id="toc-macos-download-and-install-rstudio" class="nav-link" data-scroll-target="#macos-download-and-install-rstudio"><span class="header-section-number">A.1.4</span> macOS: Download and install RStudio</a></li>
-  <li><a href="#check-install" id="toc-check-install" class="nav-link" data-scroll-target="#check-install"><span class="header-section-number">A.1.5</span> Check Install</a></li>
-  </ul></li>
-  <li><a href="#sec-instjags" id="toc-sec-instjags" class="nav-link" data-scroll-target="#sec-instjags"><span class="header-section-number">A.2</span> Install JAGS</a></li>
-  <li><a href="#sec-instpackages" id="toc-sec-instpackages" class="nav-link" data-scroll-target="#sec-instpackages"><span class="header-section-number">A.3</span> Install R packages</a></li>
-  <li><a href="#sec-cloud" id="toc-sec-cloud" class="nav-link" data-scroll-target="#sec-cloud"><span class="header-section-number">A.4</span> Posit Cloud (optional)</a></li>
+  <li><a href="#lesson-outline" id="toc-lesson-outline" class="nav-link active" data-scroll-target="#lesson-outline"><span class="header-section-number">3.1</span> Lesson Outline</a></li>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals"><span class="header-section-number">3.2</span> Learning Goals</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">3.3</span> Next steps</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/ebase.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./setup.html">Appendices</a></li><li class="breadcrumb-item"><a href="./setup.html"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Setup for the workshop</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rbasics.html">Modules</a></li><li class="breadcrumb-item"><a href="./ebase.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using EBASE</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="setup" class="quarto-section-identifier">Appendix A — Setup for the workshop</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/fawda123/ebase-training/blob/main/setup.qmd"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using EBASE</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/fawda123/ebase-training/blob/main/ebase.qmd"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -228,78 +217,23 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Thanks for your interest in the ecosystem metabolism workshop. You will need to do the following, outlined below, before the workshop.</p>
-<ol type="1">
-<li><a href="#sec-instr">Install R</a></li>
-<li><a href="#sec-instrstudio">Install RStudio</a></li>
-<li><a href="#sec-instjags">Install JAGS</a></li>
-<li><a href="#sec-instpackages">Install R packages</a></li>
-<li><a href="#sec-cloud">Posit Cloud</a> (optional)</li>
-</ol>
-<p>Most of these steps will require administrative privileges on a computer. Work with your IT staff to complete the setup if you do not have these privileges. As an alternative, you can use Posit Cloud to participate (see <a href="#sec-cloud" class="quarto-xref"><span>Section A.4</span></a>), although we strongly encourage you to install the software on your personal computer for use after the workshop.</p>
-<p>Please reach out if you have any issues with installation: <a href="mailto:mbeck@tbep.org">mbeck@tbep.org</a></p>
-<section id="install-r-and-rstudio" class="level2" data-number="A.1">
-<h2 data-number="A.1" class="anchored" data-anchor-id="install-r-and-rstudio"><span class="header-section-number">A.1</span> Install R and RStudio</h2>
-<p><strong>R</strong> and <strong>RStudio</strong> are separate downloads and installations. R is the underlying statistical computing software. RStudio is a graphical integrated development environment (IDE) that makes using R much easier and more interactive. <em>You need to install R before you install RStudio</em>.</p>
-<p>Thanks to the <a href="https://owi.usgs.gov/R/training.html" target="_blank">USGS-R Training group</a> and <a href="https://datacarpentry.org/R-ecology-lesson/index.html" target="_blank">Data Carpentry</a> for making their installation materials available. The following instructions come directly from their materials, with a few minor edits to help you get set up.</p>
-<section id="sec-instr" class="level3" data-number="A.1.1">
-<h3 data-number="A.1.1" class="anchored" data-anchor-id="sec-instr"><span class="header-section-number">A.1.1</span> Windows: Download and install R</h3>
-<p>Go to <a href="https://cran.rstudio.com/bin/windows/base/" target="_blank">CRAN and download</a> the R installer for Windows. Make sure to choose the latest stable version (v4.2.3 as of April 2023).</p>
-<p>Once the installer downloads, Right-click on it and select “Run as administrator”.</p>
-<p>Type in your credentials and click yes (or if you don’t have administrator access have your IT rep install with Admin privileges).</p>
-<p><a href="figs/install_open_as_admin.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="figs/install_open_as_admin.png" class="img-fluid"></a></p>
-<p>You can click next through the standard dialogs and accept most defaults. But at the destination screen, please verify that it is installing it to C:\Program Files\R</p>
-<p><a href="figs/install_destination.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="figs/install_destination.png" class="img-fluid"></a></p>
-<p>At the “Select Components” screen, you can accept the default and install both 32-bit and 64-bit versions.</p>
-<p><a href="figs/install_arch_window.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="figs/install_arch_window.png" class="img-fluid"></a></p>
-<p>At this screen, uncheck ‘Create a desktop icon’ because non-admin users in Windows will be unable to delete it.</p>
-<p><a href="figs/install_tasks.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="figs/install_tasks.png" class="img-fluid"></a></p>
+<section id="lesson-outline" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="lesson-outline"><span class="header-section-number">3.1</span> Lesson Outline</h2>
+<p>This lesson will explain the basic theory behind ecosystem metabolism and how EBASE is used to estimate key parameters. EBASE is a Bayesian implementation for estimating metabolism that differs from more conventional approaches. We’ll also explore the main functions of EBASE to estimate metabolism, how the Bayesian approach can be used to incorporate prior knowledge, and interpret the results.</p>
 </section>
-<section id="sec-instrstudio" class="level3" data-number="A.1.2">
-<h3 data-number="A.1.2" class="anchored" data-anchor-id="sec-instrstudio"><span class="header-section-number">A.1.2</span> Windows: Download and install RStudio</h3>
-<p>Download RStudio from <a href="https://www.rstudio.com/products/rstudio/download/#download" target="_blank">here</a>.</p>
-<p>After download, double-click the installer. It will ask for your administrator credentials to install (you might need to have your IT rep install again).</p>
-<p>Accept all the default options for the RStudio install.</p>
-<p><a href="figs/install_rstudio.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="figs/install_rstudio.png" class="img-fluid"></a></p>
-</section>
-<section id="macos-download-and-install-r" class="level3" data-number="A.1.3">
-<h3 data-number="A.1.3" class="anchored" data-anchor-id="macos-download-and-install-r"><span class="header-section-number">A.1.3</span> macOS: Download and install R</h3>
+<section id="learning-goals" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="learning-goals"><span class="header-section-number">3.2</span> Learning Goals</h2>
 <ul>
-<li>Download and install R from the CRAN website for Mac <a href="https://cran.r-project.org/bin/macosx/" target="_blank">here</a>.</li>
-<li>Select the <code>.pkg</code> file for the latest R version</li>
-<li>Double click on the downloaded file to install R</li>
-<li>It is also a good idea to install <a href="https://www.xquartz.org/" target="_blank">XQuartz</a> (needed by some packages)</li>
+<li>Understand the basic theory behind ecosystem metabolism</li>
+<li>Learn how EBASE is used to estimate key parameters</li>
+<li>Understand the Bayesian approach to estimating metabolism</li>
+<li>Use the main functions of EBASE to estimate metabolism</li>
+<li>Interpret the results of EBASE</li>
 </ul>
 </section>
-<section id="macos-download-and-install-rstudio" class="level3" data-number="A.1.4">
-<h3 data-number="A.1.4" class="anchored" data-anchor-id="macos-download-and-install-rstudio"><span class="header-section-number">A.1.4</span> macOS: Download and install RStudio</h3>
-<ul>
-<li>Go to the <a href="https://www.rstudio.com/products/rstudio/download/#download" target="_blank">RStudio</a> download page</li>
-<li>Under Installers select the appropriate RStudio download file for macOS</li>
-<li>Double click the file to install RStudio</li>
-</ul>
-</section>
-<section id="check-install" class="level3" data-number="A.1.5">
-<h3 data-number="A.1.5" class="anchored" data-anchor-id="check-install"><span class="header-section-number">A.1.5</span> Check Install</h3>
-<p>Once installed, RStudio should be accessible from the start menu. Start up RStudio. Once running it should look something like this:</p>
-<p><a href="figs/rstudio.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="figs/rstudio.png" class="img-fluid"></a></p>
-</section>
-</section>
-<section id="sec-instjags" class="level2" data-number="A.2">
-<h2 data-number="A.2" class="anchored" data-anchor-id="sec-instjags"><span class="header-section-number">A.2</span> Install JAGS</h2>
-</section>
-<section id="sec-instpackages" class="level2" data-number="A.3">
-<h2 data-number="A.3" class="anchored" data-anchor-id="sec-instpackages"><span class="header-section-number">A.3</span> Install R packages</h2>
-</section>
-<section id="sec-cloud" class="level2" data-number="A.4">
-<h2 data-number="A.4" class="anchored" data-anchor-id="sec-cloud"><span class="header-section-number">A.4</span> Posit Cloud (optional)</h2>
-<p>Posit Cloud provides an environment to use RStudio and the resources above through a web browser. We’ve created a workspace on Posit Cloud that includes most of the content described above. Open the following URL in a web browser: <a href="https://posit.cloud/content/5544370" target="_blank">https://posit.cloud/content/5544370</a></p>
-<p>You will see a login screen that looks like this:</p>
-<p><a href="figs/positsignup.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="figs/positsignup.png" class="img-fluid"></a></p>
-<p>Sign up using a personal login or existing account (Google, GitHub, etc.).</p>
-<p>You’ll see the workspace in your browser once you’ve signed in. You’ll need to make a permanent copy to save your work. Just click the button at the top marked “+ Save as Permanent Copy”. When this is done, the red text at the top indicating “TEMPORARY COPY” will no longer be visible.</p>
-<p><a href="figs/positworkspace.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="figs/positworkspace.PNG" class="img-fluid"></a></p>
-<p>Now you can follow along with the workshop content.</p>
+<section id="next-steps" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">3.3</span> Next steps</h2>
+<p>You now understand the basics of ecosystem metabolism and how EBASE is used to estimate key parameters using a Bayesian approach. We’ve explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and varioius plotting methods. Next we’ll cover a more in depth interpretation of the metabolism results to understand the implications for ecosystem health and function.</p>
 
 
 </section>
@@ -778,13 +712,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./interpret.html" class="pagination-link" aria-label="Interpreting Results">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interpreting Results</span></span>
+      <a href="./dataprep.html" class="pagination-link" aria-label="Data Preparation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./interpret.html" class="pagination-link" aria-label="Interpreting Results">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interpreting Results</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -796,44 +730,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/ebase.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/" target="_blank">Quarto</a></p>
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});
-(function() {
-  let previousOnload = window.onload;
-  window.onload = () => {
-    if (previousOnload) {
-      previousOnload();
-    }
-    lightboxQuarto.on('slide_before_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      const href = trigger.getAttribute('href');
-      if (href !== null) {
-        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-        if (imgEl !== null) {
-          const srcAttr = imgEl.getAttribute("src");
-          if (srcAttr && srcAttr.startsWith("data:")) {
-            slideConfig.href = srcAttr;
-          }
-        }
-      } 
-    });
-  
-    lightboxQuarto.on('slide_after_load', (data) => {
-      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(slideNode);
-      }
-    });
-  
-  };
-  
-})();
-          </script>
 
 
 
