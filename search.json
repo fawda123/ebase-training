@@ -54,7 +54,7 @@
     "href": "rbasics.html",
     "title": "1  R Basics",
     "section": "",
-    "text": "1.1 Lesson Outline\nThis lesson will cover the very basics of using R and RStudio on your computer. R is a powerful open-source programming language that is widely used for data analysis and visualization. RStudio is an integrated development environment (IDE) that makes it easier to work with R. Combined, they provide a powerful tool for working with data.",
+    "text": "1.1 Lesson Outline\nThis lesson will cover the very basics of using R and RStudio on your computer. R is a powerful open-source programming language that is widely used for data analysis and visualization. RStudio is an integrated development environment (IDE) that makes it easier to work with R. Combined, they provide effective tools for evaluating and understanding data.",
     "crumbs": [
       "Modules",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>R Basics</span>"
@@ -120,7 +120,7 @@
     "href": "dataprep.html#next-steps",
     "title": "2  Data Preparation",
     "section": "2.3 Next steps",
-    "text": "2.3 Next steps\nThe most difficult part of using EBASE is preparing the data. Now that we have learned how to import and clean the data, we are ready to analyze the data. In the next lesson, we’ll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.",
+    "text": "2.3 Next steps\nThe most difficult part of using EBASE is preparing the data. Now that we have learned how to import and clean the data, we are ready for analysis. In the next lesson, we’ll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.",
     "crumbs": [
       "Modules",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
@@ -153,7 +153,7 @@
     "href": "ebase.html#next-steps",
     "title": "3  Using EBASE",
     "section": "3.3 Next steps",
-    "text": "3.3 Next steps\nYou now understand the basics of ecosystem metabolism and how EBASE is used to estimate key parameters using a Bayesian approach. We’ve explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and varioius plotting methods. Next we’ll cover a more in depth interpretation of the metabolism results to understand the implications for ecosystem health and function.",
+    "text": "3.3 Next steps\nYou now understand the basics of ecosystem metabolism and how EBASE is used to estimate key parameters using a Bayesian approach. We’ve explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and various plotting methods. Next, we’ll explore the EBASE results in more detail to demonstrate how the results can inform the understanding of ecosystem health and function.",
     "crumbs": [
       "Modules",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using EBASE</span>"
