@@ -14,7 +14,7 @@
     "href": "index.html#agenda",
     "title": "Ecosystem Metabolism Workshop",
     "section": "Agenda",
-    "text": "Agenda\n\n\n\n\n\nTime\nTopic\n\n\n\n\n10:00\nR Basics\n\n\n11:00\nData preparation\n\n\n12:00\nLunch\n\n\n1:00\nUsing EBASE\n\n\n2:00\nInterpreting results\n\n\n3:00\nadjourn",
+    "text": "Agenda\nAll times EDT.\n\n\n\n\n\nTime\nTopic\n\n\n\n\n10:00\nIntroduction\n\n\n10:30\nData Preparation\n\n\n11:30\nBreak\n\n\n12:00\nUsing EBASE\n\n\n1:30\nInterpreting Results\n\n\n3:00\nadjourn",
     "crumbs": [
       "About this Workshop"
     ]
@@ -50,52 +50,41 @@
     ]
   },
   {
-    "objectID": "rbasics.html",
-    "href": "rbasics.html",
-    "title": "1  R Basics",
+    "objectID": "01_intro.html",
+    "href": "01_intro.html",
+    "title": "1  Inroduction",
     "section": "",
-    "text": "1.1 Lesson Outline\nThis lesson will cover the very basics of using R and RStudio on your computer. R is a powerful open-source programming language that is widely used for data analysis and visualization. RStudio is an integrated development environment (IDE) that makes it easier to work with R. Combined, they provide effective tools for evaluating and understanding data.",
+    "text": "1.1 Lesson Outline\nThis lesson will cover the very basics of ecosystem metabolism: what it is, why you should care about it, and what it can tell you. We’ll also make sure that RStudio is setup for the rest of the workshop.",
     "crumbs": [
       "Modules",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>R Basics</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
     ]
   },
   {
-    "objectID": "rbasics.html#learning-goals",
-    "href": "rbasics.html#learning-goals",
-    "title": "1  R Basics",
+    "objectID": "01_intro.html#learning-goals",
+    "href": "01_intro.html#learning-goals",
+    "title": "1  Inroduction",
     "section": "1.2 Learning Goals",
-    "text": "1.2 Learning Goals\n\nUnderstand the basics of R and RStudio\nLearn how to use RStudio to write and run R code\nLearn how to install and load packages in R\nUnderstand the basic data structures in R\nLearn how to read data into R",
+    "text": "1.2 Learning Goals\n\nLearn a basic definition of metabolism\nUnderstand what it tells you about your ecosystem\nUnderstand how it is measured\nSetup RStudio for the workshop using a project",
     "crumbs": [
       "Modules",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>R Basics</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
     ]
   },
   {
-    "objectID": "rbasics.html#why-should-i-invest-time-in-r",
-    "href": "rbasics.html#why-should-i-invest-time-in-r",
-    "title": "1  R Basics",
-    "section": "1.3 Why should I invest time in R?",
-    "text": "1.3 Why should I invest time in R?",
+    "objectID": "01_intro.html#next-steps",
+    "href": "01_intro.html#next-steps",
+    "title": "1  Inroduction",
+    "section": "1.3 Next steps",
+    "text": "1.3 Next steps\nIn this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr for analysis with EBASE.",
     "crumbs": [
       "Modules",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>R Basics</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
     ]
   },
   {
-    "objectID": "rbasics.html#next-steps",
-    "href": "rbasics.html#next-steps",
-    "title": "1  R Basics",
-    "section": "1.4 Next steps",
-    "text": "1.4 Next steps\nIn this lesson we learned about R and Rstudio, some of the basic syntax and data structures in R, and how to import files. We’ve also imported some water quality files from Apalachicola Bay. Next we’ll learn how to import these data with SWMPr and prepare the data for analysis with EBASE.",
-    "crumbs": [
-      "Modules",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>R Basics</span>"
-    ]
-  },
-  {
-    "objectID": "dataprep.html",
-    "href": "dataprep.html",
+    "objectID": "02_dataprep.html",
+    "href": "02_dataprep.html",
     "title": "2  Data Preparation",
     "section": "",
     "text": "2.1 Lesson Outline\nThis lesson will demonstrate how the SWMPr package can be used to import and prepare data for analysis with EBASE. The EBASE software requires a specific format for input data that includes both water quality and weather data. SWMPr includes several functions that can facilitate the preparation of data for EBASE analysis.",
@@ -105,8 +94,8 @@
     ]
   },
   {
-    "objectID": "dataprep.html#learning-goals",
-    "href": "dataprep.html#learning-goals",
+    "objectID": "02_dataprep.html#learning-goals",
+    "href": "02_dataprep.html#learning-goals",
     "title": "2  Data Preparation",
     "section": "2.2 Learning Goals",
     "text": "2.2 Learning Goals\n\nUnderstand the data requirements for EBASE\nLearn how to import data with SWMPr\nLearn how to clean and combine SWMP data\nLearn how to prepare data for EBASE analysis",
@@ -116,8 +105,8 @@
     ]
   },
   {
-    "objectID": "dataprep.html#next-steps",
-    "href": "dataprep.html#next-steps",
+    "objectID": "02_dataprep.html#next-steps",
+    "href": "02_dataprep.html#next-steps",
     "title": "2  Data Preparation",
     "section": "2.3 Next steps",
     "text": "2.3 Next steps\nThe most difficult part of using EBASE is preparing the data. Now that we have learned how to import and clean the data, we are ready for analysis. In the next lesson, we’ll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.",
@@ -127,8 +116,8 @@
     ]
   },
   {
-    "objectID": "ebase.html",
-    "href": "ebase.html",
+    "objectID": "03_ebase.html",
+    "href": "03_ebase.html",
     "title": "3  Using EBASE",
     "section": "",
     "text": "3.1 Lesson Outline\nThis lesson will explain the basic theory behind ecosystem metabolism and how EBASE is used to estimate key parameters. EBASE is a Bayesian implementation for estimating metabolism that differs from more conventional approaches. We’ll also explore the main functions of EBASE to estimate metabolism, how the Bayesian approach can be used to incorporate prior knowledge, and interpret the results.",
@@ -138,8 +127,8 @@
     ]
   },
   {
-    "objectID": "ebase.html#learning-goals",
-    "href": "ebase.html#learning-goals",
+    "objectID": "03_ebase.html#learning-goals",
+    "href": "03_ebase.html#learning-goals",
     "title": "3  Using EBASE",
     "section": "3.2 Learning Goals",
     "text": "3.2 Learning Goals\n\nUnderstand the basic theory behind ecosystem metabolism\nLearn how EBASE is used to estimate key parameters\nUnderstand the Bayesian approach to estimating metabolism\nUse the main functions of EBASE to estimate metabolism\nInterpret the results of EBASE",
@@ -149,8 +138,8 @@
     ]
   },
   {
-    "objectID": "ebase.html#next-steps",
-    "href": "ebase.html#next-steps",
+    "objectID": "03_ebase.html#next-steps",
+    "href": "03_ebase.html#next-steps",
     "title": "3  Using EBASE",
     "section": "3.3 Next steps",
     "text": "3.3 Next steps\nYou now understand the basics of ecosystem metabolism and how EBASE is used to estimate key parameters using a Bayesian approach. We’ve explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and various plotting methods. Next, we’ll explore the EBASE results in more detail to demonstrate how the results can inform the understanding of ecosystem health and function.",
@@ -160,33 +149,44 @@
     ]
   },
   {
-    "objectID": "interpret.html",
-    "href": "interpret.html",
+    "objectID": "04_interpret.html",
+    "href": "04_interpret.html",
     "title": "4  Interpreting Results",
     "section": "",
-    "text": "4.1 Lesson Outline\nThe EBASE package includes a few functions to quickly assess the results of the metabolism analysis. Additional tools are available in R to develop a more detailed understanding of factors that might influence the metabolic rates. This lesson will provide some quick demonstrations of how to use R for more in depth analyses that will help you understand differences within and between coastal areas.",
+    "text": "4.1 Discussion Outline\nThis discussion is your time to share some ideas about evaluating the results from EBASE. We’ll go through some live coding examples based on these ideas. Below are some examples and code to get us started.",
     "crumbs": [
       "Modules",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interpreting Results</span>"
     ]
   },
   {
-    "objectID": "interpret.html#learning-goals",
-    "href": "interpret.html#learning-goals",
+    "objectID": "04_interpret.html#example-1-compare-results-to-nutrient-data",
+    "href": "04_interpret.html#example-1-compare-results-to-nutrient-data",
     "title": "4  Interpreting Results",
-    "section": "4.2 Learning Goals",
-    "text": "4.2 Learning Goals\n\nUnderstand how to manipulate or wrangle EBASE results for further analysis\nCombine EBASE results with additional data\nPerform simple analyses to evaluate hypotheses about factors influencing metabolism",
+    "section": "4.2 Example 1: Compare results to nutrient data",
+    "text": "4.2 Example 1: Compare results to nutrient data",
     "crumbs": [
       "Modules",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interpreting Results</span>"
     ]
   },
   {
-    "objectID": "interpret.html#next-steps",
-    "href": "interpret.html#next-steps",
+    "objectID": "04_interpret.html#example-2-site-comparisons",
+    "href": "04_interpret.html#example-2-site-comparisons",
     "title": "4  Interpreting Results",
-    "section": "4.3 Next steps",
-    "text": "4.3 Next steps\nThis concludes our workshop on using EBASE to estimate ecosystem metabolism. You should now have a baseline understanding of how these tools can be used to gain insights into ecosystem properties and the factors that may be influencing them. Please follow up with the instructor if you have additional questions or would like to explore more advanced topics.",
+    "section": "4.3 Example 2: Site comparisons",
+    "text": "4.3 Example 2: Site comparisons",
+    "crumbs": [
+      "Modules",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interpreting Results</span>"
+    ]
+  },
+  {
+    "objectID": "04_interpret.html#next-steps",
+    "href": "04_interpret.html#next-steps",
+    "title": "4  Interpreting Results",
+    "section": "4.4 Next steps",
+    "text": "4.4 Next steps\nThis concludes our workshop on using EBASE to estimate ecosystem metabolism. You should now have a baseline understanding of how these tools can be used to gain insights into ecosystem properties and the factors that may be influencing them. Please follow up with the instructor if you have additional questions or would like to explore more advanced topics.",
     "crumbs": [
       "Modules",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interpreting Results</span>"

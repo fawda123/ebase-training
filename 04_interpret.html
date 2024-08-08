@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Data Preparation – Ecosystem Metabolism Workshop</title>
+<title>4&nbsp; Interpreting Results – Ecosystem Metabolism Workshop</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ebase.html" rel="next">
-<link href="./rbasics.html" rel="prev">
+<link href="./setup.html" rel="next">
+<link href="./03_ebase.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rbasics.html">Modules</a></li><li class="breadcrumb-item"><a href="./dataprep.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Modules</a></li><li class="breadcrumb-item"><a href="./04_interpret.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interpreting Results</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -132,25 +132,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rbasics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Basics</span></span></a>
+  <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Inroduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dataprep.html" class="sidebar-item-text sidebar-link active">
+  <a href="./02_dataprep.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ebase.html" class="sidebar-item-text sidebar-link">
+  <a href="./03_ebase.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using EBASE</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./interpret.html" class="sidebar-item-text sidebar-link">
+  <a href="./04_interpret.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interpreting Results</span></span></a>
   </div>
 </li>
@@ -189,18 +189,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#lesson-outline" id="toc-lesson-outline" class="nav-link active" data-scroll-target="#lesson-outline"><span class="header-section-number">2.1</span> Lesson Outline</a></li>
-  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals"><span class="header-section-number">2.2</span> Learning Goals</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">2.3</span> Next steps</a></li>
+  <li><a href="#discussion-outline" id="toc-discussion-outline" class="nav-link active" data-scroll-target="#discussion-outline"><span class="header-section-number">4.1</span> Discussion Outline</a></li>
+  <li><a href="#example-1-compare-results-to-nutrient-data" id="toc-example-1-compare-results-to-nutrient-data" class="nav-link" data-scroll-target="#example-1-compare-results-to-nutrient-data"><span class="header-section-number">4.2</span> Example 1: Compare results to nutrient data</a></li>
+  <li><a href="#example-2-site-comparisons" id="toc-example-2-site-comparisons" class="nav-link" data-scroll-target="#example-2-site-comparisons"><span class="header-section-number">4.3</span> Example 2: Site comparisons</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">4.4</span> Next steps</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/dataprep.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/04_interpret.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rbasics.html">Modules</a></li><li class="breadcrumb-item"><a href="./dataprep.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Modules</a></li><li class="breadcrumb-item"><a href="./04_interpret.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interpreting Results</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/fawda123/ebase-training/blob/main/dataprep.qmd"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interpreting Results</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/fawda123/ebase-training/blob/main/04_interpret.qmd"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -217,22 +218,19 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="lesson-outline" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="lesson-outline"><span class="header-section-number">2.1</span> Lesson Outline</h2>
-<p>This lesson will demonstrate how the SWMPr package can be used to import and prepare data for analysis with EBASE. The EBASE software requires a specific format for input data that includes both water quality and weather data. SWMPr includes several functions that can facilitate the preparation of data for EBASE analysis.</p>
+<section id="discussion-outline" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="discussion-outline"><span class="header-section-number">4.1</span> Discussion Outline</h2>
+<p>This discussion is your time to share some ideas about evaluating the results from EBASE. We’ll go through some live coding examples based on these ideas. Below are some examples and code to get us started.</p>
 </section>
-<section id="learning-goals" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="learning-goals"><span class="header-section-number">2.2</span> Learning Goals</h2>
-<ul>
-<li>Understand the data requirements for EBASE</li>
-<li>Learn how to import data with SWMPr</li>
-<li>Learn how to clean and combine SWMP data</li>
-<li>Learn how to prepare data for EBASE analysis</li>
-</ul>
+<section id="example-1-compare-results-to-nutrient-data" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="example-1-compare-results-to-nutrient-data"><span class="header-section-number">4.2</span> Example 1: Compare results to nutrient data</h2>
 </section>
-<section id="next-steps" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">2.3</span> Next steps</h2>
-<p>The most difficult part of using EBASE is preparing the data. Now that we have learned how to import and clean the data, we are ready for analysis. In the next lesson, we’ll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.</p>
+<section id="example-2-site-comparisons" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="example-2-site-comparisons"><span class="header-section-number">4.3</span> Example 2: Site comparisons</h2>
+</section>
+<section id="next-steps" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">4.4</span> Next steps</h2>
+<p>This concludes our workshop on using EBASE to estimate ecosystem metabolism. You should now have a baseline understanding of how these tools can be used to gain insights into ecosystem properties and the factors that may be influencing them. Please follow up with the instructor if you have additional questions or would like to explore more advanced topics.</p>
 
 
 </section>
@@ -711,13 +709,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./rbasics.html" class="pagination-link" aria-label="R Basics">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Basics</span></span>
+      <a href="./03_ebase.html" class="pagination-link" aria-label="Using EBASE">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using EBASE</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ebase.html" class="pagination-link" aria-label="Using EBASE">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using EBASE</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./setup.html" class="pagination-link" aria-label="Setup for the workshop">
+        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Setup for the workshop</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -729,7 +727,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/dataprep.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/04_interpret.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/" target="_blank">Quarto</a></p>
 </div>

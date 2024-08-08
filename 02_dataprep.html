@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; R Basics – Ecosystem Metabolism Workshop</title>
+<title>2&nbsp; Data Preparation – Ecosystem Metabolism Workshop</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./dataprep.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./03_ebase.html" rel="next">
+<link href="./01_intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +82,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rbasics.html">Modules</a></li><li class="breadcrumb-item"><a href="./rbasics.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Basics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Modules</a></li><li class="breadcrumb-item"><a href="./02_dataprep.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -132,25 +132,25 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./rbasics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Basics</span></span></a>
+  <a href="./01_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Inroduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dataprep.html" class="sidebar-item-text sidebar-link">
+  <a href="./02_dataprep.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ebase.html" class="sidebar-item-text sidebar-link">
+  <a href="./03_ebase.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using EBASE</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./interpret.html" class="sidebar-item-text sidebar-link">
+  <a href="./04_interpret.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interpreting Results</span></span></a>
   </div>
 </li>
@@ -189,19 +189,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#lesson-outline" id="toc-lesson-outline" class="nav-link active" data-scroll-target="#lesson-outline"><span class="header-section-number">1.1</span> Lesson Outline</a></li>
-  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals"><span class="header-section-number">1.2</span> Learning Goals</a></li>
-  <li><a href="#why-should-i-invest-time-in-r" id="toc-why-should-i-invest-time-in-r" class="nav-link" data-scroll-target="#why-should-i-invest-time-in-r"><span class="header-section-number">1.3</span> Why should I invest time in R?</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">1.4</span> Next steps</a></li>
+  <li><a href="#lesson-outline" id="toc-lesson-outline" class="nav-link active" data-scroll-target="#lesson-outline"><span class="header-section-number">2.1</span> Lesson Outline</a></li>
+  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals"><span class="header-section-number">2.2</span> Learning Goals</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">2.3</span> Next steps</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/rbasics.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/02_dataprep.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./rbasics.html">Modules</a></li><li class="breadcrumb-item"><a href="./rbasics.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Basics</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Modules</a></li><li class="breadcrumb-item"><a href="./02_dataprep.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Basics</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/fawda123/ebase-training/blob/main/rbasics.qmd"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/fawda123/ebase-training/blob/main/02_dataprep.qmd"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -218,26 +217,22 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="lesson-outline" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="lesson-outline"><span class="header-section-number">1.1</span> Lesson Outline</h2>
-<p>This lesson will cover the very basics of using R and RStudio on your computer. R is a powerful open-source programming language that is widely used for data analysis and visualization. RStudio is an integrated development environment (IDE) that makes it easier to work with R. Combined, they provide effective tools for evaluating and understanding data.</p>
+<section id="lesson-outline" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="lesson-outline"><span class="header-section-number">2.1</span> Lesson Outline</h2>
+<p>This lesson will demonstrate how the SWMPr package can be used to import and prepare data for analysis with EBASE. The EBASE software requires a specific format for input data that includes both water quality and weather data. SWMPr includes several functions that can facilitate the preparation of data for EBASE analysis.</p>
 </section>
-<section id="learning-goals" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="learning-goals"><span class="header-section-number">1.2</span> Learning Goals</h2>
+<section id="learning-goals" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="learning-goals"><span class="header-section-number">2.2</span> Learning Goals</h2>
 <ul>
-<li>Understand the basics of R and RStudio</li>
-<li>Learn how to use RStudio to write and run R code</li>
-<li>Learn how to install and load packages in R</li>
-<li>Understand the basic data structures in R</li>
-<li>Learn how to read data into R</li>
+<li>Understand the data requirements for EBASE</li>
+<li>Learn how to import data with SWMPr</li>
+<li>Learn how to clean and combine SWMP data</li>
+<li>Learn how to prepare data for EBASE analysis</li>
 </ul>
 </section>
-<section id="why-should-i-invest-time-in-r" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="why-should-i-invest-time-in-r"><span class="header-section-number">1.3</span> Why should I invest time in R?</h2>
-</section>
-<section id="next-steps" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">1.4</span> Next steps</h2>
-<p>In this lesson we learned about R and Rstudio, some of the basic syntax and data structures in R, and how to import files. We’ve also imported some water quality files from Apalachicola Bay. Next we’ll learn how to import these data with SWMPr and prepare the data for analysis with EBASE.</p>
+<section id="next-steps" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">2.3</span> Next steps</h2>
+<p>The most difficult part of using EBASE is preparing the data. Now that we have learned how to import and clean the data, we are ready for analysis. In the next lesson, we’ll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.</p>
 
 
 </section>
@@ -716,13 +711,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="About this Workshop">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">About this Workshop</span>
+      <a href="./01_intro.html" class="pagination-link" aria-label="Inroduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Inroduction</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./dataprep.html" class="pagination-link" aria-label="Data Preparation">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Preparation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03_ebase.html" class="pagination-link" aria-label="Using EBASE">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Using EBASE</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -734,7 +729,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/rbasics.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/02_dataprep.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This book was built with <a href="https://quarto.org/" target="_blank">Quarto</a></p>
 </div>
