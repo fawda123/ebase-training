@@ -6,7 +6,7 @@ lightbox: true
 
 ## Lesson Outline
 
-This lesson will cover the very basics of using R and RStudio on your computer.  R is a powerful open-source programming language that is widely used for data analysis and visualization.  RStudio is an integrated development environment (IDE) that makes it easier to work with R.  Combined, they provide a powerful tool for working with data.
+This lesson will cover the very basics of using R and RStudio on your computer.  R is a powerful open-source programming language that is widely used for data analysis and visualization.  RStudio is an integrated development environment (IDE) that makes it easier to work with R.  Combined, they provide effective tools for evaluating and understanding data.
 
 ## Learning Goals
 

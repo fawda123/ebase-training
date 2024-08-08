@@ -18,4 +18,4 @@ This lesson will explain the basic theory behind ecosystem metabolism and how EB
 
 ## Next steps
 
-You now understand the basics of ecosystem metabolism and how EBASE is used to estimate key parameters using a Bayesian approach.  We've explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and varioius plotting methods.  Next we'll cover a more in depth interpretation of the metabolism results to understand the implications for ecosystem health and function.
+You now understand the basics of ecosystem metabolism and how EBASE is used to estimate key parameters using a Bayesian approach.  We've explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and various plotting methods.  Next, we'll explore the EBASE results in more detail to demonstrate how the results can inform the understanding of ecosystem health and function.
