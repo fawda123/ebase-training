@@ -1,0 +1,20 @@
+---
+lightbox: true
+---
+
+# Inroduction
+
+## Lesson Outline
+
+This lesson will cover the very basics of ecosystem metabolism: what it is, why you should care about it, and what it can tell you.  We'll also make sure that RStudio is setup for the rest of the workshop.
+
+## Learning Goals
+
+- Learn a basic definition of metabolism
+- Understand what it tells you about your ecosystem
+- Understand how it is measured
+- Setup RStudio for the workshop using a project
+
+## Next steps
+ 
+In this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr for analysis with EBASE.

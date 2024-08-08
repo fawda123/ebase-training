@@ -24,10 +24,10 @@ book:
     - index.qmd
     - part: "Modules"
       chapters:
-        - rbasics.qmd
-        - dataprep.qmd
-        - ebase.qmd
-        - interpret.qmd  
+        - 01_intro.qmd
+        - 02_dataprep.qmd
+        - 03_ebase.qmd
+        - 04_interpret.qmd  
   appendices:
     - setup.qmd
     - references.qmd

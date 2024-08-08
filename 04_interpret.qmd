@@ -1,0 +1,17 @@
+---
+lightbox: true
+---
+
+# Interpreting Results
+
+## Discussion Outline
+
+This discussion is your time to share some ideas about evaluating the results from EBASE.  We'll go through some live coding examples based on these ideas. Below are some examples and code to get us started. 
+
+## Example 1: Compare results to nutrient data
+
+## Example 2: Site comparisons
+
+## Next steps
+
+This concludes our workshop on using EBASE to estimate ecosystem metabolism.  You should now have a baseline understanding of how these tools can be used to gain insights into ecosystem properties and the factors that may be influencing them. Please follow up with the instructor if you have additional questions or would like to explore more advanced topics.
