@@ -14,7 +14,7 @@ Thanks for your interest in the ecosystem metabolism workshop. You will need to 
 
 Most of these steps will require administrative privileges on a computer.  Work with your IT staff to complete the setup if you do not have these privileges.  As an alternative, you can use Posit Cloud to participate (see @sec-cloud), although we strongly encourage you to install the software on your personal computer for use after the workshop.
 
-Please reach out if you have any issues with installation: [mbeck@tbep.org](mailto:mbeck@tbep.org)
+__Please reach out if you have any issues with installation: [mbeck@tbep.org](mailto:mbeck@tbep.org)__
 
 ## Install R and RStudio 
 
@@ -24,7 +24,7 @@ Thanks to the [USGS-R Training group](https://owi.usgs.gov/R/training.html){targ
 
 ### Windows: Download and install R {#sec-instr}
 
-Go to [CRAN and download](https://cran.rstudio.com/bin/windows/base/){target="_blank"} the R installer for Windows. Make sure to choose the latest stable version (v4.2.3 as of April 2023).
+Go to [CRAN and download](https://cran.rstudio.com/bin/windows/base/){target="_blank"} the R installer for Windows. Make sure to choose the latest stable version (v4.4.1 as of August 2024).
 
 Once the installer downloads, Right-click on it and select "Run as administrator".
 
@@ -75,11 +75,29 @@ Once installed, RStudio should be accessible from the start menu. Start up RStud
 
 ## Install JAGS {#sec-instjags}
 
+The JAGS software is a separate open-source program for analyzing Bayesian hierarchical models using Markov Chain Monte Carlo (MCMC) methods.  It is used by EBASE to run the Bayesian models. Follow the instructions [here](https://mcmc-jags.sourceforge.io/) to download and install the version appropriate for your operating system.
+
 ## Install R packages {#sec-instpackages}
+
+We'll use the following R packages during the workshop.  Install them in the RStudio console by running these commands:
+
+```r
+install.packages('EBASE')
+install.packages('tidyverse')
+```
+
+After installation, check the packages can be loaded without error:
+
+```r
+library(EBASE)
+library(tidyverse)
+```
 
 ## Posit Cloud (optional) {#sec-cloud}
 
-Posit Cloud provides an environment to use RStudio and the resources above through a web browser.  We've created a workspace on Posit Cloud that includes most of the content described above.  Open the following URL in a web browser: [https://posit.cloud/content/5544370](https://posit.cloud/content/5544370){target="_blank"}
+Posit Cloud provides an environment to use RStudio and the resources above through a web browser.  We've created a workspace on Posit Cloud that includes most all of the software and packages described above. __Please only use this option as a last resort.  We strongly encourage installing the software on your own computer.__  
+
+Open the following URL in a web browser: [https://posit.cloud/content/8518890](https://posit.cloud/content/8518890){target="_blank"}
 
 You will see a login screen that looks like this: 
 

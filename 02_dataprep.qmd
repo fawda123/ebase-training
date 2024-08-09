@@ -15,6 +15,10 @@ This lesson will demonstrate how the SWMPr package can be used to import and pre
 - Learn how to clean and combine SWMP data
 - Learn how to prepare data for EBASE analysis
 
+## Preparing NERRS data with SWMPr
+
+## Preparing other data
+
 ## Next steps
 
 The most difficult part of using EBASE is preparing the data.  Now that we have learned how to import and clean the data, we are ready for analysis. In the next lesson, we'll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.

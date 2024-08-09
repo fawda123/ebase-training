@@ -15,6 +15,10 @@ This lesson will cover the very basics of ecosystem metabolism: what it is, why 
 - Understand how it is measured
 - Setup RStudio for the workshop using a project
 
+## What is ecosystem metabolism? 
+
+## Get ready for the workshop
+
 ## Next steps
  
 In this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr for analysis with EBASE.

@@ -4,14 +4,30 @@ execute:
   echo: false
 ---
 
+```{css}
+/*| echo: false */
+figcaption {
+  margin: auto;
+  text-align: center;
+}
+```
+
 # About this Workshop {.unnumbered}
 
 This course will provide an overview of new techniques to estimate metabolic processes in estuaries using new software with the R open-source programming language. We will describe the theory and application of the new Estuarine BAyesian Single-station Estimation (EBASE) method that applies a Bayesian framework to a simple process-based model and dissolved oxygen observations, allowing the estimation of critical metabolic parameters as informed by a set of prior distributions.  We will also explore how EBASE and additional R features can be used to evaluate metabolism results and to identify potential drivers of change.  By the end of the course, you will understand how to prepare data for use with EBASE and to interpret the results to better understand processes that influence ecosystem status and condition. Basic R experience is expected.
 
-Also see:
+EBASE materials:
 
--   [EBASE website](https://fawda123.github.io/EBASE/){target="_blank"}
--   [EBASE paper](https://doi.org/10.1002/lom3.10620){target="_blank"}
+::: {layout-ncol=2 layout-valign="center"}
+
+![Website: <https://fawda123.github.io/EBASE>](figs/logo.png){height=200}
+
+![Paper: <https://doi.org/10.1002/lom3.10620>](figs/paper.png){height=200}
+
+:::
+
+<!-- -   [website](https://fawda123.github.io/EBASE/){target="_blank"} -->
+<!-- -   [paper](https://doi.org/10.1002/lom3.10620){target="_blank"} -->
 
 ## Agenda {.unnumbered}
 
@@ -25,12 +41,27 @@ knitr::kable(agenda)
 ## Important links {.unnumbered}
 
 * Workshop Website: [link](https://fawda123.github.io/ebase-training){target="_blank"}
-* Posit Cloud: link
-* Live coding: link
+* Live coding: [link](https://tinyurl.com/live-ebase){target="_blank"}
+* Posit Cloud: [link](https://posit.cloud/content/8518890){target="_blank"}
+
+## Housekeeping {.unnumbered}
+
+Please read these housekeeping items on the day of the training so that everything runs smoothly. 
+
+1. Feel free to verbally ask questions during the training by unmuting your microphone.  You can also type questions in the chat.  Other attendees are welcome to respond to questions in the chat.  
+1. Please use RStudio installed on your computer to follow along during the workshop.  RStudio Cloud can also be used as a backup option.  See the setup instructions below for more information.
+
+1. We have a [live coding](https://tinyurl.com/live-ebase){target="_blank"} link that we’ll be using as we go through the lessons. If you get lost, you can copy/paste code from this link into RStudio.
+
+1. All training content is on this website. If you get lost you can view the agenda to see which lesson we’re covering.
 
 ## Setup {.unnumbered}
 
 Please visit the [setup](setup.qmd) page for instructions on preparing for this workshop. You will be required to install R, RStudio, JAGS, and several R packages prior to the workshop. Basic R experience is expected.
+
+## Code of Conduct {.unnumbered}
+
+We are dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity. We are adopting [The Carpentries Code of Conduct](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html){target="_blank"} for this workshop.
 
 ## Instructor {.unnumbered}
 
