@@ -2,23 +2,123 @@
 lightbox: true
 ---
 
-# Inroduction
+# Inroduction {#sec-intro}
 
 ## Lesson Outline
 
-This lesson will cover the very basics of ecosystem metabolism: what it is, why you should care about it, and what it can tell you.  We'll also make sure that RStudio is setup for the rest of the workshop.
+This lesson will cover the very basics of ecosystem metabolism: what it is, why you should care about it, and what it can tell you. We'll also make sure that RStudio is setup for the rest of the workshop.
 
 ## Learning Goals
 
-- Learn a basic definition of metabolism
-- Understand what it tells you about your ecosystem
-- Understand how it is measured
-- Setup RStudio for the workshop using a project
+-   Learn a basic definition of metabolism
+-   Understand what it tells you about your ecosystem
+-   Understand how it is measured
+-   Setup RStudio for the workshop using a project
 
-## What is ecosystem metabolism? 
+## What is ecosystem metabolism?
+
+Simply put, ecosystem metabolism is a measure of how quickly organic matter is consumed or produced in an aquatic environment. Estuaries are transition zones that receive materials from the land and export them to the ocean and atmosphere. Ecosystem metabolism is a measure of the rate at which this material is processed as a first order property that can affect a wide range of biogeochemical processes.
+
+More specifically, ecosystem metabolism is the balance between production and respiration processes that create and consume organic matter. We can use these measures to characterize metabolism in aquatic environments as a ***rate***, as compared to "surrogate" snapshot measures like nutrient or chlorophyll ***concentrations***. It provides a more complete picture of the state of the environment.
+
+The simplest expression of metabolism is below:
+
+$$
+NEM = P - R
+$$ 
+
+Here, net ecosystem metabolism ($NEM$) is the difference between gross primary production ($P$) and respiration ($R$). Or, net ecosystem metabolism is the difference between processes that produce organic matter and those that consume organic matter.
+
+$NEM$ can tell us a lot about an ecosystem:
+
+-   If positive, the ecosystem is ***autotrophic***, meaning it produces more organic matter than it consumes. Organic matter will accumulate.
+-   If negative, the ecosystem is ***heterotrophic***, meaning it consumes more organic matter than it produces. Organic matter will deplete.
+
+Autotrophy and heterotrophy can be governed by many factors. For example, autotrophy may occur more often during warmer months, as temperature can stimulate growth of algae and other primary primary producers. Similarly, hyper-eutrophic systems may be more heterotrophic during the summer as the rapid decomposition of organic matter that was produced by excess nutrients may be increased with temperature. A single pulse of nutrients can create autotrophic conditions as production increases followed by heterotrophic conditions as the new organic material settles to the bottom and is decomposed.
+
+Metabolism is highly dynamic, responding to seasonal changes and short-term events. Substantial insight into system dynamics can be gained by exploring how metabolism is related to other key variables in a dataset - we will attempt this in our last lesson.
+
+## How is metabolism measured?
+
+Metabolism can be measured several ways, each of which has its own strengths, weaknesses, and assumptions. These include:
+
+-   Bottle-based incubations
+-   Open-water techniques
+-   Ecosystem budgets
+-   Use of oxygen isotopes or inert gases
+-   Aquatic eddy covariance
+
+Open-water techniques are among the more commonly used approaches applied to continuous monitoring data. These techniques exploit the diel cycle of dissolved oxygen (DO) concentration to infer metabolism. The main assumptions are:
+
+-   Production produces oxygen during daylight hours
+-   Respiration consumes oxygen during daylight and nighttime hours
+-   Oxygen exchanges freely with the atmosphere
+-   The system is well-mixed
+
+![](figs/metab.png)
+
+The DO time series can be deconstructed using a mass-balance equation to estimate metabolism. This is a literal deconstruction of the processes in the above figure.
+
+$$
+Z\frac{dC_d}{dt} = P - R + D
+$$
+
+This equation can be translated as the change in dissolved oxygen ($dC_d$) over time ($dt$) (a rate) is equal to the difference between production ($P$) and respiration ($R$) plus the exchange of oxygen with the atmosphere ($D$). The units are converted from volumetric ($m^{-3}$) to areal ($m^{-2}$) by multiplying the equation by water column depth ($Z$). In this example, $D$ is positive for ingassing and negative for outgassing.
+
+$P$, $R$, and $D$ can be estimated several ways depending on which "open-water" technique is used. The most popular method is that of @Odum56, modified extensively by others since its original presentation. The method calculates the DO flux (DO change per unit time) during day and night periods and corrects it for gas exchange. This is also called the book-keeping method since it's "simple" arithmetic.
+
+Gas exchange can also be estimated several ways, but the core concept is that the flux is proportional to the difference between the DO concentration in the water and the DO concentration in the atmosphere. This difference is also multiplied by a gas exchange coefficient, which can vary by wind, temperature, or other factors depending on the model.
+
+Fortunately for us, there are existing packages in R that can estimate these parameters. One is the [WtRegDO](https://github.com/fawda123/WtRegDO){target="_blank"} package that uses the Odum technique, which was covered in a [workshop](https://tbep-tech.github.io/ecometab-r-training/){target="_blank"} a few years ago. Another is EBASE, which we'll discuss today. EBASE follows the same general principles as the Odum technique, but differs in the statistical method to estimate the parameter (i.e., Bayesian) and the model used for each parameter.
+
+We'll talk more about how EBASE estimates metabolism in [Lesson @sec-ebase], but first we need to get setup with R and prepare our data in [Lesson @sec-dataprep].
 
 ## Get ready for the workshop
 
+Let's make sure RStudio is setup for the workshop. We'll use a project to keep everything in one place, for good reason.  There are people that will [set your computer on fire](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/) if you don't follow these best practices.
+
+Let's run through the basics of creating a project in RStudio.
+
+(@) **Create a new project in RStudio, first open RStudio and select "New project" from the File menu at the top.**
+
+    ![](figs/newproj.PNG)
+
+    Then select "New Directory". 
+    
+    ![](figs/newdir.PNG)
+    
+    Then select "New Project".  Create a directory in a location that's easy to find. 
+    
+    ![](figs/newproj2.PNG){width=500} 
+
+    Click "Create Project" when you're done.
+    
+(@) **A fresh RStudio session will open.  Open a new R script by selecting "New file" > R script from the File menu at the top.**
+
+    ![](figs/newfile.PNG){width=500}
+    
+    Save the file in your working directory by clicking the file icon on the top right.  Give it a useful name. For example, "ebase_intro.R".  The file should be saved to the project root directory.
+    
+    ![](figs/savefile.PNG)
+
+(@) **Setup the package imports at the top of the script.  These should already be installed during the [setup](setup.qmd#sec-instpackages) prior to the workshop.**
+
+    ```r
+    library(EBASE)
+    library(SWMPr)
+    library(tidyverse)
+    ```
+    Save the script again and send the commands from the source script to the console.  Do they load properly??
+
+(@) **Setup a data folder in the project directory.  This is where we'll store the data for the workshop.**
+
+    Select "New folder" from the file pane (usually bottom right) and name it "data".
+    ![](figs/newfolder.PNG)
+    
+    Name the folder "data" and save it in the project root directory.
+    
+    Place the downloaded data in this folder. 
+    
 ## Next steps
- 
+
 In this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr for analysis with EBASE.

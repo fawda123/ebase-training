@@ -3,7 +3,7 @@ project:
   output-dir: _site
   resources:
     - "/.nojekyll"
-
+    
 book:
   title: "Ecosystem Metabolism Workshop"
   subtitle: "EBASE training, Sep. 13th, 2024"
@@ -22,7 +22,7 @@ book:
       This book was built with <a href="https://quarto.org/" target="_blank">Quarto</a>
   chapters:
     - index.qmd
-    - part: "Modules"
+    - part: "Lessons"
       chapters:
         - 01_intro.qmd
         - 02_dataprep.qmd
@@ -31,7 +31,7 @@ book:
   appendices:
     - setup.qmd
     - references.qmd
-
+  
 bibliography: references.bib
 
 format:

@@ -2,7 +2,7 @@
 lightbox: true
 ---
 
-# Using EBASE
+# Using EBASE {#sec-ebase}
 
 ## Lesson Outline
 

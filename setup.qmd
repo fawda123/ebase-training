@@ -83,6 +83,7 @@ We'll use the following R packages during the workshop.  Install them in the RSt
 
 ```r
 install.packages('EBASE')
+install.packages('SWMPr')
 install.packages('tidyverse')
 ```
 
@@ -90,6 +91,7 @@ After installation, check the packages can be loaded without error:
 
 ```r
 library(EBASE)
+library(SWMPr)
 library(tidyverse)
 ```
 
