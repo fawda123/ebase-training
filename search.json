@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Ecosystem Metabolism Workshop",
     "section": "",
-    "text": "About this Workshop\nThis course will provide an overview of new techniques to estimate metabolic processes in estuaries using new software with the R open-source programming language. We will describe the theory and application of the new Estuarine BAyesian Single-station Estimation (EBASE) method that applies a Bayesian framework to a simple process-based model and dissolved oxygen observations, allowing the estimation of critical metabolic parameters as informed by a set of prior distributions. We will also explore how EBASE and additional R features can be used to evaluate metabolism results and to identify potential drivers of change. By the end of the course, you will understand how to prepare data for use with EBASE and to interpret the results to better understand processes that influence ecosystem status and condition. Basic R experience is expected.\nAlso see:",
+    "text": "About this Workshop\nThis course will provide an overview of new techniques to estimate metabolic processes in estuaries using new software with the R open-source programming language. We will describe the theory and application of the new Estuarine BAyesian Single-station Estimation (EBASE) method that applies a Bayesian framework to a simple process-based model and dissolved oxygen observations, allowing the estimation of critical metabolic parameters as informed by a set of prior distributions. We will also explore how EBASE and additional R features can be used to evaluate metabolism results and to identify potential drivers of change. By the end of the course, you will understand how to prepare data for use with EBASE and to interpret the results to better understand processes that influence ecosystem status and condition. Basic R experience is expected.\nEBASE materials:",
     "crumbs": [
       "About this Workshop"
     ]
@@ -24,7 +24,17 @@
     "href": "index.html#important-links",
     "title": "Ecosystem Metabolism Workshop",
     "section": "Important links",
-    "text": "Important links\n\nWorkshop Website: link\nPosit Cloud: link\nLive coding: link",
+    "text": "Important links\n\nWorkshop Website: link\nLive coding: link\nPosit Cloud: link",
+    "crumbs": [
+      "About this Workshop"
+    ]
+  },
+  {
+    "objectID": "index.html#housekeeping",
+    "href": "index.html#housekeeping",
+    "title": "Ecosystem Metabolism Workshop",
+    "section": "Housekeeping",
+    "text": "Housekeeping\nPlease read these housekeeping items on the day of the training so that everything runs smoothly.\n\nFeel free to verbally ask questions during the training by unmuting your microphone. You can also type questions in the chat. Other attendees are welcome to respond to questions in the chat.\n\nPlease use RStudio installed on your computer to follow along during the workshop. RStudio Cloud can also be used as a backup option. See the setup instructions below for more information.\nWe have a live coding link that we’ll be using as we go through the lessons. If you get lost, you can copy/paste code from this link into RStudio.\nAll training content is on this website. If you get lost you can view the agenda to see which lesson we’re covering.",
     "crumbs": [
       "About this Workshop"
     ]
@@ -35,6 +45,16 @@
     "title": "Ecosystem Metabolism Workshop",
     "section": "Setup",
     "text": "Setup\nPlease visit the setup page for instructions on preparing for this workshop. You will be required to install R, RStudio, JAGS, and several R packages prior to the workshop. Basic R experience is expected.",
+    "crumbs": [
+      "About this Workshop"
+    ]
+  },
+  {
+    "objectID": "index.html#code-of-conduct",
+    "href": "index.html#code-of-conduct",
+    "title": "Ecosystem Metabolism Workshop",
+    "section": "Code of Conduct",
+    "text": "Code of Conduct\nWe are dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity. We are adopting The Carpentries Code of Conduct for this workshop.",
     "crumbs": [
       "About this Workshop"
     ]
@@ -72,11 +92,33 @@
     ]
   },
   {
+    "objectID": "01_intro.html#what-is-ecosystem-metabolism",
+    "href": "01_intro.html#what-is-ecosystem-metabolism",
+    "title": "1  Inroduction",
+    "section": "1.3 What is ecosystem metabolism?",
+    "text": "1.3 What is ecosystem metabolism?",
+    "crumbs": [
+      "Modules",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#get-ready-for-the-workshop",
+    "href": "01_intro.html#get-ready-for-the-workshop",
+    "title": "1  Inroduction",
+    "section": "1.4 Get ready for the workshop",
+    "text": "1.4 Get ready for the workshop",
+    "crumbs": [
+      "Modules",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
+    ]
+  },
+  {
     "objectID": "01_intro.html#next-steps",
     "href": "01_intro.html#next-steps",
     "title": "1  Inroduction",
-    "section": "1.3 Next steps",
-    "text": "1.3 Next steps\nIn this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr for analysis with EBASE.",
+    "section": "1.5 Next steps",
+    "text": "1.5 Next steps\nIn this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr for analysis with EBASE.",
     "crumbs": [
       "Modules",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
@@ -105,11 +147,33 @@
     ]
   },
   {
+    "objectID": "02_dataprep.html#preparing-nerrs-data-with-swmpr",
+    "href": "02_dataprep.html#preparing-nerrs-data-with-swmpr",
+    "title": "2  Data Preparation",
+    "section": "2.3 Preparing NERRS data with SWMPr",
+    "text": "2.3 Preparing NERRS data with SWMPr",
+    "crumbs": [
+      "Modules",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
+    ]
+  },
+  {
+    "objectID": "02_dataprep.html#preparing-other-data",
+    "href": "02_dataprep.html#preparing-other-data",
+    "title": "2  Data Preparation",
+    "section": "2.4 Preparing other data",
+    "text": "2.4 Preparing other data",
+    "crumbs": [
+      "Modules",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
+    ]
+  },
+  {
     "objectID": "02_dataprep.html#next-steps",
     "href": "02_dataprep.html#next-steps",
     "title": "2  Data Preparation",
-    "section": "2.3 Next steps",
-    "text": "2.3 Next steps\nThe most difficult part of using EBASE is preparing the data. Now that we have learned how to import and clean the data, we are ready for analysis. In the next lesson, we’ll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.",
+    "section": "2.5 Next steps",
+    "text": "2.5 Next steps\nThe most difficult part of using EBASE is preparing the data. Now that we have learned how to import and clean the data, we are ready for analysis. In the next lesson, we’ll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.",
     "crumbs": [
       "Modules",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
@@ -208,7 +272,7 @@
     "href": "setup.html#install-r-and-rstudio",
     "title": "Appendix A — Setup for the workshop",
     "section": "",
-    "text": "A.1.1 Windows: Download and install R\nGo to CRAN and download the R installer for Windows. Make sure to choose the latest stable version (v4.2.3 as of April 2023).\nOnce the installer downloads, Right-click on it and select “Run as administrator”.\nType in your credentials and click yes (or if you don’t have administrator access have your IT rep install with Admin privileges).\n\nYou can click next through the standard dialogs and accept most defaults. But at the destination screen, please verify that it is installing it to C:\\Program Files\\R\n\nAt the “Select Components” screen, you can accept the default and install both 32-bit and 64-bit versions.\n\nAt this screen, uncheck ‘Create a desktop icon’ because non-admin users in Windows will be unable to delete it.\n\n\n\nA.1.2 Windows: Download and install RStudio\nDownload RStudio from here.\nAfter download, double-click the installer. It will ask for your administrator credentials to install (you might need to have your IT rep install again).\nAccept all the default options for the RStudio install.\n\n\n\nA.1.3 macOS: Download and install R\n\nDownload and install R from the CRAN website for Mac here.\nSelect the .pkg file for the latest R version\nDouble click on the downloaded file to install R\nIt is also a good idea to install XQuartz (needed by some packages)\n\n\n\nA.1.4 macOS: Download and install RStudio\n\nGo to the RStudio download page\nUnder Installers select the appropriate RStudio download file for macOS\nDouble click the file to install RStudio\n\n\n\nA.1.5 Check Install\nOnce installed, RStudio should be accessible from the start menu. Start up RStudio. Once running it should look something like this:",
+    "text": "A.1.1 Windows: Download and install R\nGo to CRAN and download the R installer for Windows. Make sure to choose the latest stable version (v4.4.1 as of August 2024).\nOnce the installer downloads, Right-click on it and select “Run as administrator”.\nType in your credentials and click yes (or if you don’t have administrator access have your IT rep install with Admin privileges).\n\nYou can click next through the standard dialogs and accept most defaults. But at the destination screen, please verify that it is installing it to C:\\Program Files\\R\n\nAt the “Select Components” screen, you can accept the default and install both 32-bit and 64-bit versions.\n\nAt this screen, uncheck ‘Create a desktop icon’ because non-admin users in Windows will be unable to delete it.\n\n\n\nA.1.2 Windows: Download and install RStudio\nDownload RStudio from here.\nAfter download, double-click the installer. It will ask for your administrator credentials to install (you might need to have your IT rep install again).\nAccept all the default options for the RStudio install.\n\n\n\nA.1.3 macOS: Download and install R\n\nDownload and install R from the CRAN website for Mac here.\nSelect the .pkg file for the latest R version\nDouble click on the downloaded file to install R\nIt is also a good idea to install XQuartz (needed by some packages)\n\n\n\nA.1.4 macOS: Download and install RStudio\n\nGo to the RStudio download page\nUnder Installers select the appropriate RStudio download file for macOS\nDouble click the file to install RStudio\n\n\n\nA.1.5 Check Install\nOnce installed, RStudio should be accessible from the start menu. Start up RStudio. Once running it should look something like this:",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Setup for the workshop</span>"
@@ -219,7 +283,7 @@
     "href": "setup.html#sec-instjags",
     "title": "Appendix A — Setup for the workshop",
     "section": "A.2 Install JAGS",
-    "text": "A.2 Install JAGS",
+    "text": "A.2 Install JAGS\nThe JAGS software is a separate open-source program for analyzing Bayesian hierarchical models using Markov Chain Monte Carlo (MCMC) methods. It is used by EBASE to run the Bayesian models. Follow the instructions here to download and install the version appropriate for your operating system.",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Setup for the workshop</span>"
@@ -230,7 +294,7 @@
     "href": "setup.html#sec-instpackages",
     "title": "Appendix A — Setup for the workshop",
     "section": "A.3 Install R packages",
-    "text": "A.3 Install R packages",
+    "text": "A.3 Install R packages\nWe’ll use the following R packages during the workshop. Install them in the RStudio console by running these commands:\ninstall.packages('EBASE')\ninstall.packages('tidyverse')\nAfter installation, check the packages can be loaded without error:\nlibrary(EBASE)\nlibrary(tidyverse)",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Setup for the workshop</span>"
@@ -241,7 +305,7 @@
     "href": "setup.html#sec-cloud",
     "title": "Appendix A — Setup for the workshop",
     "section": "A.4 Posit Cloud (optional)",
-    "text": "A.4 Posit Cloud (optional)\nPosit Cloud provides an environment to use RStudio and the resources above through a web browser. We’ve created a workspace on Posit Cloud that includes most of the content described above. Open the following URL in a web browser: https://posit.cloud/content/5544370\nYou will see a login screen that looks like this:\n\nSign up using a personal login or existing account (Google, GitHub, etc.).\nYou’ll see the workspace in your browser once you’ve signed in. You’ll need to make a permanent copy to save your work. Just click the button at the top marked “+ Save as Permanent Copy”. When this is done, the red text at the top indicating “TEMPORARY COPY” will no longer be visible.\n\nNow you can follow along with the workshop content.",
+    "text": "A.4 Posit Cloud (optional)\nPosit Cloud provides an environment to use RStudio and the resources above through a web browser. We’ve created a workspace on Posit Cloud that includes most all of the software and packages described above. Please only use this option as a last resort. We strongly encourage installing the software on your own computer.\nOpen the following URL in a web browser: https://posit.cloud/content/8518890\nYou will see a login screen that looks like this:\n\nSign up using a personal login or existing account (Google, GitHub, etc.).\nYou’ll see the workspace in your browser once you’ve signed in. You’ll need to make a permanent copy to save your work. Just click the button at the top marked “+ Save as Permanent Copy”. When this is done, the red text at the top indicating “TEMPORARY COPY” will no longer be visible.\n\nNow you can follow along with the workshop content.",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Setup for the workshop</span>"

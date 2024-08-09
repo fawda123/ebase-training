@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -237,14 +271,14 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="#sec-cloud">Posit Cloud</a> (optional)</li>
 </ol>
 <p>Most of these steps will require administrative privileges on a computer. Work with your IT staff to complete the setup if you do not have these privileges. As an alternative, you can use Posit Cloud to participate (see <a href="#sec-cloud" class="quarto-xref"><span>Section A.4</span></a>), although we strongly encourage you to install the software on your personal computer for use after the workshop.</p>
-<p>Please reach out if you have any issues with installation: <a href="mailto:mbeck@tbep.org">mbeck@tbep.org</a></p>
+<p><strong>Please reach out if you have any issues with installation: <a href="mailto:mbeck@tbep.org">mbeck@tbep.org</a></strong></p>
 <section id="install-r-and-rstudio" class="level2" data-number="A.1">
 <h2 data-number="A.1" class="anchored" data-anchor-id="install-r-and-rstudio"><span class="header-section-number">A.1</span> Install R and RStudio</h2>
 <p><strong>R</strong> and <strong>RStudio</strong> are separate downloads and installations. R is the underlying statistical computing software. RStudio is a graphical integrated development environment (IDE) that makes using R much easier and more interactive. <em>You need to install R before you install RStudio</em>.</p>
 <p>Thanks to the <a href="https://owi.usgs.gov/R/training.html" target="_blank">USGS-R Training group</a> and <a href="https://datacarpentry.org/R-ecology-lesson/index.html" target="_blank">Data Carpentry</a> for making their installation materials available. The following instructions come directly from their materials, with a few minor edits to help you get set up.</p>
 <section id="sec-instr" class="level3" data-number="A.1.1">
 <h3 data-number="A.1.1" class="anchored" data-anchor-id="sec-instr"><span class="header-section-number">A.1.1</span> Windows: Download and install R</h3>
-<p>Go to <a href="https://cran.rstudio.com/bin/windows/base/" target="_blank">CRAN and download</a> the R installer for Windows. Make sure to choose the latest stable version (v4.2.3 as of April 2023).</p>
+<p>Go to <a href="https://cran.rstudio.com/bin/windows/base/" target="_blank">CRAN and download</a> the R installer for Windows. Make sure to choose the latest stable version (v4.4.1 as of August 2024).</p>
 <p>Once the installer downloads, Right-click on it and select “Run as administrator”.</p>
 <p>Type in your credentials and click yes (or if you don’t have administrator access have your IT rep install with Admin privileges).</p>
 <p><a href="figs/install_open_as_admin.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="figs/install_open_as_admin.png" class="img-fluid"></a></p>
@@ -287,13 +321,21 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="sec-instjags" class="level2" data-number="A.2">
 <h2 data-number="A.2" class="anchored" data-anchor-id="sec-instjags"><span class="header-section-number">A.2</span> Install JAGS</h2>
+<p>The JAGS software is a separate open-source program for analyzing Bayesian hierarchical models using Markov Chain Monte Carlo (MCMC) methods. It is used by EBASE to run the Bayesian models. Follow the instructions <a href="https://mcmc-jags.sourceforge.io/">here</a> to download and install the version appropriate for your operating system.</p>
 </section>
 <section id="sec-instpackages" class="level2" data-number="A.3">
 <h2 data-number="A.3" class="anchored" data-anchor-id="sec-instpackages"><span class="header-section-number">A.3</span> Install R packages</h2>
+<p>We’ll use the following R packages during the workshop. Install them in the RStudio console by running these commands:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'EBASE'</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'tidyverse'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After installation, check the packages can be loaded without error:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EBASE)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="sec-cloud" class="level2" data-number="A.4">
 <h2 data-number="A.4" class="anchored" data-anchor-id="sec-cloud"><span class="header-section-number">A.4</span> Posit Cloud (optional)</h2>
-<p>Posit Cloud provides an environment to use RStudio and the resources above through a web browser. We’ve created a workspace on Posit Cloud that includes most of the content described above. Open the following URL in a web browser: <a href="https://posit.cloud/content/5544370" target="_blank">https://posit.cloud/content/5544370</a></p>
+<p>Posit Cloud provides an environment to use RStudio and the resources above through a web browser. We’ve created a workspace on Posit Cloud that includes most all of the software and packages described above. <strong>Please only use this option as a last resort. We strongly encourage installing the software on your own computer.</strong></p>
+<p>Open the following URL in a web browser: <a href="https://posit.cloud/content/8518890" target="_blank">https://posit.cloud/content/8518890</a></p>
 <p>You will see a login screen that looks like this:</p>
 <p><a href="figs/positsignup.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="figs/positsignup.png" class="img-fluid"></a></p>
 <p>Sign up using a personal login or existing account (Google, GitHub, etc.).</p>
@@ -802,7 +844,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","loop":false,"selector":".lightbox"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","loop":false,"descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {

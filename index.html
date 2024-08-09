@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Marcus Beck">
-<meta name="dcterms.date" content="2024-08-08">
+<meta name="dcterms.date" content="2024-08-09">
 
 <title>Ecosystem Metabolism Workshop</title>
 <style>
@@ -197,7 +197,9 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#agenda" id="toc-agenda" class="nav-link" data-scroll-target="#agenda">Agenda</a></li>
   <li><a href="#important-links" id="toc-important-links" class="nav-link" data-scroll-target="#important-links">Important links</a></li>
+  <li><a href="#housekeeping" id="toc-housekeeping" class="nav-link" data-scroll-target="#housekeeping">Housekeeping</a></li>
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#code-of-conduct" id="toc-code-of-conduct" class="nav-link" data-scroll-target="#code-of-conduct">Code of Conduct</a></li>
   <li><a href="#instructor" id="toc-instructor" class="nav-link" data-scroll-target="#instructor">Instructor</a>
   <ul class="collapse">
   <li><a href="#marcus-beck-ph.d." id="toc-marcus-beck-ph.d." class="nav-link" data-scroll-target="#marcus-beck-ph.d.">Marcus Beck, Ph.D.</a></li>
@@ -229,7 +231,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-08-08</p>
+      <p class="date">2024-08-09</p>
     </div>
   </div>
   
@@ -241,14 +243,43 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="cell">
+<style type="text/css">
+figcaption {
+  margin: auto;
+  text-align: center;
+}
+</style>
+</div>
 <section id="about-this-workshop" class="level1 unnumbered">
 <h1 class="unnumbered">About this Workshop</h1>
 <p>This course will provide an overview of new techniques to estimate metabolic processes in estuaries using new software with the R open-source programming language. We will describe the theory and application of the new Estuarine BAyesian Single-station Estimation (EBASE) method that applies a Bayesian framework to a simple process-based model and dissolved oxygen observations, allowing the estimation of critical metabolic parameters as informed by a set of prior distributions. We will also explore how EBASE and additional R features can be used to evaluate metabolism results and to identify potential drivers of change. By the end of the course, you will understand how to prepare data for use with EBASE and to interpret the results to better understand processes that influence ecosystem status and condition. Basic R experience is expected.</p>
-<p>Also see:</p>
-<ul>
-<li><a href="https://fawda123.github.io/EBASE/" target="_blank">EBASE website</a></li>
-<li><a href="https://doi.org/10.1002/lom3.10620" target="_blank">EBASE paper</a></li>
-</ul>
+<p>EBASE materials:</p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row quarto-layout-valign-center">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figs/logo.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Website: https://fawda123.github.io/EBASE"><img src="figs/logo.png" height="200" alt="Website: https://fawda123.github.io/EBASE" class="figure-img"></a></p>
+<figcaption>Website: <a href="https://fawda123.github.io/EBASE" class="uri">https://fawda123.github.io/EBASE</a></figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figs/paper.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Paper: https://doi.org/10.1002/lom3.10620"><img src="figs/paper.png" height="200" alt="Paper: https://doi.org/10.1002/lom3.10620" class="figure-img"></a></p>
+<figcaption>Paper: <a href="https://doi.org/10.1002/lom3.10620" class="uri">https://doi.org/10.1002/lom3.10620</a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<!-- -   [website](https://fawda123.github.io/EBASE/){target="_blank"} -->
+<!-- -   [paper](https://doi.org/10.1002/lom3.10620){target="_blank"} -->
 <section id="agenda" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="agenda">Agenda</h2>
 <p>All times EDT.</p>
@@ -295,13 +326,28 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="unnumbered anchored" data-anchor-id="important-links">Important links</h2>
 <ul>
 <li>Workshop Website: <a href="https://fawda123.github.io/ebase-training" target="_blank">link</a></li>
-<li>Posit Cloud: link</li>
-<li>Live coding: link</li>
+<li>Live coding: <a href="https://tinyurl.com/live-ebase" target="_blank">link</a></li>
+<li>Posit Cloud: <a href="https://posit.cloud/content/8518890" target="_blank">link</a></li>
 </ul>
+</section>
+<section id="housekeeping" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="housekeeping">Housekeeping</h2>
+<p>Please read these housekeeping items on the day of the training so that everything runs smoothly.</p>
+<ol type="1">
+<li><p>Feel free to verbally ask questions during the training by unmuting your microphone. You can also type questions in the chat. Other attendees are welcome to respond to questions in the chat.<br>
+</p></li>
+<li><p>Please use RStudio installed on your computer to follow along during the workshop. RStudio Cloud can also be used as a backup option. See the setup instructions below for more information.</p></li>
+<li><p>We have a <a href="https://tinyurl.com/live-ebase" target="_blank">live coding</a> link that we’ll be using as we go through the lessons. If you get lost, you can copy/paste code from this link into RStudio.</p></li>
+<li><p>All training content is on this website. If you get lost you can view the agenda to see which lesson we’re covering.</p></li>
+</ol>
 </section>
 <section id="setup" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="setup">Setup</h2>
 <p>Please visit the <a href="./setup.html">setup</a> page for instructions on preparing for this workshop. You will be required to install R, RStudio, JAGS, and several R packages prior to the workshop. Basic R experience is expected.</p>
+</section>
+<section id="code-of-conduct" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="code-of-conduct">Code of Conduct</h2>
+<p>We are dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity. We are adopting <a href="https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html" target="_blank">The Carpentries Code of Conduct</a> for this workshop.</p>
 </section>
 <section id="instructor" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="instructor">Instructor</h2>
@@ -309,7 +355,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="marcus-beck-ph.d.">Marcus Beck, Ph.D.</h3>
 <div class="columns">
 <div class="column" style="width:30%;">
-<p><a href="figs/headshot_marcus.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="figs/headshot_marcus.jpg" class="img-fluid"></a></p>
+<p><a href="figs/headshot_marcus.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="figs/headshot_marcus.jpg" class="img-fluid"></a></p>
 </div><div class="column p-right" style="width:70%;">
 <p>Marcus Beck is the Program Scientist for the Tampa Bay Estuary Program in St.&nbsp;Petersburg, Florida and is developing data analysis and visualization methods for Bay health indicators. Marcus has experience researching environmental indicators and developing open science products to support environmental decision-making. He has been using the R statistical programming language for over 15 years and has taught several workshops on its application to environmental sciences. Marcus has also developed several R packages and currently maintains 7 on CRAN. He received a PhD in Conservation Biology with a minor in Statistics from the University of Minnesota in 2013, his Masters in Conservation Biology from the University of Minnesota in 2009, and his Bachelors in Zoology from the University of Florida in 2007. Links: <a href="mailto:mbeck@tbep.org" target="_blank">Email</a>, <a href="https://github.com/fawda123/CV/blob/master/Beck_CV.pdf" target="_blank">CV</a>, <a href="https://github.com/fawda123" target="_blank">GitHub</a>, <a href="https://scholar.google.com/citations?user=9ZDDQ_8AAAAJ&amp;hl=en&amp;authuser=2" target="_blank">Scholar</a></p>
 </div>
@@ -815,7 +861,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"descPosition":"bottom","openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
