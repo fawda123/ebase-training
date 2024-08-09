@@ -89,17 +89,17 @@ Let's run through the basics of creating a project in RStudio.
     
     Then select "New Project".  Create a directory in a location that's easy to find. 
     
-    ![](figs/newproj2.PNG){width=500} 
+    ![](figs/newproj2.png){width=500} 
 
     Click "Create Project" when you're done.
     
 (@) **A fresh RStudio session will open.  Open a new R script by selecting "New file" > R script from the File menu at the top.**
 
-    ![](figs/newfile.PNG){width=500}
+    ![](figs/newfile.png){width=500}
     
     Save the file in your working directory by clicking the file icon on the top right.  Give it a useful name. For example, "ebase_intro.R".  The file should be saved to the project root directory.
     
-    ![](figs/savefile.PNG)
+    ![](figs/savefile.png)
 
 (@) **Setup the package imports at the top of the script.  These should already be installed during the [setup](setup.qmd#sec-instpackages) prior to the workshop.**
 
@@ -113,7 +113,7 @@ Let's run through the basics of creating a project in RStudio.
 (@) **Setup a data folder in the project directory.  This is where we'll store the data for the workshop.**
 
     Select "New folder" from the file pane (usually bottom right) and name it "data".
-    ![](figs/newfolder.PNG)
+    ![](figs/newfolder.png)
     
     Name the folder "data" and save it in the project root directory.
     
