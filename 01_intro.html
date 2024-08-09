@@ -20,7 +20,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -41,6 +95,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -69,6 +126,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="libs/style.css">
 </head>
@@ -82,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Modules</a></li><li class="breadcrumb-item"><a href="./01_intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Inroduction</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Lessons</a></li><li class="breadcrumb-item"><a href="./01_intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Inroduction</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -124,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Modules</span></a>
+ <span class="menu-text">Lessons</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -192,17 +278,18 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#lesson-outline" id="toc-lesson-outline" class="nav-link active" data-scroll-target="#lesson-outline"><span class="header-section-number">1.1</span> Lesson Outline</a></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals"><span class="header-section-number">1.2</span> Learning Goals</a></li>
   <li><a href="#what-is-ecosystem-metabolism" id="toc-what-is-ecosystem-metabolism" class="nav-link" data-scroll-target="#what-is-ecosystem-metabolism"><span class="header-section-number">1.3</span> What is ecosystem metabolism?</a></li>
-  <li><a href="#get-ready-for-the-workshop" id="toc-get-ready-for-the-workshop" class="nav-link" data-scroll-target="#get-ready-for-the-workshop"><span class="header-section-number">1.4</span> Get ready for the workshop</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">1.5</span> Next steps</a></li>
+  <li><a href="#how-is-metabolism-measured" id="toc-how-is-metabolism-measured" class="nav-link" data-scroll-target="#how-is-metabolism-measured"><span class="header-section-number">1.4</span> How is metabolism measured?</a></li>
+  <li><a href="#get-ready-for-the-workshop" id="toc-get-ready-for-the-workshop" class="nav-link" data-scroll-target="#get-ready-for-the-workshop"><span class="header-section-number">1.5</span> Get ready for the workshop</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">1.6</span> Next steps</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/01_intro.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Modules</a></li><li class="breadcrumb-item"><a href="./01_intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Inroduction</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro.html">Lessons</a></li><li class="breadcrumb-item"><a href="./01_intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Inroduction</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Inroduction</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/fawda123/ebase-training/blob/main/01_intro.qmd"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-intro" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Inroduction</span></span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source" data-quarto-source-url="https://github.com/fawda123/ebase-training/blob/main/01_intro.qmd"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -234,15 +321,86 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="what-is-ecosystem-metabolism" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="what-is-ecosystem-metabolism"><span class="header-section-number">1.3</span> What is ecosystem metabolism?</h2>
+<p>Simply put, ecosystem metabolism is a measure of how quickly organic matter is consumed or produced in an aquatic environment. Estuaries are transition zones that receive materials from the land and export them to the ocean and atmosphere. Ecosystem metabolism is a measure of the rate at which this material is processed as a first order property that can affect a wide range of biogeochemical processes.</p>
+<p>More specifically, ecosystem metabolism is the balance between production and respiration processes that create and consume organic matter. We can use these measures to characterize metabolism in aquatic environments as a <strong><em>rate</em></strong>, as compared to “surrogate” snapshot measures like nutrient or chlorophyll <strong><em>concentrations</em></strong>. It provides a more complete picture of the state of the environment.</p>
+<p>The simplest expression of metabolism is below:</p>
+<p><span class="math display">\[
+NEM = P - R
+\]</span></p>
+<p>Here, net ecosystem metabolism (<span class="math inline">\(NEM\)</span>) is the difference between gross primary production (<span class="math inline">\(P\)</span>) and respiration (<span class="math inline">\(R\)</span>). Or, net ecosystem metabolism is the difference between processes that produce organic matter and those that consume organic matter.</p>
+<p><span class="math inline">\(NEM\)</span> can tell us a lot about an ecosystem:</p>
+<ul>
+<li>If positive, the ecosystem is <strong><em>autotrophic</em></strong>, meaning it produces more organic matter than it consumes. Organic matter will accumulate.</li>
+<li>If negative, the ecosystem is <strong><em>heterotrophic</em></strong>, meaning it consumes more organic matter than it produces. Organic matter will deplete.</li>
+</ul>
+<p>Autotrophy and heterotrophy can be governed by many factors. For example, autotrophy may occur more often during warmer months, as temperature can stimulate growth of algae and other primary primary producers. Similarly, hyper-eutrophic systems may be more heterotrophic during the summer as the rapid decomposition of organic matter that was produced by excess nutrients may be increased with temperature. A single pulse of nutrients can create autotrophic conditions as production increases followed by heterotrophic conditions as the new organic material settles to the bottom and is decomposed.</p>
+<p>Metabolism is highly dynamic, responding to seasonal changes and short-term events. Substantial insight into system dynamics can be gained by exploring how metabolism is related to other key variables in a dataset - we will attempt this in our last lesson.</p>
 </section>
-<section id="get-ready-for-the-workshop" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="get-ready-for-the-workshop"><span class="header-section-number">1.4</span> Get ready for the workshop</h2>
+<section id="how-is-metabolism-measured" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="how-is-metabolism-measured"><span class="header-section-number">1.4</span> How is metabolism measured?</h2>
+<p>Metabolism can be measured several ways, each of which has its own strengths, weaknesses, and assumptions. These include:</p>
+<ul>
+<li>Bottle-based incubations</li>
+<li>Open-water techniques</li>
+<li>Ecosystem budgets</li>
+<li>Use of oxygen isotopes or inert gases</li>
+<li>Aquatic eddy covariance</li>
+</ul>
+<p>Open-water techniques are among the more commonly used approaches applied to continuous monitoring data. These techniques exploit the diel cycle of dissolved oxygen (DO) concentration to infer metabolism. The main assumptions are:</p>
+<ul>
+<li>Production produces oxygen during daylight hours</li>
+<li>Respiration consumes oxygen during daylight and nighttime hours</li>
+<li>Oxygen exchanges freely with the atmosphere</li>
+<li>The system is well-mixed</li>
+</ul>
+<p><a href="figs/metab.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="figs/metab.png" class="img-fluid"></a></p>
+<p>The DO time series can be deconstructed using a mass-balance equation to estimate metabolism. This is a literal deconstruction of the processes in the above figure.</p>
+<p><span class="math display">\[
+Z\frac{dC_d}{dt} = P - R + D
+\]</span></p>
+<p>This equation can be translated as the change in dissolved oxygen (<span class="math inline">\(dC_d\)</span>) over time (<span class="math inline">\(dt\)</span>) (a rate) is equal to the difference between production (<span class="math inline">\(P\)</span>) and respiration (<span class="math inline">\(R\)</span>) plus the exchange of oxygen with the atmosphere (<span class="math inline">\(D\)</span>). The units are converted from volumetric (<span class="math inline">\(m^{-3}\)</span>) to areal (<span class="math inline">\(m^{-2}\)</span>) by multiplying the equation by water column depth (<span class="math inline">\(Z\)</span>). In this example, <span class="math inline">\(D\)</span> is positive for ingassing and negative for outgassing.</p>
+<p><span class="math inline">\(P\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(D\)</span> can be estimated several ways depending on which “open-water” technique is used. The most popular method is that of <span class="citation" data-cites="Odum56">Odum (<a href="references.html#ref-Odum56" role="doc-biblioref">1956</a>)</span>, modified extensively by others since its original presentation. The method calculates the DO flux (DO change per unit time) during day and night periods and corrects it for gas exchange. This is also called the book-keeping method since it’s “simple” arithmetic.</p>
+<p>Gas exchange can also be estimated several ways, but the core concept is that the flux is proportional to the difference between the DO concentration in the water and the DO concentration in the atmosphere. This difference is also multiplied by a gas exchange coefficient, which can vary by wind, temperature, or other factors depending on the model.</p>
+<p>Fortunately for us, there are existing packages in R that can estimate these parameters. One is the <a href="https://github.com/fawda123/WtRegDO" target="_blank">WtRegDO</a> package that uses the Odum technique, which was covered in a <a href="https://tbep-tech.github.io/ecometab-r-training/" target="_blank">workshop</a> a few years ago. Another is EBASE, which we’ll discuss today. EBASE follows the same general principles as the Odum technique, but differs in the statistical method to estimate the parameter (i.e., Bayesian) and the model used for each parameter.</p>
+<p>We’ll talk more about how EBASE estimates metabolism in <a href="03_ebase.html" class="quarto-xref">Lesson&nbsp;<span>3</span></a>, but first we need to get setup with R and prepare our data in <a href="02_dataprep.html" class="quarto-xref">Lesson&nbsp;<span>2</span></a>.</p>
 </section>
-<section id="next-steps" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">1.5</span> Next steps</h2>
+<section id="get-ready-for-the-workshop" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="get-ready-for-the-workshop"><span class="header-section-number">1.5</span> Get ready for the workshop</h2>
+<p>Let’s make sure RStudio is setup for the workshop. We’ll use a project to keep everything in one place, for good reason. There are people that will <a href="https://www.tidyverse.org/blog/2017/12/workflow-vs-script/">set your computer on fire</a> if you don’t follow these best practices.</p>
+<p>Let’s run through the basics of creating a project in RStudio.</p>
+<ol class="example" type="1">
+<li><p><strong>Create a new project in RStudio, first open RStudio and select “New project” from the File menu at the top.</strong></p>
+<p><a href="figs/newproj.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="figs/newproj.PNG" class="img-fluid"></a></p>
+<p>Then select “New Directory”.</p>
+<p><a href="figs/newdir.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="figs/newdir.PNG" class="img-fluid"></a></p>
+<p>Then select “New Project”. Create a directory in a location that’s easy to find.</p>
+<p><a href="figs/newproj2.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="figs/newproj2.PNG" class="img-fluid" width="500"></a></p>
+<p>Click “Create Project” when you’re done.</p></li>
+<li><p><strong>A fresh RStudio session will open. Open a new R script by selecting “New file” &gt; R script from the File menu at the top.</strong></p>
+<p><a href="figs/newfile.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="figs/newfile.PNG" class="img-fluid" width="500"></a></p>
+<p>Save the file in your working directory by clicking the file icon on the top right. Give it a useful name. For example, “ebase_intro.R”. The file should be saved to the project root directory.</p>
+<p><a href="figs/savefile.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="figs/savefile.PNG" class="img-fluid"></a></p></li>
+<li><p><strong>Setup the package imports at the top of the script. These should already be installed during the <a href="./setup.html#sec-instpackages">setup</a> prior to the workshop.</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EBASE)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SWMPr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Save the script again and send the commands from the source script to the console. Do they load properly??</p></li>
+<li><p><strong>Setup a data folder in the project directory. This is where we’ll store the data for the workshop.</strong></p>
+<p>Select “New folder” from the file pane (usually bottom right) and name it “data”. <img src="figs/newfolder.PNG" class="img-fluid"></p>
+<p>Name the folder “data” and save it in the project root directory.</p>
+<p>Place the downloaded data in this folder.</p></li>
+</ol>
+</section>
+<section id="next-steps" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">1.6</span> Next steps</h2>
 <p>In this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr for analysis with EBASE.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Odum56" class="csl-entry" role="listitem">
+Odum, H. T. 1956. <span>“Primary Production in Flowing Waters.”</span> <em>Limnology and Oceanography</em> 1 (2): 102–17.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -743,6 +901,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

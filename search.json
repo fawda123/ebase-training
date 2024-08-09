@@ -76,7 +76,7 @@
     "section": "",
     "text": "1.1 Lesson Outline\nThis lesson will cover the very basics of ecosystem metabolism: what it is, why you should care about it, and what it can tell you. We’ll also make sure that RStudio is setup for the rest of the workshop.",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
     ]
   },
@@ -87,7 +87,7 @@
     "section": "1.2 Learning Goals",
     "text": "1.2 Learning Goals\n\nLearn a basic definition of metabolism\nUnderstand what it tells you about your ecosystem\nUnderstand how it is measured\nSetup RStudio for the workshop using a project",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
     ]
   },
@@ -96,9 +96,20 @@
     "href": "01_intro.html#what-is-ecosystem-metabolism",
     "title": "1  Inroduction",
     "section": "1.3 What is ecosystem metabolism?",
-    "text": "1.3 What is ecosystem metabolism?",
+    "text": "1.3 What is ecosystem metabolism?\nSimply put, ecosystem metabolism is a measure of how quickly organic matter is consumed or produced in an aquatic environment. Estuaries are transition zones that receive materials from the land and export them to the ocean and atmosphere. Ecosystem metabolism is a measure of the rate at which this material is processed as a first order property that can affect a wide range of biogeochemical processes.\nMore specifically, ecosystem metabolism is the balance between production and respiration processes that create and consume organic matter. We can use these measures to characterize metabolism in aquatic environments as a rate, as compared to “surrogate” snapshot measures like nutrient or chlorophyll concentrations. It provides a more complete picture of the state of the environment.\nThe simplest expression of metabolism is below:\n\\[\nNEM = P - R\n\\]\nHere, net ecosystem metabolism (\\(NEM\\)) is the difference between gross primary production (\\(P\\)) and respiration (\\(R\\)). Or, net ecosystem metabolism is the difference between processes that produce organic matter and those that consume organic matter.\n\\(NEM\\) can tell us a lot about an ecosystem:\n\nIf positive, the ecosystem is autotrophic, meaning it produces more organic matter than it consumes. Organic matter will accumulate.\nIf negative, the ecosystem is heterotrophic, meaning it consumes more organic matter than it produces. Organic matter will deplete.\n\nAutotrophy and heterotrophy can be governed by many factors. For example, autotrophy may occur more often during warmer months, as temperature can stimulate growth of algae and other primary primary producers. Similarly, hyper-eutrophic systems may be more heterotrophic during the summer as the rapid decomposition of organic matter that was produced by excess nutrients may be increased with temperature. A single pulse of nutrients can create autotrophic conditions as production increases followed by heterotrophic conditions as the new organic material settles to the bottom and is decomposed.\nMetabolism is highly dynamic, responding to seasonal changes and short-term events. Substantial insight into system dynamics can be gained by exploring how metabolism is related to other key variables in a dataset - we will attempt this in our last lesson.",
     "crumbs": [
-      "Modules",
+      "Lessons",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
+    ]
+  },
+  {
+    "objectID": "01_intro.html#how-is-metabolism-measured",
+    "href": "01_intro.html#how-is-metabolism-measured",
+    "title": "1  Inroduction",
+    "section": "1.4 How is metabolism measured?",
+    "text": "1.4 How is metabolism measured?\nMetabolism can be measured several ways, each of which has its own strengths, weaknesses, and assumptions. These include:\n\nBottle-based incubations\nOpen-water techniques\nEcosystem budgets\nUse of oxygen isotopes or inert gases\nAquatic eddy covariance\n\nOpen-water techniques are among the more commonly used approaches applied to continuous monitoring data. These techniques exploit the diel cycle of dissolved oxygen (DO) concentration to infer metabolism. The main assumptions are:\n\nProduction produces oxygen during daylight hours\nRespiration consumes oxygen during daylight and nighttime hours\nOxygen exchanges freely with the atmosphere\nThe system is well-mixed\n\n\nThe DO time series can be deconstructed using a mass-balance equation to estimate metabolism. This is a literal deconstruction of the processes in the above figure.\n\\[\nZ\\frac{dC_d}{dt} = P - R + D\n\\]\nThis equation can be translated as the change in dissolved oxygen (\\(dC_d\\)) over time (\\(dt\\)) (a rate) is equal to the difference between production (\\(P\\)) and respiration (\\(R\\)) plus the exchange of oxygen with the atmosphere (\\(D\\)). The units are converted from volumetric (\\(m^{-3}\\)) to areal (\\(m^{-2}\\)) by multiplying the equation by water column depth (\\(Z\\)). In this example, \\(D\\) is positive for ingassing and negative for outgassing.\n\\(P\\), \\(R\\), and \\(D\\) can be estimated several ways depending on which “open-water” technique is used. The most popular method is that of Odum (1956), modified extensively by others since its original presentation. The method calculates the DO flux (DO change per unit time) during day and night periods and corrects it for gas exchange. This is also called the book-keeping method since it’s “simple” arithmetic.\nGas exchange can also be estimated several ways, but the core concept is that the flux is proportional to the difference between the DO concentration in the water and the DO concentration in the atmosphere. This difference is also multiplied by a gas exchange coefficient, which can vary by wind, temperature, or other factors depending on the model.\nFortunately for us, there are existing packages in R that can estimate these parameters. One is the WtRegDO package that uses the Odum technique, which was covered in a workshop a few years ago. Another is EBASE, which we’ll discuss today. EBASE follows the same general principles as the Odum technique, but differs in the statistical method to estimate the parameter (i.e., Bayesian) and the model used for each parameter.\nWe’ll talk more about how EBASE estimates metabolism in Lesson 3, but first we need to get setup with R and prepare our data in Lesson 2.",
+    "crumbs": [
+      "Lessons",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
     ]
   },
@@ -106,10 +117,10 @@
     "objectID": "01_intro.html#get-ready-for-the-workshop",
     "href": "01_intro.html#get-ready-for-the-workshop",
     "title": "1  Inroduction",
-    "section": "1.4 Get ready for the workshop",
-    "text": "1.4 Get ready for the workshop",
+    "section": "1.5 Get ready for the workshop",
+    "text": "1.5 Get ready for the workshop\nLet’s make sure RStudio is setup for the workshop. We’ll use a project to keep everything in one place, for good reason. There are people that will set your computer on fire if you don’t follow these best practices.\nLet’s run through the basics of creating a project in RStudio.\n\nCreate a new project in RStudio, first open RStudio and select “New project” from the File menu at the top.\n\nThen select “New Directory”.\n\nThen select “New Project”. Create a directory in a location that’s easy to find.\n\nClick “Create Project” when you’re done.\nA fresh RStudio session will open. Open a new R script by selecting “New file” &gt; R script from the File menu at the top.\n\nSave the file in your working directory by clicking the file icon on the top right. Give it a useful name. For example, “ebase_intro.R”. The file should be saved to the project root directory.\n\nSetup the package imports at the top of the script. These should already be installed during the setup prior to the workshop.\nlibrary(EBASE)\nlibrary(SWMPr)\nlibrary(tidyverse)\nSave the script again and send the commands from the source script to the console. Do they load properly??\nSetup a data folder in the project directory. This is where we’ll store the data for the workshop.\nSelect “New folder” from the file pane (usually bottom right) and name it “data”. \nName the folder “data” and save it in the project root directory.\nPlace the downloaded data in this folder.",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
     ]
   },
@@ -117,10 +128,10 @@
     "objectID": "01_intro.html#next-steps",
     "href": "01_intro.html#next-steps",
     "title": "1  Inroduction",
-    "section": "1.5 Next steps",
-    "text": "1.5 Next steps\nIn this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr for analysis with EBASE.",
+    "section": "1.6 Next steps",
+    "text": "1.6 Next steps\nIn this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr for analysis with EBASE.\n\n\n\n\nOdum, H. T. 1956. “Primary Production in Flowing Waters.” Limnology and Oceanography 1 (2): 102–17.",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Inroduction</span>"
     ]
   },
@@ -131,7 +142,7 @@
     "section": "",
     "text": "2.1 Lesson Outline\nThis lesson will demonstrate how the SWMPr package can be used to import and prepare data for analysis with EBASE. The EBASE software requires a specific format for input data that includes both water quality and weather data. SWMPr includes several functions that can facilitate the preparation of data for EBASE analysis.",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
     ]
   },
@@ -142,7 +153,7 @@
     "section": "2.2 Learning Goals",
     "text": "2.2 Learning Goals\n\nUnderstand the data requirements for EBASE\nLearn how to import data with SWMPr\nLearn how to clean and combine SWMP data\nLearn how to prepare data for EBASE analysis",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
     ]
   },
@@ -153,7 +164,7 @@
     "section": "2.3 Preparing NERRS data with SWMPr",
     "text": "2.3 Preparing NERRS data with SWMPr",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
     ]
   },
@@ -164,7 +175,7 @@
     "section": "2.4 Preparing other data",
     "text": "2.4 Preparing other data",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
     ]
   },
@@ -175,7 +186,7 @@
     "section": "2.5 Next steps",
     "text": "2.5 Next steps\nThe most difficult part of using EBASE is preparing the data. Now that we have learned how to import and clean the data, we are ready for analysis. In the next lesson, we’ll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
     ]
   },
@@ -186,7 +197,7 @@
     "section": "",
     "text": "3.1 Lesson Outline\nThis lesson will explain the basic theory behind ecosystem metabolism and how EBASE is used to estimate key parameters. EBASE is a Bayesian implementation for estimating metabolism that differs from more conventional approaches. We’ll also explore the main functions of EBASE to estimate metabolism, how the Bayesian approach can be used to incorporate prior knowledge, and interpret the results.",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using EBASE</span>"
     ]
   },
@@ -197,7 +208,7 @@
     "section": "3.2 Learning Goals",
     "text": "3.2 Learning Goals\n\nUnderstand the basic theory behind ecosystem metabolism\nLearn how EBASE is used to estimate key parameters\nUnderstand the Bayesian approach to estimating metabolism\nUse the main functions of EBASE to estimate metabolism\nInterpret the results of EBASE",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using EBASE</span>"
     ]
   },
@@ -208,7 +219,7 @@
     "section": "3.3 Next steps",
     "text": "3.3 Next steps\nYou now understand the basics of ecosystem metabolism and how EBASE is used to estimate key parameters using a Bayesian approach. We’ve explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and various plotting methods. Next, we’ll explore the EBASE results in more detail to demonstrate how the results can inform the understanding of ecosystem health and function.",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using EBASE</span>"
     ]
   },
@@ -219,7 +230,7 @@
     "section": "",
     "text": "4.1 Discussion Outline\nThis discussion is your time to share some ideas about evaluating the results from EBASE. We’ll go through some live coding examples based on these ideas. Below are some examples and code to get us started.",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interpreting Results</span>"
     ]
   },
@@ -230,7 +241,7 @@
     "section": "4.2 Example 1: Compare results to nutrient data",
     "text": "4.2 Example 1: Compare results to nutrient data",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interpreting Results</span>"
     ]
   },
@@ -241,7 +252,7 @@
     "section": "4.3 Example 2: Site comparisons",
     "text": "4.3 Example 2: Site comparisons",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interpreting Results</span>"
     ]
   },
@@ -252,7 +263,7 @@
     "section": "4.4 Next steps",
     "text": "4.4 Next steps\nThis concludes our workshop on using EBASE to estimate ecosystem metabolism. You should now have a baseline understanding of how these tools can be used to gain insights into ecosystem properties and the factors that may be influencing them. Please follow up with the instructor if you have additional questions or would like to explore more advanced topics.",
     "crumbs": [
-      "Modules",
+      "Lessons",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interpreting Results</span>"
     ]
   },
@@ -294,7 +305,7 @@
     "href": "setup.html#sec-instpackages",
     "title": "Appendix A — Setup for the workshop",
     "section": "A.3 Install R packages",
-    "text": "A.3 Install R packages\nWe’ll use the following R packages during the workshop. Install them in the RStudio console by running these commands:\ninstall.packages('EBASE')\ninstall.packages('tidyverse')\nAfter installation, check the packages can be loaded without error:\nlibrary(EBASE)\nlibrary(tidyverse)",
+    "text": "A.3 Install R packages\nWe’ll use the following R packages during the workshop. Install them in the RStudio console by running these commands:\ninstall.packages('EBASE')\ninstall.packages('SWMPr')\ninstall.packages('tidyverse')\nAfter installation, check the packages can be loaded without error:\nlibrary(EBASE)\nlibrary(SWMPr)\nlibrary(tidyverse)",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Setup for the workshop</span>"
@@ -309,6 +320,17 @@
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Setup for the workshop</span>"
+    ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Odum, H. T. 1956. “Primary Production in Flowing Waters.”\nLimnology and Oceanography 1 (2): 102–17.",
+    "crumbs": [
+      "Appendices",
+      "References"
     ]
   }
 ]
