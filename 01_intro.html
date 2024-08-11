@@ -327,14 +327,45 @@ window.Quarto = {
 <p><span class="math display">\[
 NEM = P - R
 \]</span></p>
-<p>Here, net ecosystem metabolism (<span class="math inline">\(NEM\)</span>) is the difference between gross primary production (<span class="math inline">\(P\)</span>) and respiration (<span class="math inline">\(R\)</span>). Or, net ecosystem metabolism is the difference between processes that produce organic matter and those that consume organic matter.</p>
+<p>Here, net ecosystem metabolism (<span class="math inline">\(NEM\)</span>) is the difference between gross primary production (<span class="math inline">\(P\)</span>) and respiration (<span class="math inline">\(R\)</span>). Or, net ecosystem metabolism is the difference between processes that produce organic matter and those that consume organic matter. You may also see <span class="math inline">\(NEM\)</span> written as net ecosystem production (<span class="math inline">\(NEP\)</span>).</p>
 <p><span class="math inline">\(NEM\)</span> can tell us a lot about an ecosystem:</p>
 <ul>
 <li>If positive, the ecosystem is <strong><em>autotrophic</em></strong>, meaning it produces more organic matter than it consumes. Organic matter will accumulate.</li>
 <li>If negative, the ecosystem is <strong><em>heterotrophic</em></strong>, meaning it consumes more organic matter than it produces. Organic matter will deplete.</li>
 </ul>
 <p>Autotrophy and heterotrophy can be governed by many factors. For example, autotrophy may occur more often during warmer months, as temperature can stimulate growth of algae and other primary primary producers. Similarly, hyper-eutrophic systems may be more heterotrophic during the summer as the rapid decomposition of organic matter that was produced by excess nutrients may be increased with temperature. A single pulse of nutrients can create autotrophic conditions as production increases followed by heterotrophic conditions as the new organic material settles to the bottom and is decomposed.</p>
-<p>Metabolism is highly dynamic, responding to seasonal changes and short-term events. Substantial insight into system dynamics can be gained by exploring how metabolism is related to other key variables in a dataset - we will attempt this in our last lesson.</p>
+<p>This graphic from a synthesis study of 350 sites by <span class="citation" data-cites="Hoellein2013">Hoellein, Bruesewitz, and Richardson (<a href="references.html#ref-Hoellein2013" role="doc-biblioref">2013</a>)</span> shows how metabolic ranges vary across different aquatic ecosystems. Here we can see that the largest ranges in production and respiration occur in estuaries and most aquatic systems tend towards heterotrophy. Note the units as grams of oxygen per m<span class="math inline">\(^{-2}\)</span> per day.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figs/hoellein.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="figs/hoellein.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+<p>Most of the estuarine sites used in <span class="citation" data-cites="Hoellein2013">Hoellein, Bruesewitz, and Richardson (<a href="references.html#ref-Hoellein2013" role="doc-biblioref">2013</a>)</span> were from a single study by <span class="citation" data-cites="caffrey2004">Caffrey (<a href="references.html#ref-caffrey2004" role="doc-biblioref">2004</a>)</span> that evaluated metabolism across all NERR sites. This study was one of the first to develop a system-wide comparison of metabolic rates and several useful conclusions were made.</p>
+<p>For example, metabolic rates between habitats are shown below, where most sites tend towards heterotrophy, although sites dominated by submerged aquatic vegetation are more balanced.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figs/caffrey1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="figs/caffrey1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></a></p>
+</figure>
+</div>
+<p>Nutrients as drivers of metabolism were also evaluated by <span class="citation" data-cites="caffrey2004">Caffrey (<a href="references.html#ref-caffrey2004" role="doc-biblioref">2004</a>)</span>. Although the relationships were weak, sites with higher nutrient loadings tended towards autotrophy as production was generally higher than respiration.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figs/caffrey2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="figs/caffrey2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></a></p>
+</figure>
+</div>
+<p>Metabolism is also temporally variable. In addition to seasonal variation, metabolism can be event-driven and respond to external and internal drivers that influence the system. A severe red tide bloom in Tampa Bay occurred in July 2021. The dissolved oxygen time series shows a clear increase and decrease as the bloom developed and then dissipated.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figs/pineypoint1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="figs/pineypoint1.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
+</figure>
+</div>
+<p>The change in ecosystem metabolism from autototrophy to heterotrophy tells a story about the bloom. We see an increase in production followed by an increase in respiration with bloom development and senescence.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="figs/pineypoint2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="figs/pineypoint2.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
+</figure>
+</div>
+<p>These quick examples demonstrate that unique information about system dynamics can be inferred from ecosystem metabolism and its components. As you learn to assess metabolism with the the tools from this workshop, you can develop similar hypotheses on factors that control metabolism both within and between systems.</p>
 </section>
 <section id="how-is-metabolism-measured" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="how-is-metabolism-measured"><span class="header-section-number">1.4</span> How is metabolism measured?</h2>
@@ -353,14 +384,17 @@ NEM = P - R
 <li>Oxygen exchanges freely with the atmosphere</li>
 <li>The system is well-mixed</li>
 </ul>
-<p><a href="figs/metab.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="figs/metab.png" class="img-fluid"></a></p>
+<p><a href="figs/metab.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="figs/metab.png" class="img-fluid"></a></p>
 <p>The DO time series can be deconstructed using a mass-balance equation to estimate metabolism. This is a literal deconstruction of the processes in the above figure.</p>
 <p><span class="math display">\[
 Z\frac{dC_d}{dt} = P - R + D
 \]</span></p>
 <p>This equation can be translated as the change in dissolved oxygen (<span class="math inline">\(dC_d\)</span>) over time (<span class="math inline">\(dt\)</span>) (a rate) is equal to the difference between production (<span class="math inline">\(P\)</span>) and respiration (<span class="math inline">\(R\)</span>) plus the exchange of oxygen with the atmosphere (<span class="math inline">\(D\)</span>). The units are converted from volumetric (<span class="math inline">\(m^{-3}\)</span>) to areal (<span class="math inline">\(m^{-2}\)</span>) by multiplying the equation by water column depth (<span class="math inline">\(Z\)</span>). In this example, <span class="math inline">\(D\)</span> is positive for ingassing and negative for outgassing.</p>
 <p><span class="math inline">\(P\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(D\)</span> can be estimated several ways depending on which “open-water” technique is used. The most popular method is that of <span class="citation" data-cites="Odum56">Odum (<a href="references.html#ref-Odum56" role="doc-biblioref">1956</a>)</span>, modified extensively by others since its original presentation. The method calculates the DO flux (DO change per unit time) during day and night periods and corrects it for gas exchange. This is also called the book-keeping method since it’s “simple” arithmetic.</p>
-<p>Gas exchange can also be estimated several ways, but the core concept is that the flux is proportional to the difference between the DO concentration in the water and the DO concentration in the atmosphere. This difference is also multiplied by a gas exchange coefficient, which can vary by wind, temperature, or other factors depending on the model.</p>
+<p>Gas exchange can also be estimated several ways, but the core concept is that the flux in or out of the water is proportional to the difference between the DO saturation concentration (<span class="math inline">\(C_s\)</span>) and the measured concentration in the water (<span class="math inline">\(C_d\)</span>). This difference is also multiplied by a gas exchange coefficient (<span class="math inline">\(k\)</span>), which can vary by wind, temperature, or other factors depending on the model.</p>
+<p><span class="math display">\[
+D = k(C_s - C_d)
+\]</span></p>
 <p>Fortunately for us, there are existing packages in R that can estimate these parameters. One is the <a href="https://github.com/fawda123/WtRegDO" target="_blank">WtRegDO</a> package that uses the Odum technique, which was covered in a <a href="https://tbep-tech.github.io/ecometab-r-training/" target="_blank">workshop</a> a few years ago. Another is EBASE, which we’ll discuss today. EBASE follows the same general principles as the Odum technique, but differs in the statistical method to estimate the parameter (i.e., Bayesian) and the model used for each parameter.</p>
 <p>We’ll talk more about how EBASE estimates metabolism in <a href="03_ebase.html" class="quarto-xref">Lesson&nbsp;<span>3</span></a>, but first we need to get setup with R and prepare our data in <a href="02_dataprep.html" class="quarto-xref">Lesson&nbsp;<span>2</span></a>.</p>
 </section>
@@ -370,33 +404,39 @@ Z\frac{dC_d}{dt} = P - R + D
 <p>Let’s run through the basics of creating a project in RStudio.</p>
 <ol class="example" type="1">
 <li><p><strong>Create a new project in RStudio, first open RStudio and select “New project” from the File menu at the top.</strong></p>
-<p><a href="figs/newproj.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="figs/newproj.PNG" class="img-fluid"></a></p>
+<p><a href="figs/newproj.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="figs/newproj.PNG" class="img-fluid"></a></p>
 <p>Then select “New Directory”.</p>
-<p><a href="figs/newdir.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="figs/newdir.PNG" class="img-fluid"></a></p>
+<p><a href="figs/newdir.PNG" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="figs/newdir.PNG" class="img-fluid"></a></p>
 <p>Then select “New Project”. Create a directory in a location that’s easy to find.</p>
-<p><a href="figs/newproj2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="figs/newproj2.png" class="img-fluid" width="500"></a></p>
+<p><a href="figs/newproj2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="figs/newproj2.png" class="img-fluid" width="500"></a></p>
 <p>Click “Create Project” when you’re done.</p></li>
 <li><p><strong>A fresh RStudio session will open. Open a new R script by selecting “New file” &gt; R script from the File menu at the top.</strong></p>
-<p><a href="figs/newfile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="figs/newfile.png" class="img-fluid" width="500"></a></p>
-<p>Save the file in your working directory by clicking the file icon on the top right. Give it a useful name. For example, “ebase_intro.R”. The file should be saved to the project root directory.</p>
-<p><a href="figs/savefile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="figs/savefile.png" class="img-fluid"></a></p></li>
+<p><a href="figs/newfile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="figs/newfile.png" class="img-fluid" width="500"></a></p>
+<p>Save the file in your working directory by clicking the file icon on the top right. Give it an informative name. For example, “ebase_intro.R”. The file should be saved to the project root directory.</p>
+<p><a href="figs/savefile.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="figs/savefile.png" class="img-fluid"></a></p></li>
 <li><p><strong>Setup the package imports at the top of the script. These should already be installed during the <a href="./setup.html#sec-instpackages">setup</a> prior to the workshop.</strong></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EBASE)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SWMPr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Save the script again and send the commands from the source script to the console. Do they load properly??</p></li>
 <li><p><strong>Setup a data folder in the project directory. This is where we’ll store the data for the workshop.</strong></p>
-<p>Select “New folder” from the file pane (usually bottom right) and name it “data”. <img src="figs/newfolder.png" class="img-fluid"></p>
+<p>Select “New folder” from the file pane (bottom right). <img src="figs/newfolder.png" class="img-fluid"></p>
 <p>Name the folder “data” and save it in the project root directory.</p>
 <p>Place the downloaded data in this folder.</p></li>
 </ol>
 </section>
 <section id="next-steps" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">1.6</span> Next steps</h2>
-<p>In this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr for analysis with EBASE.</p>
+<p>In this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr and other packages for analysis with EBASE.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-caffrey2004" class="csl-entry" role="listitem">
+Caffrey, Jane M. 2004. <span>“Factors Controlling Net Ecosystem Metabolism in U.S. Estuaries.”</span> <em>Estuaries</em> 27 (1): 90–101. <a href="https://doi.org/10.1007/bf02803563">https://doi.org/10.1007/bf02803563</a>.
+</div>
+<div id="ref-Hoellein2013" class="csl-entry" role="listitem">
+Hoellein, Timothy J, Denise A Bruesewitz, and David C Richardson. 2013. <span>“Revisiting <span>O</span>dum (1956): A Synthesis of Aquatic Ecosystem Metabolism.”</span> <em>Limnology and Oceanography</em> 58 (6): 2089–2100. <a href="https://doi.org/10.4319/lo.2013.58.6.2089">https://doi.org/10.4319/lo.2013.58.6.2089</a>.
+</div>
 <div id="ref-Odum56" class="csl-entry" role="listitem">
 Odum, H. T. 1956. <span>“Primary Production in Flowing Waters.”</span> <em>Limnology and Oceanography</em> 1 (2): 102–17.
 </div>
@@ -901,7 +941,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","loop":false,"descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
