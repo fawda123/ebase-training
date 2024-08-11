@@ -27,7 +27,7 @@ $$
 NEM = P - R
 $$ 
 
-Here, net ecosystem metabolism ($NEM$) is the difference between gross primary production ($P$) and respiration ($R$). Or, net ecosystem metabolism is the difference between processes that produce organic matter and those that consume organic matter.
+Here, net ecosystem metabolism ($NEM$) is the difference between gross primary production ($P$) and respiration ($R$). Or, net ecosystem metabolism is the difference between processes that produce organic matter and those that consume organic matter.  You may also see $NEM$ written as net ecosystem production ($NEP$).
 
 $NEM$ can tell us a lot about an ecosystem:
 
@@ -36,7 +36,29 @@ $NEM$ can tell us a lot about an ecosystem:
 
 Autotrophy and heterotrophy can be governed by many factors. For example, autotrophy may occur more often during warmer months, as temperature can stimulate growth of algae and other primary primary producers. Similarly, hyper-eutrophic systems may be more heterotrophic during the summer as the rapid decomposition of organic matter that was produced by excess nutrients may be increased with temperature. A single pulse of nutrients can create autotrophic conditions as production increases followed by heterotrophic conditions as the new organic material settles to the bottom and is decomposed.
 
-Metabolism is highly dynamic, responding to seasonal changes and short-term events. Substantial insight into system dynamics can be gained by exploring how metabolism is related to other key variables in a dataset - we will attempt this in our last lesson.
+This graphic from a synthesis study of 350 sites by @Hoellein2013 shows how metabolic ranges vary across different aquatic ecosystems.  Here we can see that the largest ranges in production and respiration occur in estuaries and most aquatic systems tend towards heterotrophy.  Note the units as grams of oxygen per m$^{-2}$ per day. 
+
+![](figs/hoellein.png){fig-align="center" width=80%}
+
+Most of the estuarine sites used in @Hoellein2013 were from a single study by @caffrey2004 that evaluated metabolism across all NERR sites. This study was one of the first to develop a system-wide comparison of metabolic rates and several useful conclusions were made.  
+
+For example, metabolic rates between habitats are shown below, where most sites tend towards heterotrophy, although sites dominated by submerged aquatic vegetation are more balanced.  
+
+![](figs/caffrey1.png){fig-align="center" width=80%}
+
+Nutrients as drivers of metabolism were also evaluated by @caffrey2004. Although the relationships were weak, sites with higher nutrient loadings tended towards autotrophy as production was generally higher than respiration.
+
+![](figs/caffrey2.png){fig-align="center" width=60%}
+
+Metabolism is also temporally variable.  In addition to seasonal variation, metabolism can be event-driven and respond to external and internal drivers that influence the system. A severe red tide bloom in Tampa Bay occurred in July 2021.  The dissolved oxygen time series shows a clear increase and decrease as the bloom developed and then dissipated. 
+
+![](figs/pineypoint1.png){fig-align="center"}
+
+The change in ecosystem metabolism from autototrophy to heterotrophy tells a story about the bloom. We see an increase in production followed by an increase in respiration with bloom development and senescence.  
+
+![](figs/pineypoint2.png){fig-align="center"}
+
+These quick examples demonstrate that unique information about system dynamics can be inferred from ecosystem metabolism and its components.  As you learn to assess metabolism with the the tools from this workshop, you can develop similar hypotheses on factors that control metabolism both within and between systems. 
 
 ## How is metabolism measured?
 
@@ -67,7 +89,11 @@ This equation can be translated as the change in dissolved oxygen ($dC_d$) over 
 
 $P$, $R$, and $D$ can be estimated several ways depending on which "open-water" technique is used. The most popular method is that of @Odum56, modified extensively by others since its original presentation. The method calculates the DO flux (DO change per unit time) during day and night periods and corrects it for gas exchange. This is also called the book-keeping method since it's "simple" arithmetic.
 
-Gas exchange can also be estimated several ways, but the core concept is that the flux is proportional to the difference between the DO concentration in the water and the DO concentration in the atmosphere. This difference is also multiplied by a gas exchange coefficient, which can vary by wind, temperature, or other factors depending on the model.
+Gas exchange can also be estimated several ways, but the core concept is that the flux in or out of the water is proportional to the difference between the DO saturation concentration ($C_s$) and the measured concentration in the water ($C_d$). This difference is also multiplied by a gas exchange coefficient ($k$), which can vary by wind, temperature, or other factors depending on the model.
+
+$$
+D = k(C_s - C_d)
+$$
 
 Fortunately for us, there are existing packages in R that can estimate these parameters. One is the [WtRegDO](https://github.com/fawda123/WtRegDO){target="_blank"} package that uses the Odum technique, which was covered in a [workshop](https://tbep-tech.github.io/ecometab-r-training/){target="_blank"} a few years ago. Another is EBASE, which we'll discuss today. EBASE follows the same general principles as the Odum technique, but differs in the statistical method to estimate the parameter (i.e., Bayesian) and the model used for each parameter.
 
@@ -97,7 +123,7 @@ Let's run through the basics of creating a project in RStudio.
 
     ![](figs/newfile.png){width=500}
     
-    Save the file in your working directory by clicking the file icon on the top right.  Give it a useful name. For example, "ebase_intro.R".  The file should be saved to the project root directory.
+    Save the file in your working directory by clicking the file icon on the top right.  Give it an informative name. For example, "ebase_intro.R".  The file should be saved to the project root directory.
     
     ![](figs/savefile.png)
 
@@ -112,7 +138,7 @@ Let's run through the basics of creating a project in RStudio.
 
 (@) **Setup a data folder in the project directory.  This is where we'll store the data for the workshop.**
 
-    Select "New folder" from the file pane (usually bottom right) and name it "data".
+    Select "New folder" from the file pane (bottom right).
     ![](figs/newfolder.png)
     
     Name the folder "data" and save it in the project root directory.
@@ -121,4 +147,4 @@ Let's run through the basics of creating a project in RStudio.
     
 ## Next steps
 
-In this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr for analysis with EBASE.
+In this lesson we learned the basics about metabolism and made sure RStudio is ready to go for the rest of the workshop. Next we’ll learn how to import and prepare data with SWMPr and other packages for analysis with EBASE.
