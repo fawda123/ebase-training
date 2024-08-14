@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -191,9 +211,10 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#lesson-outline" id="toc-lesson-outline" class="nav-link active" data-scroll-target="#lesson-outline"><span class="header-section-number">2.1</span> Lesson Outline</a></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals"><span class="header-section-number">2.2</span> Learning Goals</a></li>
-  <li><a href="#preparing-nerrs-data-with-swmpr" id="toc-preparing-nerrs-data-with-swmpr" class="nav-link" data-scroll-target="#preparing-nerrs-data-with-swmpr"><span class="header-section-number">2.3</span> Preparing NERRS data with SWMPr</a></li>
-  <li><a href="#preparing-other-data" id="toc-preparing-other-data" class="nav-link" data-scroll-target="#preparing-other-data"><span class="header-section-number">2.4</span> Preparing other data</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">2.5</span> Next steps</a></li>
+  <li><a href="#data-requirements-for-ebase" id="toc-data-requirements-for-ebase" class="nav-link" data-scroll-target="#data-requirements-for-ebase"><span class="header-section-number">2.3</span> Data requirements for EBASE</a></li>
+  <li><a href="#data-import-with-swmpr" id="toc-data-import-with-swmpr" class="nav-link" data-scroll-target="#data-import-with-swmpr"><span class="header-section-number">2.4</span> Data import with SWMPr</a></li>
+  <li><a href="#preparing-other-data" id="toc-preparing-other-data" class="nav-link" data-scroll-target="#preparing-other-data"><span class="header-section-number">2.5</span> Preparing other data</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">2.6</span> Next steps</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/02_dataprep.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -221,7 +242,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="lesson-outline" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="lesson-outline"><span class="header-section-number">2.1</span> Lesson Outline</h2>
-<p>This lesson will demonstrate how the SWMPr package can be used to import and prepare data for analysis with EBASE. The EBASE software requires a specific format for input data that includes both water quality and weather data. SWMPr includes several functions that can facilitate the preparation of data for EBASE analysis.</p>
+<p>The EBASE software requires a specific format for input data that includes both water quality and weather data. This lesson will demonstrate how the SWMPr package can be used to import and prepare data from the NERRS System Wide Monitoring Program (SWMP) for analysis. We’ll also cover how to prepare non-SWMP data using SWMPr and by hand using R packages from the tidyverse.</p>
 </section>
 <section id="learning-goals" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="learning-goals"><span class="header-section-number">2.2</span> Learning Goals</h2>
@@ -229,20 +250,175 @@ ul.task-list li input[type="checkbox"] {
 <li>Understand the data requirements for EBASE</li>
 <li>Learn how to import data with SWMPr</li>
 <li>Learn how to clean and combine SWMP data</li>
-<li>Learn how to prepare data for EBASE analysis</li>
+<li>Learn how to prepare data for EBASE analysis with SWMPr and other tools</li>
 </ul>
 </section>
-<section id="preparing-nerrs-data-with-swmpr" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="preparing-nerrs-data-with-swmpr"><span class="header-section-number">2.3</span> Preparing NERRS data with SWMPr</h2>
+<section id="data-requirements-for-ebase" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="data-requirements-for-ebase"><span class="header-section-number">2.3</span> Data requirements for EBASE</h2>
+<p>The metabolism functions in EBASE require both water quality and weather data. Both are assumed continuous where sufficient observations are collected each day to describe the diel cycyling of dissolved oxygen and other required parameters. Because water quality and weather data are collected by different sensors, these data typically are not provided in the same file. A bit of preprocessing is needed to combine the necessary data before EBASE can be used.</p>
+<p>We’ll start by loading EBASE and viewing an example file that’s included with the package. This example file is used for all the documentation in EBASE and you can use it to learn how the main functions work. We’ll use other data files below.</p>
+<p>View the first few rows of the example data file:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>        DateTimeStamp DO_obs Temp  Sal PAR WSpd
+1 2012-02-23 00:00:00    8.8 16.4 23.0   0  3.6
+2 2012-02-23 00:15:00    8.8 16.4 22.8   0  3.5
+3 2012-02-23 00:30:00    8.8 16.4 22.7   0  3.6
+4 2012-02-23 00:45:00    8.8 16.4 22.9   0  4.2
+5 2012-02-23 01:00:00    8.7 16.4 22.7   0  3.6
+6 2012-02-23 01:15:00    8.5 16.4 23.4   0  4.1</code></pre>
+</div>
+</div>
+<p>Check the structure of the example data file:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   27648 obs. of  6 variables:
+ $ DateTimeStamp: POSIXct, format: "2012-02-23 00:00:00" "2012-02-23 00:15:00" ...
+ $ DO_obs       : num  8.8 8.8 8.8 8.8 8.7 8.5 8.3 8.2 7.8 8.5 ...
+ $ Temp         : num  16.4 16.4 16.4 16.4 16.4 16.4 16.4 16.4 16.4 16.4 ...
+ $ Sal          : num  23 22.8 22.7 22.9 22.7 23.4 24.5 24.4 24.3 23 ...
+ $ PAR          : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ WSpd         : num  3.6 3.5 3.6 4.2 3.6 4.1 3.6 4.2 4 3.6 ...</code></pre>
+</div>
+</div>
+<p>Only five parameters are required to use EBASE, where each row represents a single observation indexed by time, which must be ascending.</p>
+<ul>
+<li><code>DateTimeStamp</code>: Date and time of the observation, as a POSIXct object with an appropriate time zone.</li>
+<li><code>DO_obs</code>: Observed dissolved oxygen concentration in mg/L.</li>
+<li><code>Temp</code>: Water temperature in degrees Celsius.</li>
+<li><code>Sal</code>: Salinity in psu.</li>
+<li><code>PAR</code>: Total photosynthetically active radiation in Watts per square meter.</li>
+<li><code>WSpd</code>: Wind speed in meters per second.</li>
+</ul>
+<p>The dissolved oxygen, water temperature, and salinity data are typically collected by a water quality sonde, while the PAR and wind speed data are typically collected at a weather station. We’ll discuss why these parameters are needed to calculate metabolism in <a href="03_ebase.html" class="quarto-xref">Lesson&nbsp;<span>3</span></a>. These data must be combined into a single data frame for EBASE to work. We’ll do this in the next few sections.</p>
 </section>
-<section id="preparing-other-data" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="preparing-other-data"><span class="header-section-number">2.4</span> Preparing other data</h2>
+<section id="data-import-with-swmpr" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="data-import-with-swmpr"><span class="header-section-number">2.4</span> Data import with SWMPr</h2>
+<p>The SWMPr package was developed in 2016 to provide a bridge between the raw data provided the NERRS SWMP network and the R analysis platform <span class="citation" data-cites="Beck2016">(<a href="references.html#ref-Beck2016" role="doc-biblioref">Beck 2016</a>)</span>. It does this with some degree of proficiency, but by far it’s most useful feature is being able to import and combine time series from SWMP sites with relative ease. In particular, the <code>import_local</code>, <code>qaqc</code>, and <code>comb</code> functions allow us to quickly import, clean up, and combine datasets for follow-up analysis. This is all we’ll do with SWMPr in these lessons.</p>
+<p>The <code>import_local</code> function is designed to work with data downloaded from the CDMO using the <a href="http://cdmo.baruch.sc.edu/aqs/zips.cfm">Zip Downloads</a> feature from the Advanced Query System. The files we have in our “data” folder were requested from this feature for Apalachicola Bay data from 2017 to 2019.</p>
+<p>The <code>import_local</code> function has two arguments: <code>path</code> to indicate where the data are located and <code>station_code</code> to indicate which station to import. We first load SWMPr and then use the function to import data for the Apalachicola Dry Bar station:</p>
+<!-- ```{r} -->
+<!-- # load SWMPr -->
+<!-- library(SWMPr) -->
+<!-- # import data -->
+<!-- apadbwq <- import_local(path = 'data', station_code = 'apadbwq') -->
+<!-- # characteristics of the dataset -->
+<!-- head(apadbwq) -->
+<!-- dim(apadbwq) -->
+<!-- range(apadbwq$datetimestamp) -->
+<!-- ``` -->
+<!-- Note that this function was able to import and combine data from multiple csv files.  We would have had to do this by hand if we were importing data with more general import functions available in R (e.g., `read_csv` from last time). -->
+<!-- ## Cleaning and combining SWMP data -->
+<!-- Each row has data for multiple parameters at 15 minute intervals.  Each parameter also includes a column with QAQC flags, i.e., `f_` then the parameter name.  We can use the `qaqc` function to "screen" observations with specific QAQC flags.  You can view what the flags mean at this website: <http://cdmo.baruch.sc.edu/data/qaqc.cfm>.  We'll keep all data that have the flags 0, 1, 2, 3, 4, and 5 by indicating this information in the `qaqc_keep` argument (in practice, you may only want to keep data with a "zero" flag). You can view a tabular summary of the flags in a dataset using the `qaqcchk` function.  -->
+<!-- ```{r} -->
+<!-- # keep only observations that passed qaqc chekcs -->
+<!-- apadbwq <- qaqc(apadbwq, qaqc_keep = c('0', '1', '2', '3', '4', '5')) -->
+<!-- # check the results -->
+<!-- head(apadbwq) -->
+<!-- dim(apadbwq) -->
+<!-- range(apadbwq$datetimestamp) -->
+<!-- ``` -->
+<!-- Notice that the number of rows are the same as before - no rows are removed by `qaqc`.  Values that did not fit the screening criteria are given a `NA` value.  Also notice the flag columns are removed.  -->
+<!-- Our metabolism functions also require weather data.  We can repeat the steps above to import and clean data from the weather station at Apalachicola.  -->
+<!-- ```{r} -->
+<!-- # import weather data, clean it up -->
+<!-- apaebmet <- import_local(path = 'data', station_code = 'apaebmet') -->
+<!-- apaebmet <- qaqc(apaebmet, qaqc_keep = c('0', '1', '2', '3', '4', '5')) -->
+<!-- # check the results -->
+<!-- head(apaebmet) -->
+<!-- dim(apaebmet) -->
+<!-- range(apaebmet$datetimestamp) -->
+<!-- ``` -->
+<!-- The `comb` function in SWMPr lets us combine data from two locations using the `datetimestamp` column.  We'll need to do this to use the functions in the WtRegDO package that require both water quality and weather data.   -->
+<!-- There are a couple of arguments to consider when using the `comb` function.  First, the `timestep` argument defines the time step for the resulting output.  Keep this at 15 to retain all of the data.  You could use a larger time step to subset the data if, for example, we wanted data every 60 minutes. Second, the `method` argument defines how two datasets with different date ranges are combined.  Use `method = 'union'` to retain the entire date range across both datasets or use `method = 'intersect'` to retain only the dates that include data from both datasets.  For our example, `union` and `intersect` produce the same results since the date ranges are the same.  -->
+<!-- To speed up the examples in our lesson, we'll use a 60 minute timestep.  In practice, it's better to retain all of the data (i.e., `timestep = 15`).  -->
+<!-- ```{r} -->
+<!-- # combine water quality and weather data -->
+<!-- apa <- comb(apadbwq, apaebmet, timestep = 60, method = 'union') -->
+<!-- # check the results -->
+<!-- head(apa) -->
+<!-- dim(apa) -->
+<!-- range(apa$datetimestamp) -->
+<!-- ``` -->
+<!-- ## Exercise 1 -->
+<!-- Repeat the above examples but do this using data for Sapelo Island.  Import data for `sapdcwq` and `sapmlmet`, clean them up with `qaqc`, and combine them with `comb`.  -->
+<!-- 1. Open a new script in your RStudio project, save it with an informative title (e.g, `import-detiding.R`), and add a section header with `Ctrl + Shift + R`. -->
+<!-- 1. Load the SWMPr package with the `library` function.  This should already be installed from last time (i.e., `install.packages('SWMPr')`).  -->
+<!-- 1. Import and clean up `sapdcwq` with `import_local` and `qaqc`.  -->
+<!-- 1. Import and clean up `sapmlmet` with `import_local` and `qaqc`.  -->
+<!-- 1. Combine the two with `comb`. Use a 60 minute time step and use the `union` option.  -->
+<!-- ## Preparing SWMP data for detiding -->
+<!-- Now we want to setup our data for use with functions in the WtRegDO package.  As with most R functions, the input formats are very specific requiring us to make sure the column names, locations, and types of columns in our data are exactly as needed.  The two functions in WtRegDO that we'll use in this lesson are `evalcor` and `wtreg`.  You can look at the examples in the help file for these functions to see what format we need (`?evalcor`, `?wtreg`).  -->
+<!-- The WtRegDO package comes with an example dataset that has a format we can follow for our SWMP data. First we load WtRegDO and then examine the `SAPDC` example dataset.  This is the same site we used for the previous exercise, just with older data.  -->
+<!-- ```{r} -->
+<!-- # load WtRegDO -->
+<!-- library(WtRegDO) -->
+<!-- # view first six rows of SAPDC -->
+<!-- head(SAPDC) -->
+<!-- # View the structure of SAPDC -->
+<!-- str(SAPDC) -->
+<!-- ``` -->
+<!-- We can compare this to our Apalachicola dataset from before.  -->
+<!-- ```{r} -->
+<!-- # view first six rows of apa -->
+<!-- head(apa) -->
+<!-- # view the structure of apa -->
+<!-- str(apa) -->
+<!-- ``` -->
+<!-- So, we need to do a few things to our Apalachicola dataset to make it look like SAPDC so it will work with the functions.  We can use the dplyr package to "wrangle" the data into the correct format (here's a useful [cheatsheet](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for this package).  The dplyr package comes with the tidyverse.  -->
+<!-- All we need to do is rename the columns and select the ones we want in the correct order.  This can all be done with the `select` function in dplyr.  Remember, we are trying to follow the exact format of the SAPDC dataset that comes with WtRegDO. -->
+<!-- ```{r} -->
+<!-- # load dplyr -->
+<!-- library(dplyr) -->
+<!-- # select and rename columns -->
+<!-- apa <- select(apa, -->
+<!--   DateTimeStamp = datetimestamp,  -->
+<!--   Temp = temp,  -->
+<!--   Sal = sal,  -->
+<!--   DO_obs = do_mgl, -->
+<!--   ATemp = atemp,  -->
+<!--   BP = bp,  -->
+<!--   WSpd = wspd,  -->
+<!--   Tide = depth -->
+<!-- ) -->
+<!-- # show first six rows -->
+<!-- head(apa) -->
+<!-- # view structure -->
+<!-- str(apa) -->
+<!-- ``` -->
+<!-- We can also verify the column names are the same between the two datasets.  Note the use of two equal signs - this is how we tell R to test for equality.   -->
+<!-- ```{r} -->
+<!-- names(apa) == names(SAPDC) -->
+<!-- ``` -->
+<!-- Finally, we need to deal with pesky missing data values.  Most functions in R deal with missing data by either not working at all or providing some work-around to accommodate the missing values. The functions in WtRegDO are in the former category.   -->
+<!-- Missing data in SWMP are not uncommon and they often occur when sondes or other equipment are down for maintenance or are otherwise broken for a period of time.  So, missing observations usually come in blocks where all parameters are unavailable, as opposed to only one parameter.  We can quickly remove rows with missing data using the `na.omit` function. Note that this will remove an entire row where even one parameter is missing data.  Usually this is not ideal for most data, but this is okay for our examples because we require all parameters at a time step to estimate metabolism.  -->
+<!-- Here we see an example of a chunk of missing observations. -->
+<!-- ```{r} -->
+<!-- apa[which(is.na(apa$Tide))[1:5], ] -->
+<!-- ``` -->
+<!-- Now we just remove the rows with missing data using `na.omit`.  -->
+<!-- ```{r} -->
+<!-- # number of rows before -->
+<!-- nrow(apa) -->
+<!-- # omit missing rows -->
+<!-- apa <- na.omit(apa) -->
+<!-- # number of rows after -->
+<!-- nrow(apa) -->
+<!-- ``` -->
 </section>
-<section id="next-steps" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">2.5</span> Next steps</h2>
+<section id="preparing-other-data" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="preparing-other-data"><span class="header-section-number">2.5</span> Preparing other data</h2>
+</section>
+<section id="next-steps" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">2.6</span> Next steps</h2>
 <p>The most difficult part of using EBASE is preparing the data. Now that we have learned how to import and clean the data, we are ready for analysis. In the next lesson, we’ll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-Beck2016" class="csl-entry" role="listitem">
+Beck, M. W. 2016. <span>SWMPr</span>: An <span>R</span> package for retrieving, organizing, and analyzing environmental data for estuaries. R Journal <strong>8</strong>: 219–232.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

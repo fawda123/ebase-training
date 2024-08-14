@@ -140,7 +140,7 @@
     "href": "02_dataprep.html",
     "title": "2  Data Preparation",
     "section": "",
-    "text": "2.1 Lesson Outline\nThis lesson will demonstrate how the SWMPr package can be used to import and prepare data for analysis with EBASE. The EBASE software requires a specific format for input data that includes both water quality and weather data. SWMPr includes several functions that can facilitate the preparation of data for EBASE analysis.",
+    "text": "2.1 Lesson Outline\nThe EBASE software requires a specific format for input data that includes both water quality and weather data. This lesson will demonstrate how the SWMPr package can be used to import and prepare data from the NERRS System Wide Monitoring Program (SWMP) for analysis. We’ll also cover how to prepare non-SWMP data using SWMPr and by hand using R packages from the tidyverse.",
     "crumbs": [
       "Lessons",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
@@ -151,18 +151,29 @@
     "href": "02_dataprep.html#learning-goals",
     "title": "2  Data Preparation",
     "section": "2.2 Learning Goals",
-    "text": "2.2 Learning Goals\n\nUnderstand the data requirements for EBASE\nLearn how to import data with SWMPr\nLearn how to clean and combine SWMP data\nLearn how to prepare data for EBASE analysis",
+    "text": "2.2 Learning Goals\n\nUnderstand the data requirements for EBASE\nLearn how to import data with SWMPr\nLearn how to clean and combine SWMP data\nLearn how to prepare data for EBASE analysis with SWMPr and other tools",
     "crumbs": [
       "Lessons",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
     ]
   },
   {
-    "objectID": "02_dataprep.html#preparing-nerrs-data-with-swmpr",
-    "href": "02_dataprep.html#preparing-nerrs-data-with-swmpr",
+    "objectID": "02_dataprep.html#data-requirements-for-ebase",
+    "href": "02_dataprep.html#data-requirements-for-ebase",
     "title": "2  Data Preparation",
-    "section": "2.3 Preparing NERRS data with SWMPr",
-    "text": "2.3 Preparing NERRS data with SWMPr",
+    "section": "2.3 Data requirements for EBASE",
+    "text": "2.3 Data requirements for EBASE\nThe metabolism functions in EBASE require both water quality and weather data. Both are assumed continuous where sufficient observations are collected each day to describe the diel cycyling of dissolved oxygen and other required parameters. Because water quality and weather data are collected by different sensors, these data typically are not provided in the same file. A bit of preprocessing is needed to combine the necessary data before EBASE can be used.\nWe’ll start by loading EBASE and viewing an example file that’s included with the package. This example file is used for all the documentation in EBASE and you can use it to learn how the main functions work. We’ll use other data files below.\nView the first few rows of the example data file:\n\n\n        DateTimeStamp DO_obs Temp  Sal PAR WSpd\n1 2012-02-23 00:00:00    8.8 16.4 23.0   0  3.6\n2 2012-02-23 00:15:00    8.8 16.4 22.8   0  3.5\n3 2012-02-23 00:30:00    8.8 16.4 22.7   0  3.6\n4 2012-02-23 00:45:00    8.8 16.4 22.9   0  4.2\n5 2012-02-23 01:00:00    8.7 16.4 22.7   0  3.6\n6 2012-02-23 01:15:00    8.5 16.4 23.4   0  4.1\n\n\nCheck the structure of the example data file:\n\n\n'data.frame':   27648 obs. of  6 variables:\n $ DateTimeStamp: POSIXct, format: \"2012-02-23 00:00:00\" \"2012-02-23 00:15:00\" ...\n $ DO_obs       : num  8.8 8.8 8.8 8.8 8.7 8.5 8.3 8.2 7.8 8.5 ...\n $ Temp         : num  16.4 16.4 16.4 16.4 16.4 16.4 16.4 16.4 16.4 16.4 ...\n $ Sal          : num  23 22.8 22.7 22.9 22.7 23.4 24.5 24.4 24.3 23 ...\n $ PAR          : num  0 0 0 0 0 0 0 0 0 0 ...\n $ WSpd         : num  3.6 3.5 3.6 4.2 3.6 4.1 3.6 4.2 4 3.6 ...\n\n\nOnly five parameters are required to use EBASE, where each row represents a single observation indexed by time, which must be ascending.\n\nDateTimeStamp: Date and time of the observation, as a POSIXct object with an appropriate time zone.\nDO_obs: Observed dissolved oxygen concentration in mg/L.\nTemp: Water temperature in degrees Celsius.\nSal: Salinity in psu.\nPAR: Total photosynthetically active radiation in Watts per square meter.\nWSpd: Wind speed in meters per second.\n\nThe dissolved oxygen, water temperature, and salinity data are typically collected by a water quality sonde, while the PAR and wind speed data are typically collected at a weather station. We’ll discuss why these parameters are needed to calculate metabolism in Lesson 3. These data must be combined into a single data frame for EBASE to work. We’ll do this in the next few sections.",
+    "crumbs": [
+      "Lessons",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
+    ]
+  },
+  {
+    "objectID": "02_dataprep.html#data-import-with-swmpr",
+    "href": "02_dataprep.html#data-import-with-swmpr",
+    "title": "2  Data Preparation",
+    "section": "2.4 Data import with SWMPr",
+    "text": "2.4 Data import with SWMPr\nThe SWMPr package was developed in 2016 to provide a bridge between the raw data provided the NERRS SWMP network and the R analysis platform (Beck 2016). It does this with some degree of proficiency, but by far it’s most useful feature is being able to import and combine time series from SWMP sites with relative ease. In particular, the import_local, qaqc, and comb functions allow us to quickly import, clean up, and combine datasets for follow-up analysis. This is all we’ll do with SWMPr in these lessons.\nThe import_local function is designed to work with data downloaded from the CDMO using the Zip Downloads feature from the Advanced Query System. The files we have in our “data” folder were requested from this feature for Apalachicola Bay data from 2017 to 2019.\nThe import_local function has two arguments: path to indicate where the data are located and station_code to indicate which station to import. We first load SWMPr and then use the function to import data for the Apalachicola Dry Bar station:",
     "crumbs": [
       "Lessons",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
@@ -172,8 +183,8 @@
     "objectID": "02_dataprep.html#preparing-other-data",
     "href": "02_dataprep.html#preparing-other-data",
     "title": "2  Data Preparation",
-    "section": "2.4 Preparing other data",
-    "text": "2.4 Preparing other data",
+    "section": "2.5 Preparing other data",
+    "text": "2.5 Preparing other data",
     "crumbs": [
       "Lessons",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
@@ -183,8 +194,8 @@
     "objectID": "02_dataprep.html#next-steps",
     "href": "02_dataprep.html#next-steps",
     "title": "2  Data Preparation",
-    "section": "2.5 Next steps",
-    "text": "2.5 Next steps\nThe most difficult part of using EBASE is preparing the data. Now that we have learned how to import and clean the data, we are ready for analysis. In the next lesson, we’ll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.",
+    "section": "2.6 Next steps",
+    "text": "2.6 Next steps\nThe most difficult part of using EBASE is preparing the data. Now that we have learned how to import and clean the data, we are ready for analysis. In the next lesson, we’ll learn about the theory behind EBASE, how to use it to estimate metabolism, and how to interpret the results.\n\n\n\n\nBeck, M. W. 2016. SWMPr: An R package for retrieving, organizing, and analyzing environmental data for estuaries. R Journal 8: 219–232.",
     "crumbs": [
       "Lessons",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data Preparation</span>"
@@ -327,7 +338,7 @@
     "href": "references.html",
     "title": "References",
     "section": "",
-    "text": "Beck, M. W., J. M. Arriola, M. Herrmann, and R. G. Najjar. 2024. Fitting\nmetabolic models to dissolved oxygen data: The estuarine bayesian\nsingle-station estimation method. Limnology and Oceanography: Methods\n22: 590–607. doi:10.1002/lom3.10620\n\n\nBeck, M. W., J. D. Hagy III, and M. C. Murrell. 2015. Improving\nestimates of ecosystem metabolism by reducing effects of tidal advection\non dissolved oxygen time series. Limnology and Oceanography: Methods\n13: 731–745. doi:10.1002/lom3.10062\n\n\nCaffrey, J. M. 2004. Factors controlling net ecosystem metabolism in\nU.S. estuaries. Estuaries 27: 90–101. doi:10.1007/bf02803563\n\n\nHoellein, T. J., D. A. Bruesewitz, and D. C. Richardson. 2013.\nRevisiting Odum (1956): A synthesis of aquatic ecosystem\nmetabolism. Limnology and Oceanography 58: 2089–2100.\ndoi:10.4319/lo.2013.58.6.2089\n\n\nKemp, W. M., and J. M. Testa. 2011. Metabolic\nbalance between ecosystem production and consumption, p. 83–118.\nIn E. Wolanski and D. McLusky [eds.], Treatise on estuarine and\ncoastal science. Elsevier.\n\n\nOdum, H. T. 1956. Primary production in flowing waters. Limnology and\nOceanography 1: 102–117.",
+    "text": "Beck, M. W. 2016. SWMPr: An R package for\nretrieving, organizing, and analyzing environmental data for estuaries.\nR Journal 8: 219–232.\n\n\nBeck, M. W., J. M. Arriola, M. Herrmann, and R. G. Najjar. 2024. Fitting\nmetabolic models to dissolved oxygen data: The estuarine bayesian\nsingle-station estimation method. Limnology and Oceanography: Methods\n22: 590–607. doi:10.1002/lom3.10620\n\n\nBeck, M. W., J. D. Hagy III, and M. C. Murrell. 2015. Improving\nestimates of ecosystem metabolism by reducing effects of tidal advection\non dissolved oxygen time series. Limnology and Oceanography: Methods\n13: 731–745. doi:10.1002/lom3.10062\n\n\nCaffrey, J. M. 2004. Factors controlling net ecosystem metabolism in\nU.S. estuaries. Estuaries 27: 90–101. doi:10.1007/bf02803563\n\n\nHoellein, T. J., D. A. Bruesewitz, and D. C. Richardson. 2013.\nRevisiting Odum (1956): A synthesis of aquatic ecosystem\nmetabolism. Limnology and Oceanography 58: 2089–2100.\ndoi:10.4319/lo.2013.58.6.2089\n\n\nKemp, W. M., and J. M. Testa. 2011. Metabolic\nbalance between ecosystem production and consumption, p. 83–118.\nIn E. Wolanski and D. McLusky [eds.], Treatise on estuarine and\ncoastal science. Elsevier.\n\n\nOdum, H. T. 1956. Primary production in flowing waters. Limnology and\nOceanography 1: 102–117.",
     "crumbs": [
       "Appendices",
       "References"
