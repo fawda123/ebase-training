@@ -236,7 +236,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#sec-instjags" id="toc-sec-instjags" class="nav-link" data-scroll-target="#sec-instjags"><span class="header-section-number">A.2</span> Install JAGS</a></li>
   <li><a href="#sec-instpackages" id="toc-sec-instpackages" class="nav-link" data-scroll-target="#sec-instpackages"><span class="header-section-number">A.3</span> Install R packages</a></li>
-  <li><a href="#sec-cloud" id="toc-sec-cloud" class="nav-link" data-scroll-target="#sec-cloud"><span class="header-section-number">A.4</span> Posit Cloud (optional)</a></li>
+  <li><a href="#sec-data" id="toc-sec-data" class="nav-link" data-scroll-target="#sec-data"><span class="header-section-number">A.4</span> Download the data</a></li>
+  <li><a href="#sec-cloud" id="toc-sec-cloud" class="nav-link" data-scroll-target="#sec-cloud"><span class="header-section-number">A.5</span> Posit Cloud (optional)</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -268,9 +269,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><a href="#sec-instrstudio">Install RStudio</a></li>
 <li><a href="#sec-instjags">Install JAGS</a></li>
 <li><a href="#sec-instpackages">Install R packages</a></li>
+<li><a href="#sec-data">Download the data</a></li>
 <li><a href="#sec-cloud">Posit Cloud</a> (optional)</li>
 </ol>
-<p>Most of these steps will require administrative privileges on a computer. Work with your IT staff to complete the setup if you do not have these privileges. As an alternative, you can use Posit Cloud to participate (see <a href="#sec-cloud" class="quarto-xref"><span>Section A.4</span></a>), although we strongly encourage you to install the software on your personal computer for use after the workshop.</p>
+<p>Most of these steps will require administrative privileges on a computer. Work with your IT staff to complete the setup if you do not have these privileges. As an alternative, you can use Posit Cloud to participate (see <a href="#sec-cloud" class="quarto-xref"><span>Section A.5</span></a>), although we strongly encourage you to install the software on your personal computer for use after the workshop.</p>
 <p><strong>Please reach out if you have any issues with installation: <a href="mailto:mbeck@tbep.org">mbeck@tbep.org</a></strong></p>
 <section id="install-r-and-rstudio" class="level2" data-number="A.1">
 <h2 data-number="A.1" class="anchored" data-anchor-id="install-r-and-rstudio"><span class="header-section-number">A.1</span> Install R and RStudio</h2>
@@ -334,8 +336,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(SWMPr)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="sec-cloud" class="level2" data-number="A.4">
-<h2 data-number="A.4" class="anchored" data-anchor-id="sec-cloud"><span class="header-section-number">A.4</span> Posit Cloud (optional)</h2>
+<section id="sec-data" class="level2" data-number="A.4">
+<h2 data-number="A.4" class="anchored" data-anchor-id="sec-data"><span class="header-section-number">A.4</span> Download the data</h2>
+<p>Download the zipped data file from here: <a href="https://github.com/fawda123/ebase-training/raw/main/data/367272.zip" class="uri">https://github.com/fawda123/ebase-training/raw/main/data/367272.zip</a></p>
+<p>Keep the file in a known location so that we can access it during the workshop.</p>
+</section>
+<section id="sec-cloud" class="level2" data-number="A.5">
+<h2 data-number="A.5" class="anchored" data-anchor-id="sec-cloud"><span class="header-section-number">A.5</span> Posit Cloud (optional)</h2>
 <p>Posit Cloud provides an environment to use RStudio and the resources above through a web browser. We’ve created a workspace on Posit Cloud that includes most all of the software and packages described above. <strong>Please only use this option as a last resort. We strongly encourage installing the software on your own computer.</strong></p>
 <p>Open the following URL in a web browser: <a href="https://posit.cloud/content/8518890" target="_blank">https://posit.cloud/content/8518890</a></p>
 <p>You will see a login screen that looks like this:</p>
@@ -846,7 +853,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","descPosition":"bottom","openEffect":"zoom","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","loop":false});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
