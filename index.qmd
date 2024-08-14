@@ -26,9 +26,6 @@ EBASE materials:
 
 :::
 
-<!-- -   [website](https://fawda123.github.io/EBASE/){target="_blank"} -->
-<!-- -   [paper](https://doi.org/10.1002/lom3.10620){target="_blank"} -->
-
 ## Agenda {.unnumbered}
 
 All times EDT. 

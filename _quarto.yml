@@ -48,3 +48,6 @@ format:
   #   documentclass: scrreprt
   #   prefer-html: true
 
+execute: 
+  echo: false
+  warning: false
