@@ -10,6 +10,7 @@ Thanks for your interest in the ecosystem metabolism workshop. You will need to 
 1. [Install RStudio](#sec-instrstudio)
 1. [Install JAGS](#sec-instjags)
 1. [Install R packages](#sec-instpackages)
+1. [Download the data](#sec-data)
 1. [Posit Cloud](#sec-cloud) (optional)
 
 Most of these steps will require administrative privileges on a computer.  Work with your IT staff to complete the setup if you do not have these privileges.  As an alternative, you can use Posit Cloud to participate (see @sec-cloud), although we strongly encourage you to install the software on your personal computer for use after the workshop.
@@ -94,6 +95,12 @@ library(EBASE)
 library(SWMPr)
 library(tidyverse)
 ```
+
+## Download the data {#sec-data}
+
+Download the zipped data file from here: <https://github.com/fawda123/ebase-training/raw/main/data/367272.zip>
+
+Keep the file in a known location so that we can access it during the workshop.
 
 ## Posit Cloud (optional) {#sec-cloud}
 

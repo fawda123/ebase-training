@@ -143,7 +143,9 @@ Let's run through the basics of creating a project in RStudio.
     
     Name the folder "data" and save it in the project root directory.
     
-    Place the downloaded data in this folder. 
+    Download the zipped data file from GitHub: <https://github.com/fawda123/ebase-training/raw/main/data/367272.zip>
+    
+    Place the downloaded data in this folder. There's no need to unzip it.  
     
 ## Next steps
 

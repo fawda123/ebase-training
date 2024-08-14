@@ -1,5 +1,8 @@
 ---
 lightbox: true
+
+execute:
+  echo: true
 ---
 
 # Data Preparation {#sec-dataprep}
@@ -17,7 +20,7 @@ The EBASE software requires a specific format for input data that includes both 
 
 ## Data requirements for EBASE
 
-The metabolism functions in EBASE require both water quality and weather data.  Both are assumed continuous where sufficient observations are collected each day to describe the diel cycyling of dissolved oxygen and other required parameters.  Because water quality and weather data are collected by different sensors, these data typically are not provided in the same file.  A bit of preprocessing is needed to combine the necessary data before EBASE can be used.  
+The metabolism functions in EBASE require both water quality and weather data.  Both are assumed continuous where sufficient observations are collected each day to describe the diel cycling of dissolved oxygen and other required parameters.  Because water quality and weather data are collected by different sensors, these data typically are not provided in the same file.  A bit of preprocessing is needed to combine the necessary data before EBASE can be used.  
 
 We'll start by loading EBASE and viewing an example file that's included with the package.  This example file is used for all the documentation in EBASE and you can use it to learn how the main functions work. We'll use other data files below.
 
@@ -56,75 +59,75 @@ The `import_local` function is designed to work with data downloaded from the CD
 
 The `import_local` function has two arguments: `path` to indicate where the data are located and `station_code` to indicate which station to import.  We first load SWMPr and then use the function to import data for the Apalachicola Dry Bar station:
 
-<!-- ```{r} -->
-<!-- # load SWMPr -->
-<!-- library(SWMPr) -->
+```{r}
+# load SWMPr
+library(SWMPr)
 
-<!-- # import data -->
-<!-- apadbwq <- import_local(path = 'data', station_code = 'apadbwq') -->
+# import data
+apadbwq <- import_local(path = 'data/367272.zip', station_code = 'apadbwq')
 
-<!-- # characteristics of the dataset -->
-<!-- head(apadbwq) -->
-<!-- dim(apadbwq) -->
-<!-- range(apadbwq$datetimestamp) -->
-<!-- ``` -->
+# characteristics of the dataset
+head(apadbwq)
+dim(apadbwq)
+range(apadbwq$datetimestamp)
+```
 
-<!-- Note that this function was able to import and combine data from multiple csv files.  We would have had to do this by hand if we were importing data with more general import functions available in R (e.g., `read_csv` from last time). -->
+Note that this function was able to import and combine data from multiple csv files.  We would have had to do this by hand if we were importing data with more general import functions available in R (e.g., `read.csv`).
 
-<!-- ## Cleaning and combining SWMP data -->
+## Cleaning and combining SWMP data
 
-<!-- Each row has data for multiple parameters at 15 minute intervals.  Each parameter also includes a column with QAQC flags, i.e., `f_` then the parameter name.  We can use the `qaqc` function to "screen" observations with specific QAQC flags.  You can view what the flags mean at this website: <http://cdmo.baruch.sc.edu/data/qaqc.cfm>.  We'll keep all data that have the flags 0, 1, 2, 3, 4, and 5 by indicating this information in the `qaqc_keep` argument (in practice, you may only want to keep data with a "zero" flag). You can view a tabular summary of the flags in a dataset using the `qaqcchk` function.  -->
+Each row has data for multiple parameters at 15 minute intervals.  Each parameter also includes a column with QAQC flags, i.e., `f_` then the parameter name.  We can use the `qaqc` function to "screen" observations with specific QAQC flags.  You can view what the flags mean at this website: <http://cdmo.baruch.sc.edu/data/qaqc.cfm>.  We'll keep all data that have the flags 0, 1, 2, 3, 4, and 5 by indicating this information in the `qaqc_keep` argument (in practice, you may only want to keep data with a "zero" flag). You can view a tabular summary of the flags in a dataset using the `qaqcchk` function.
 
-<!-- ```{r} -->
-<!-- # keep only observations that passed qaqc chekcs -->
-<!-- apadbwq <- qaqc(apadbwq, qaqc_keep = c('0', '1', '2', '3', '4', '5')) -->
+```{r}
+# keep only observations that passed qaqc chekcs
+apadbwq <- qaqc(apadbwq, qaqc_keep = c('0', '1', '2', '3', '4', '5'))
 
-<!-- # check the results -->
-<!-- head(apadbwq) -->
-<!-- dim(apadbwq) -->
-<!-- range(apadbwq$datetimestamp) -->
-<!-- ``` -->
+# check the results
+head(apadbwq)
+dim(apadbwq)
+range(apadbwq$datetimestamp)
+```
 
-<!-- Notice that the number of rows are the same as before - no rows are removed by `qaqc`.  Values that did not fit the screening criteria are given a `NA` value.  Also notice the flag columns are removed.  -->
+Notice that the number of rows are the same as before - no rows are removed by `qaqc`.  Values that did not fit the screening criteria are given a `NA` value.  Also notice the flag columns are removed.
 
-<!-- Our metabolism functions also require weather data.  We can repeat the steps above to import and clean data from the weather station at Apalachicola.  -->
+The EBASE functions also require weather data.  We can repeat the steps above to import and clean data from the weather station at Apalachicola.
 
-<!-- ```{r} -->
-<!-- # import weather data, clean it up -->
-<!-- apaebmet <- import_local(path = 'data', station_code = 'apaebmet') -->
-<!-- apaebmet <- qaqc(apaebmet, qaqc_keep = c('0', '1', '2', '3', '4', '5')) -->
+```{r}
+# import weather data, clean it up
+apaebmet <- import_local(path = 'data/367272.zip', station_code = 'apaebmet')
+apaebmet <- qaqc(apaebmet, qaqc_keep = c('0', '1', '2', '3', '4', '5'))
 
-<!-- # check the results -->
-<!-- head(apaebmet) -->
-<!-- dim(apaebmet) -->
-<!-- range(apaebmet$datetimestamp) -->
-<!-- ``` -->
+# check the results
+head(apaebmet)
+dim(apaebmet)
+range(apaebmet$datetimestamp)
+```
 
-<!-- The `comb` function in SWMPr lets us combine data from two locations using the `datetimestamp` column.  We'll need to do this to use the functions in the WtRegDO package that require both water quality and weather data.   -->
+The `comb` function in SWMPr lets us combine data from two locations using the `datetimestamp` column.  We'll need to do this to use the functions in EBASE that require both water quality and weather data.
 
-<!-- There are a couple of arguments to consider when using the `comb` function.  First, the `timestep` argument defines the time step for the resulting output.  Keep this at 15 to retain all of the data.  You could use a larger time step to subset the data if, for example, we wanted data every 60 minutes. Second, the `method` argument defines how two datasets with different date ranges are combined.  Use `method = 'union'` to retain the entire date range across both datasets or use `method = 'intersect'` to retain only the dates that include data from both datasets.  For our example, `union` and `intersect` produce the same results since the date ranges are the same.  -->
+There are a couple of arguments to consider when using the `comb` function.  First, the `timestep` argument defines the time step for the resulting output.  Keep this at 15 to retain all of the data.  You could use a larger time step to subset the data if, for example, we wanted data every 60 minutes. Second, the `method` argument defines how two datasets with different date ranges are combined.  Use `method = 'union'` to retain the entire date range across both datasets or use `method = 'intersect'` to retain only the dates that include data from both datasets.  For our example, `union` and `intersect` produce the same results since the date ranges are the same.
 
-<!-- To speed up the examples in our lesson, we'll use a 60 minute timestep.  In practice, it's better to retain all of the data (i.e., `timestep = 15`).  -->
+To speed up the examples in our lesson, we'll use a 60 minute timestep.  In practice, it's better to retain all of the data (i.e., `timestep = 15`).
 
-<!-- ```{r} -->
-<!-- # combine water quality and weather data -->
-<!-- apa <- comb(apadbwq, apaebmet, timestep = 60, method = 'union') -->
+```{r}
+# combine water quality and weather data
+apa <- comb(apadbwq, apaebmet, timestep = 60, method = 'union')
 
-<!-- # check the results -->
-<!-- head(apa) -->
-<!-- dim(apa) -->
-<!-- range(apa$datetimestamp) -->
-<!-- ``` -->
+# check the results
+head(apa)
+dim(apa)
+range(apa$datetimestamp)
+```
 
-<!-- ## Exercise 1 -->
+## Exercise 1
 
-<!-- Repeat the above examples but do this using data for Sapelo Island.  Import data for `sapdcwq` and `sapmlmet`, clean them up with `qaqc`, and combine them with `comb`.  -->
+Repeat the above examples but do this using data for the East Bay station at Apalachicola.  Import data for `apaebwq` and `abaebmet`, clean them up with `qaqc`, and combine them with `comb`.
 
-<!-- 1. Open a new script in your RStudio project, save it with an informative title (e.g, `import-detiding.R`), and add a section header with `Ctrl + Shift + R`. -->
-<!-- 1. Load the SWMPr package with the `library` function.  This should already be installed from last time (i.e., `install.packages('SWMPr')`).  -->
-<!-- 1. Import and clean up `sapdcwq` with `import_local` and `qaqc`.  -->
-<!-- 1. Import and clean up `sapmlmet` with `import_local` and `qaqc`.  -->
-<!-- 1. Combine the two with `comb`. Use a 60 minute time step and use the `union` option.  -->
+1. Open a new script in your RStudio project, save it with an informative title (e.g, `exercise1.R`), and add a section header with `Ctrl + Shift + R`.
+1. Load the SWMPr package with the `library` function.  This should already be installed from last time (i.e., `install.packages('SWMPr')`).
+1. Import and clean up `apaebwq` with `import_local` and `qaqc`.
+1. Import and clean up `apaebmet` with `import_local` and `qaqc`.
+1. Combine the two with `comb`. Use a 60 minute time step and use the `union` option.
 
 <!-- ## Preparing SWMP data for detiding -->
 
