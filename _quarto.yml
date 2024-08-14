@@ -33,6 +33,7 @@ book:
     - references.qmd
   
 bibliography: references.bib
+csl: limnology-and-oceanography.csl
 
 format:
   html:

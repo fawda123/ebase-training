@@ -42,7 +42,7 @@ This graphic from a synthesis study of 350 sites by @Hoellein2013 shows how meta
 
 Most of the estuarine sites used in @Hoellein2013 were from a single study by @caffrey2004 that evaluated metabolism across all NERR sites. This study was one of the first to develop a system-wide comparison of metabolic rates and several useful conclusions were made.  
 
-For example, metabolic rates between habitats are shown below, where most sites tend towards heterotrophy, although sites dominated by submerged aquatic vegetation are more balanced.  
+For example, metabolic rates between estuarine habitats are shown below, where most sites tend towards heterotrophy, although sites dominated by submerged aquatic vegetation are more balanced or even autotrophic.  
 
 ![](figs/caffrey1.png){fig-align="center" width=80%}
 
@@ -58,11 +58,11 @@ The change in ecosystem metabolism from autototrophy to heterotrophy tells a sto
 
 ![](figs/pineypoint2.png){fig-align="center"}
 
-These quick examples demonstrate that unique information about system dynamics can be inferred from ecosystem metabolism and its components.  As you learn to assess metabolism with the the tools from this workshop, you can develop similar hypotheses on factors that control metabolism both within and between systems. 
+These quick examples demonstrate that unique information about system dynamics can be inferred from ecosystem metabolism and its components.  As you learn to assess metabolism with the tools from this workshop, you can develop similar hypotheses on factors that control metabolism both within and between systems. 
 
 ## How is metabolism measured?
 
-Metabolism can be measured several ways, each of which has its own strengths, weaknesses, and assumptions. These include:
+Metabolism can be measured several ways, each of which has its own strengths, weaknesses, and assumptions [@kemp2011]. These include:
 
 -   Bottle-based incubations
 -   Open-water techniques
@@ -85,7 +85,7 @@ $$
 Z\frac{dC_d}{dt} = P - R + D
 $$
 
-This equation can be translated as the change in dissolved oxygen ($dC_d$) over time ($dt$) (a rate) is equal to the difference between production ($P$) and respiration ($R$) plus the exchange of oxygen with the atmosphere ($D$). The units are converted from volumetric ($m^{-3}$) to areal ($m^{-2}$) by multiplying the equation by water column depth ($Z$). In this example, $D$ is positive for ingassing and negative for outgassing.
+The change in dissolved oxygen ($dC_d$) over time ($dt$) (a rate) is equal to the difference between production ($P$) and respiration ($R$) plus the exchange of oxygen with the atmosphere ($D$). The units are converted from volumetric ($m^{-3}$) to areal ($m^{-2}$) by multiplying the equation by water column depth ($Z$). In this example, $D$ is positive for ingassing and negative for outgassing.
 
 $P$, $R$, and $D$ can be estimated several ways depending on which "open-water" technique is used. The most popular method is that of @Odum56, modified extensively by others since its original presentation. The method calculates the DO flux (DO change per unit time) during day and night periods and corrects it for gas exchange. This is also called the book-keeping method since it's "simple" arithmetic.
 
@@ -95,7 +95,7 @@ $$
 D = k(C_s - C_d)
 $$
 
-Fortunately for us, there are existing packages in R that can estimate these parameters. One is the [WtRegDO](https://github.com/fawda123/WtRegDO){target="_blank"} package that uses the Odum technique, which was covered in a [workshop](https://tbep-tech.github.io/ecometab-r-training/){target="_blank"} a few years ago. Another is EBASE, which we'll discuss today. EBASE follows the same general principles as the Odum technique, but differs in the statistical method to estimate the parameter (i.e., Bayesian) and the model used for each parameter.
+Fortunately for us, there are existing packages in R that can estimate these parameters. One is the [WtRegDO](https://github.com/fawda123/WtRegDO){target="_blank"} package that uses the Odum technique [@Beck15], which was covered in a [workshop](https://tbep-tech.github.io/ecometab-r-training/){target="_blank"} a few years ago. Another is EBASE, which we'll discuss today. EBASE follows the same general principles as the Odum technique, but differs in the statistical method to estimate the parameter (i.e., Bayesian) and the model used for each parameter [@Beck2024].
 
 We'll talk more about how EBASE estimates metabolism in [Lesson @sec-ebase], but first we need to get setup with R and prepare our data in [Lesson @sec-dataprep].
 
@@ -119,11 +119,11 @@ Let's run through the basics of creating a project in RStudio.
 
     Click "Create Project" when you're done.
     
-(@) **A fresh RStudio session will open.  Open a new R script by selecting "New file" > R script from the File menu at the top.**
+(@) **A fresh RStudio session will open.  Open a new R script by selecting "New file" > "R Script" from the File menu at the top.**
 
     ![](figs/newfile.png){width=500}
     
-    Save the file in your working directory by clicking the file icon on the top right.  Give it an informative name. For example, "ebase_intro.R".  The file should be saved to the project root directory.
+    Save the file in your working directory by clicking the file icon on the top right.  Give it an informative name. For example, "ebase_intro.R".  The file should be saved to the project root or home directory.
     
     ![](figs/savefile.png)
 
