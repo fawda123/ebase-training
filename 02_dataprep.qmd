@@ -218,7 +218,7 @@ apadb <- apadb |>
   )
 ```
 
-The Apalachicola data should now work with EBASE. However, a few additional exploratory analyses are worthwhile before we use these data.  Most functions in R deal with missing data by either not working at all or providing some work-around to accommodate the missing values. The functions in EBASE are in the former category and we'll discuss how this is done in [Lesson @sec-ebase].  However, knowing how much and where missing observations are in the dataset is still important for interpreting results. 
+The Apalachicola data should now work with EBASE. However, a few additional exploratory analyses are worthwhile before we use these data.  Most functions in R deal with missing data by either not working at all or providing some work-around to accommodate the missing values. The functions in EBASE are in the latter category and we'll discuss how this is done in [Lesson @sec-ebase].  However, knowing how much and where missing observations occur is still important for interpreting results. 
 
 Missing data in SWMP are not uncommon and they often occur when sondes or other equipment are down for maintenance or are otherwise broken for a period of time.  Missing observations usually come in blocks where all parameters are unavailable, as opposed to only one parameter. Below, we can quickly see how many missing observations occur in column.
 
@@ -280,7 +280,7 @@ apaeb <- apaeb |>
 
 Long-term continuous monitoring data from other sources can be used with EBASE. As above, the data must include relevant water quality and weather data at an appropriate time step.  This section will show you how to prepare generic data with more general tools in R.
 
-Data from Tampa Bay will be used in this example. We'll pull water quality data from a continuous monitoring platform in the lower bay and weather data from a nearby NOAA monitoring station.  The data are available [here](http://tampabay.loboviz.com/) and can be downloaded through their [API](http://tampabay.loboviz.com/cgidoc/). 
+Data from Tampa Bay will be used in this example. We'll pull water quality data from a continuous monitoring platform in the lower bay and weather data from a nearby NOAA monitoring station.  The data are available [here](http://tampabay.loboviz.com/) and can be downloaded through their [API](http://tampabay.loboviz.com/cgidoc/). Take a look at the URL to see how the API is queried. 
 
 ```{r}
 url <- 'http://tampabay.loboviz.com/cgi-data/nph-data.cgi?node=82&min_date=20210701&max_date=20210801&y=salinity,temperature,oxygen,par&data_format=text'
@@ -290,7 +290,7 @@ head(lobo)
 str(lobo)
 ```
 
-The data are in the correct format, but the column names are not.  We need to change the names, convert the date/time column to a POSIXct object with the correct time zone, and convert the PAR data to the correct units.  PAR is micromoles per square meter per second, so we need to convert this to Watts per square meter.  First, we select and rename the columns.
+The data are not in the right format for EBASE. We need to change the names, convert the date/time column to a POSIXct object with the correct time zone, and convert the PAR data to the correct units.  PAR is micromoles per square meter per second, so we need to convert this to Watts per square meter.  First, we select and rename the columns.
 
 ```{r}
 lobo <- lobo |> 
@@ -303,7 +303,7 @@ lobo <- lobo |>
   )
 ```
 
-Next, we use mutate to convert the date/time column to a POSIXct object and the PAR data to the correct units. For date/time, we can use a function from the lubridate package and use the "America/Jamaica" time zone, which is eastern time without daylight savings.  The PAR is converted using the conversion from above, except we don't need to convert from millimoles to micromoles and from 15 minutes to seconds. 
+Next, we use mutate to convert the date/time column to a POSIXct object and the PAR data to the correct units. For date/time, we can use a function from the lubridate package and use the "America/Jamaica" time zone, which is eastern time without daylight savings.  Note that this step is not needed for SWMP data since the SWMPr package automatically converts the date/time column using the correct time zone. The PAR column is converted using the same formula from above, except we don't need to convert from millimoles to micromoles and from 15 minutes to seconds. 
 
 ```{r}
 lobo <- lobo |> 
@@ -313,7 +313,7 @@ lobo <- lobo |>
   )
 ```
 
-Next we import the weather data.  These can be similarly downloaded using the NOAA Tides & Currents [API](https://api.tidesandcurrents.noaa.gov/api/prod/#units).
+Next we import the weather data.  These can be similarly downloaded using the NOAA Tides & Currents [API](https://api.tidesandcurrents.noaa.gov/api/prod/#units).  Again, note how the URL is specified to get the data we want.
 
 ```{r}
 url <- 'https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?product=wind&application=NOS.COOPS.TAC.MET&begin_date=20210701&end_date=20210801&station=8726520&time_zone=LST&units=metric&format=CSV'
@@ -323,7 +323,7 @@ head(ports)
 str(ports)
 ```
 
-We only need to select and rename the columns and convert the date/time column to a POSIXct object with the correct time zone.  Instead of `ymd_hms()` as above, we'll use `ymd_hm()` because seconds are not included. We'll do this in one step.
+Similar to the water quality data, we need to select and rename the columns we need and convert the date/time column to a POSIXct object with the correct time zone.  Instead of `ymd_hms()` as above, we'll use `ymd_hm()` because seconds are not included. We'll do this in one step.
 
 ```{r}
 ports <- ports |> 
@@ -336,7 +336,7 @@ ports <- ports |>
   )
 ```
 
-The last step is to combine the water quality and weather data.  We can use a simple join function from the dplyr package.  The water quality and weather data are at different time steps, where the water quality data is every hour on the 30 minute mark and the weather data are every six minutes.  Because the weather data also include observations on the 30 minute mark, we can just left join them to the water quality data, retaining only those data on the 30 minute mark. 
+The last step is to combine the water quality and weather data.  We can use a simple join function from the dplyr package.  The water quality and weather data are at different time steps, where the water quality data is every hour on the 30 minute mark and the weather data are every six minutes.  Because the weather data also include observations on the 30 minute mark, we can just left join them to the water quality data, retaining only those data on the 30 minute mark. See [here](https://r4ds.hadley.nz/joins) for more information about joins.
 
 ```{r}
 tbdat <- left_join(lobo, ports, by = 'DateTimeStamp')
@@ -345,13 +345,15 @@ head(tbdat)
 str(tbdat)
 ```
 
-Now the data are ready for analysis. 
+We see that the final dataset has the same number of rows as the water quality data and a wind speed column has been added from the weather data. Now the data are ready for analysis. 
 
 ::: {.callout-note icon="false"}
 ## `r fontawesome::fa('hat-wizard')`: Exercise 2
 
 We'll want to visually evaluate the Tampa Bay data before using EBASE.  
 
+1. Create and name a section header in your script with `Ctrl + Shift + R`. Enter all exercise code in this section.
+1. Load the plotly package with the `library` function.
 1. Use the plotly package to create some time series plots for variables of interest.  
 1. Look for gaps or outliers. 
 1. Look for interesting trends that might influence how you interpret metabolism.
@@ -359,7 +361,9 @@ We'll want to visually evaluate the Tampa Bay data before using EBASE.
 ::: {.callout-tip icon="false" collapse="true"}
 ### `r fontawesome::fa('wand-magic-sparkles')` Answers
 ```{r}
-#| eval: false
+#| results: 'hide'
+library(plotly)
+
 plot_ly(tbdat, x = ~DateTimeStamp, y = ~DO_obs, type = 'scatter', mode = 'lines')
 plot_ly(tbdat, x = ~DateTimeStamp, y = ~Temp, type = 'scatter', mode = 'lines')
 plot_ly(tbdat, x = ~DateTimeStamp, y = ~Sal, type = 'scatter', mode = 'lines')
