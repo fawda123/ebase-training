@@ -28,8 +28,10 @@ jobs:
         with:
           packages: |
             EBASE
+            plotly
             SWMPr
             github::mitchelloharawild/icons
+            
       
       - name: Install JAGS
         run: |
