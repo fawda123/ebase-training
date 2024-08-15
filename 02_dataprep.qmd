@@ -245,7 +245,7 @@ plot_ly(apadb, x = ~DateTimeStamp, y = ~WSpd, type = 'scatter', mode = 'lines')
 This brief assessment can give us information on which years of data are useful to interpret for metabolism.  A more detailed analysis of the quality of the data is needed before more formal analyses, including an assessment of the QC codes in the SWMP data.  This quick assessment will suffice for now.
 
 ::: {.callout-note icon="false"}
-## `r fontawesome::fa('hat-wizard)`: Exercise 2
+## `r fontawesome::fa('hat-wizard')`: Exercise 2
 
 Repeat the above examples but use the combined dataset for the Apalachicola Bay East Bay data that you created in Exercise 1.
 
@@ -348,7 +348,7 @@ str(tbdat)
 Now the data are ready for analysis. 
 
 ::: {.callout-note icon="false"}
-## `r fontawesome::fa('hat-wizard)`: Exercise 2
+## `r fontawesome::fa('hat-wizard')`: Exercise 2
 
 We'll want to visually evaluate the Tampa Bay data before using EBASE.  
 
