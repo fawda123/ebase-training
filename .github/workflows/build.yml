@@ -28,10 +28,9 @@ jobs:
         with:
           packages: |
             EBASE
+            fontawesome
             plotly
             SWMPr
-            github::mitchelloharawild/icons
-            
       
       - name: Install JAGS
         run: |

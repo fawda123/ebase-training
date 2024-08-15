@@ -120,7 +120,7 @@ range(apadb$datetimestamp)
 ```
 
 ::: {.callout-note icon="false"}
-### `r fa('hat-wizard')` Exercise 1
+### `r fontawesome::fa('hat-wizard')` Exercise 1
 Repeat the above examples but do this using data for the East Bay station at Apalachicola.  Import data for `apaebwq` and `abaebmet`, clean them up with `qaqc`, and combine them with `comb`.
 
 1. Create and name a section header in your script with `Ctrl + Shift + R`. Enter all exercise code in this section.
@@ -130,7 +130,7 @@ Repeat the above examples but do this using data for the East Bay station at Apa
 1. Combine the two with `comb`. Use a 60 minute time step and use the `union` option.
 
 ::: {.callout-tip icon="false" collapse="true"}
-#### `r fa('wand-magic-sparkles')` Answers
+#### `r fontawesome::fa('wand-magic-sparkles')` Answers
 ```{r}
 # import water quality data, clean it up
 apaebwq <- import_local(path = 'data/367272.zip', station_code = 'apaebwq')
@@ -245,7 +245,7 @@ plot_ly(apadb, x = ~DateTimeStamp, y = ~WSpd, type = 'scatter', mode = 'lines')
 This brief assessment can give us information on which years of data are useful to interpret for metabolism.  A more detailed analysis of the quality of the data is needed before more formal analyses, including an assessment of the QC codes in the SWMP data.  This quick assessment will suffice for now.
 
 ::: {.callout-note icon="false"}
-## `r fa('hat-wizard)`: Exercise 2
+## `r fontawesome::fa('hat-wizard)`: Exercise 2
 
 Repeat the above examples but use the combined dataset for the Apalachicola Bay East Bay data that you created in Exercise 1.
 
@@ -255,7 +255,7 @@ Repeat the above examples but use the combined dataset for the Apalachicola Bay 
 1. Convert PAR to the correct units.
 
 ::: {.callout-tip icon="false" collapse="true"}
-### `r fa('wand-magic-sparkles')` Answers
+### `r fontawesome::fa('wand-magic-sparkles')` Answers
 ```{r}
 # select and rename columns
 apaeb <- select(apaeb,
@@ -348,7 +348,7 @@ str(tbdat)
 Now the data are ready for analysis. 
 
 ::: {.callout-note icon="false"}
-## `r fa('hat-wizard)`: Exercise 2
+## `r fontawesome::fa('hat-wizard)`: Exercise 2
 
 We'll want to visually evaluate the Tampa Bay data before using EBASE.  
 
@@ -357,7 +357,7 @@ We'll want to visually evaluate the Tampa Bay data before using EBASE.
 1. Look for interesting trends that might influence how you interpret metabolism.
 
 ::: {.callout-tip icon="false" collapse="true"}
-### `r fa('wand-magic-sparkles')` Answers
+### `r fontawesome::fa('wand-magic-sparkles')` Answers
 ```{r}
 #| eval: false
 plot_ly(tbdat, x = ~DateTimeStamp, y = ~DO_obs, type = 'scatter', mode = 'lines')
