@@ -86,6 +86,7 @@ We'll use the following R packages during the workshop.  Install them in the RSt
 install.packages('EBASE')
 install.packages('SWMPr')
 install.packages('tidyverse')
+install.packages('plotly')
 ```
 
 After installation, check the packages can be loaded without error:
@@ -94,6 +95,7 @@ After installation, check the packages can be loaded without error:
 library(EBASE)
 library(SWMPr)
 library(tidyverse)
+library(plotly)
 ```
 
 ## Download the data {#sec-data}

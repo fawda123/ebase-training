@@ -133,6 +133,7 @@ Let's run through the basics of creating a project in RStudio.
     library(EBASE)
     library(SWMPr)
     library(tidyverse)
+    library(plotly)
     ```
     Save the script again and send the commands from the source script to the console.  Do they load properly??
 
