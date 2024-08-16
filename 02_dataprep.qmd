@@ -53,9 +53,9 @@ The dissolved oxygen, water temperature, and salinity data are typically collect
 
 ## Data import with SWMPr
 
-The [SWMPr]() package was developed in 2016 to provide a bridge between the raw data from the NERRS SWMP network and the R analysis platform [@Beck2016]. It does this with some degree of proficiency, but by far it's most useful feature is being able to import and combine time series from SWMP sites with relative ease.  In particular, the `import_local`, `qaqc`, and `comb` functions allow us to quickly import, clean up, and combine datasets for follow-up analysis.  This is all we'll do with SWMPr in these lessons.
+The [SWMPr](https://cran.r-project.org/web/packages/SWMPr/index.html) package was developed in 2016 to provide a bridge between the raw data from the NERR System Wide Monitoring Program (SWMP) network and the R analysis platform [@Beck2016]. It does this with some degree of proficiency, but by far it's most useful feature is being able to import and combine time series from SWMP sites with relative ease.  In particular, the `import_local`, `qaqc`, and `comb` functions allow us to quickly import, clean up, and combine datasets for follow-up analysis.  This is all we'll do with SWMPr in these lessons.
 
-The `import_local` function is designed to work with data downloaded from the CDMO using the [Zip Downloads](http://cdmo.baruch.sc.edu/aqs/zips.cfm) feature from the Advanced Query System.  The files we have in our "data" folder were requested from this feature for Apalachicola Bay data from 2017 to 2019.
+The `import_local` function is designed to work with SWMP data downloaded from the Centralized Data Management Office (CDMO) using the [Zip Downloads](http://cdmo.baruch.sc.edu/aqs/zips.cfm) feature from the Advanced Query System.  The files we have in our "data" folder were requested from this feature for Apalachicola Bay data from 2017 to 2019.
 
 The `import_local` function has two arguments: `path` to indicate where the data are located and `station_code` to indicate which station to import.  We first load SWMPr and then use the function to import data for the Apalachicola Dry Bar station:
 

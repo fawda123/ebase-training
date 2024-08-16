@@ -40,7 +40,7 @@ This graphic from a synthesis study of 350 sites by @Hoellein2013 shows how meta
 
 ![](figs/hoellein.png){fig-align="center" width=80%}
 
-Most of the estuarine sites used in @Hoellein2013 were from a single study by @caffrey2004 that evaluated metabolism across all NERR sites. This study was one of the first to develop a system-wide comparison of metabolic rates and several useful conclusions were made.  
+Most of the estuarine sites used in @Hoellein2013 were from a single study by @caffrey2004 that evaluated metabolism across all sites in the National Estuarine Research Reserve (NERR). This study was one of the first to develop a system-wide comparison of metabolic rates and several useful conclusions were made.  
 
 For example, metabolic rates between estuarine habitats are shown below, where most sites tend towards heterotrophy, although sites dominated by submerged aquatic vegetation are more balanced or even autotrophic.  
 
