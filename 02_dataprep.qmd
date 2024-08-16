@@ -323,7 +323,7 @@ head(ports)
 str(ports)
 ```
 
-Similar to the water quality data, we need to select and rename the columns we need and convert the date/time column to a POSIXct object with the correct time zone.  Instead of `ymd_hms()` as above, we'll use `ymd_hm()` because seconds are not included. We'll do this in one step.
+Similar to the water quality data, we need to select and rename the columns and convert the date/time column to a POSIXct object with the correct time zone.  Instead of `ymd_hms()` as above, we'll use `ymd_hm()` because seconds are not included. We'll do this in one step.
 
 ```{r}
 ports <- ports |> 
