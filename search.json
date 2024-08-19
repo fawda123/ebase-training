@@ -261,7 +261,7 @@
     "href": "03_ebase.html#the-bayesian-approach",
     "title": "3  Using EBASE",
     "section": "3.4 The Bayesian approach",
-    "text": "3.4 The Bayesian approach\nThe conventional open-water method presented by Odum (1956) is similar to EBASE in that it uses the rate of change of \\(DO\\) to estimate metabolism. However, the Bayesian approach used in EBASE differs in how the parameters are estimated and has several key advantages.",
+    "text": "3.4 The Bayesian approach\nThe conventional open-water method presented by Odum (1956) is similar to EBASE in that it uses the rate of change of \\(DO\\) to estimate metabolism. However, the Bayesian approach used in EBASE differs in how the parameters are estimated and has several key advantages.\nModern statistical approaches to modelling can broadly be described as conventional “frequentist” methods or Bayesian. The former describes standard and more commonly used methods where a model is fit to a dataset to support a hypothesis, as in a simple linear regression. Bayesian approaches turn the paradigm around by asking the question “what is the likelihood of the data given a model?”",
     "crumbs": [
       "Lessons",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Using EBASE</span>"
