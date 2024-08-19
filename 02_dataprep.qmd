@@ -245,7 +245,7 @@ plot_ly(apadb, x = ~DateTimeStamp, y = ~WSpd, type = 'scatter', mode = 'lines')
 This brief assessment can give us information on which years of data are useful to interpret for metabolism.  A more detailed analysis of the quality of the data is needed before more formal analyses, including an assessment of the QC codes in the SWMP data.  This quick assessment will suffice for now.
 
 ::: {.callout-note icon="false"}
-## `r fontawesome::fa('hat-wizard')`: Exercise 2
+## `r fontawesome::fa('hat-wizard')` Exercise 2
 
 Repeat the above examples but use the combined dataset for the Apalachicola Bay East Bay data that you created in Exercise 1.
 
@@ -280,7 +280,9 @@ apaeb <- apaeb |>
 
 Long-term continuous monitoring data from other sources can be used with EBASE. As above, the data must include relevant water quality and weather data at an appropriate time step.  This section will show you how to prepare generic data with more general tools in R.
 
-Data from Tampa Bay will be used in this example. We'll pull water quality data from a continuous monitoring platform in the lower bay and weather data from a nearby NOAA monitoring station.  The data are available [here](http://tampabay.loboviz.com/) and can be downloaded through their [API](http://tampabay.loboviz.com/cgidoc/). Take a look at the URL to see how the API is queried. 
+Data from Tampa Bay will be used in this example. We'll pull water quality data from a continuous monitoring platform in the lower bay and weather data from a nearby NOAA monitoring station.  
+
+The water quality data are available [here](http://tampabay.loboviz.com/) and can be downloaded through an [API](http://tampabay.loboviz.com/cgidoc/). Take a look at the URL to see how the API is queried. 
 
 ```{r}
 url <- 'http://tampabay.loboviz.com/cgi-data/nph-data.cgi?node=82&min_date=20210701&max_date=20210801&y=salinity,temperature,oxygen,par&data_format=text'
@@ -345,10 +347,10 @@ head(tbdat)
 str(tbdat)
 ```
 
-We see that the final dataset has the same number of rows as the water quality data and a wind speed column has been added from the weather data. Now the data are ready for analysis. 
+We see that the final dataset has the same number of rows as the water quality data and a wind speed column has been added from the weather data that includes data on the 30 minute mark. Now the data are ready for analysis. 
 
 ::: {.callout-note icon="false"}
-## `r fontawesome::fa('hat-wizard')`: Exercise 2
+## `r fontawesome::fa('hat-wizard')` Exercise 3
 
 We'll want to visually evaluate the Tampa Bay data before using EBASE.  
 
