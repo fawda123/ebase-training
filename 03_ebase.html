@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -69,6 +89,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="libs/style.css">
 </head>
@@ -191,7 +240,10 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#lesson-outline" id="toc-lesson-outline" class="nav-link active" data-scroll-target="#lesson-outline"><span class="header-section-number">3.1</span> Lesson Outline</a></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals"><span class="header-section-number">3.2</span> Learning Goals</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">3.3</span> Next steps</a></li>
+  <li><a href="#the-ebase-method" id="toc-the-ebase-method" class="nav-link" data-scroll-target="#the-ebase-method"><span class="header-section-number">3.3</span> The EBASE method</a></li>
+  <li><a href="#the-bayesian-approach" id="toc-the-bayesian-approach" class="nav-link" data-scroll-target="#the-bayesian-approach"><span class="header-section-number">3.4</span> The Bayesian approach</a></li>
+  <li><a href="#ebase-prep" id="toc-ebase-prep" class="nav-link" data-scroll-target="#ebase-prep"><span class="header-section-number">3.5</span> EBASE prep</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">3.6</span> Next steps</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/03_ebase.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -224,18 +276,56 @@ ul.task-list li input[type="checkbox"] {
 <section id="learning-goals" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="learning-goals"><span class="header-section-number">3.2</span> Learning Goals</h2>
 <ul>
-<li>Understand the basic theory behind ecosystem metabolism</li>
-<li>Learn how EBASE is used to estimate key parameters</li>
+<li>Understand the basic theories of EBASE</li>
 <li>Understand the Bayesian approach to estimating metabolism</li>
+<li>Learn how EBASE is used to estimate key parameters</li>
 <li>Use the main functions of EBASE to estimate metabolism</li>
 <li>Interpret the results of EBASE</li>
 </ul>
 </section>
-<section id="next-steps" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">3.3</span> Next steps</h2>
+<section id="the-ebase-method" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="the-ebase-method"><span class="header-section-number">3.3</span> The EBASE method</h2>
+<p><span class="citation" data-cites="intro">(Lesson <a href="references.html#ref-intro" role="doc-biblioref"><strong>intro?</strong></a>)</span> provided a general description of ecosystem metabolism and why it’s an important measure of ecosystem health. The EBASE approach follows these general principles but differs in the core model for estimating production, respiration, and gas exchange and the statistical approach for how the parameters for each are estimated. Let’s revisit the core metabolic equation:</p>
+<p><span class="math display">\[
+NEM = P - R
+\]</span></p>
+<p>Net ecosystem metabolism (<span class="math inline">\(NEM\)</span>) is simply the difference between processes that produce organic matter (production or <span class="math inline">\(P\)</span>) and those that consume organic matter (repiration or <span class="math inline">\(R\)</span>).</p>
+<p>We can estimate these rates from the dissolved oxygen (<span class="math inline">\(DO\)</span>) time series by using the rate of change of <span class="math inline">\(DO\)</span> per unit time and accounting for gas exchange <span class="math inline">\(D\)</span>. Water column depth (<span class="math inline">\(Z\)</span>) is used to estimate metabolism as an areal rate.</p>
+<p><span class="math display">\[
+Z\frac{dC_d}{dt} = P - R + D
+\]</span></p>
+<p>Methods for estimating metabolism from the dissolved oxygen time series vary in how each of the key parameters are modeled. The core equation for EBASE is the same as the previous but expanded as appropriate for estuarine applications:</p>
+<p><span class="math display">\[
+Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left(C_{Sat} - C_d \right )
+\]</span></p>
+<p><span class="math inline">\(aPAR\)</span> is production (<span class="math inline">\(P\)</span>), <span class="math inline">\(R\)</span> is respiration, and the last term is gas exchange (<span class="math inline">\(D\)</span>). The required input data to fit this model was described in <span class="citation" data-cites="dataprep">(Lesson <a href="references.html#ref-dataprep" role="doc-biblioref"><strong>dataprep?</strong></a>)</span>. Three of these inputs are used directly in the equation as <span class="math inline">\(C_d\)</span> for dissolved oxygen, <span class="math inline">\(PAR\)</span>, and wind speed as <span class="math inline">\(U_10^2\)</span> (or squared wind speed at ten meters above the surface). The other terms are the Schmidt number (<span class="math inline">\(S_c\)</span>) and dissolved oxygen at saturation (<span class="math inline">\(C_sat\)</span>), both of which use water temperature and salinity from the input data.</p>
+<p>The remaining terms <span class="math inline">\(a\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(b\)</span> are estimated during the model fitting process, which we’ll discuss in the next section. All three provide important information about metabolic processes and are useful on their own to understand ecosystem function.</p>
+<ul>
+<li><span class="math inline">\(a\)</span>: The light efficiency parameter as <span class="math inline">\(\left(mmol O_2 m^{-2} d^{-1}\right) / \left(W m^{-2}\right)\)</span>, yields production when multiplied by <span class="math inline">\(PAR\)</span>. This is a measure of how efficiently light is converted to organic matter. It provides similar information as a P/I curve by showing how production changes with light availability.</li>
+<li><span class="math inline">\(R\)</span>: The respiration rate as <span class="math inline">\(mmol O_2 m^{-2} d^{-1}\)</span>, is the rate at which organic matter is consumed.</li>
+<li><span class="math inline">\(b\)</span>: The sensitivity of gas exchange to wind speed as <span class="math inline">\(\left(cm h^{-1}\right / \left(m^2 s^{-2}\right)\)</span>.</li>
+</ul>
+<p>Although the core model equation may seem complicated, its formulation was chosen to describe dominant processes that influence metabolism in an estuarine setting. The details for this justification can be found in <span class="citation" data-cites="Beck2024">Beck et al. (<a href="references.html#ref-Beck2024" role="doc-biblioref">2024</a>)</span>.</p>
+</section>
+<section id="the-bayesian-approach" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="the-bayesian-approach"><span class="header-section-number">3.4</span> The Bayesian approach</h2>
+</section>
+<section id="ebase-prep" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="ebase-prep"><span class="header-section-number">3.5</span> EBASE prep</h2>
+<ul>
+<li>Missing data</li>
+</ul>
+</section>
+<section id="next-steps" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">3.6</span> Next steps</h2>
 <p>You now understand the basics of ecosystem metabolism and how EBASE is used to estimate key parameters using a Bayesian approach. We’ve explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and various plotting methods. Next, we’ll explore the EBASE results in more detail to demonstrate how the results can inform the understanding of ecosystem health and function.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-Beck2024" class="csl-entry" role="listitem">
+Beck, M. W., J. M. Arriola, M. Herrmann, and R. G. Najjar. 2024. Fitting metabolic models to dissolved oxygen data: The estuarine bayesian single-station estimation method. Limnology and Oceanography: Methods <strong>22</strong>: 590–607. doi:<a href="https://doi.org/10.1002/lom3.10620">10.1002/lom3.10620</a>
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
