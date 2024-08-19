@@ -52,6 +52,8 @@ Although the core model equation may seem complicated, its formulation was chose
 
 The conventional open-water method presented by @Odum56 is similar to EBASE in that it uses the rate of change of $DO$ to estimate metabolism.  However, the Bayesian approach used in EBASE differs in how the parameters are estimated and has several key advantages.  
 
+Modern statistical approaches to modelling can broadly be described as conventional "frequentist" methods or Bayesian.  The former describes standard and more commonly used methods where a model is fit to a dataset to support a hypothesis, as in a simple linear regression.  Bayesian approaches turn the paradigm around by asking the question "what is the likelihood of the data given a model?"  
+
 ## EBASE prep
 
 * Missing data
