@@ -49,7 +49,7 @@ Only five parameters are required to use EBASE, where each row represents a sing
 * `PAR`: Total photosynthetically active radiation in Watts per square meter.
 * `WSpd`: Wind speed in meters per second.
 
-The dissolved oxygen, water temperature, and salinity data are typically collected by a water quality sonde, while the PAR and wind speed data are typically collected at a weather station.  We'll discuss why these parameters are needed to calculate metabolism in [Lesson @sec-ebase]. These data must be combined into a single data frame for EBASE to work.  We'll do this in the next few sections. 
+The dissolved oxygen, water temperature, and salinity data are typically collected by a water quality sonde, while the PAR and wind speed data are typically collected at a weather station.  We'll discuss why these parameters are needed to calculate metabolism in [Lesson @sec-ebase]. These data must be combined into a single data frame to work with EBASE.  We'll do this in the next few sections. 
 
 ## Data import with SWMPr
 
@@ -76,7 +76,7 @@ Note that this function was able to import and combine data from multiple csv fi
 
 ## Cleaning and combining SWMP data
 
-Each row has data for multiple parameters at 15 minute intervals.  Each parameter also includes a column with [QAQC flags](http://cdmo.baruch.sc.edu/data/qaqc.cfm), i.e., `f_` then the parameter name.  We can use the `qaqc` function to "screen" observations with specific QAQC flags. We'll keep all observations that have the flags 0, 1, 2, 3, 4, and 5 by indicating this information in the `qaqc_keep` argument (in practice, you may only want to keep data with a "zero" flag). You can view a tabular summary of the flags in a dataset using the `qaqcchk` function.
+Each row has data for multiple parameters at 15 minute intervals.  Each parameter also includes a column with [QAQC flags](http://cdmo.baruch.sc.edu/data/qaqc.cfm), i.e., `f_` then the parameter name.  We can use the `qaqc` function to "screen" observations with specific QAQC flags. We'll keep all observations that have the flags 0, 1, 2, 3, 4, and 5 by indicating this information in the `qaqc_keep` argument (in practice, you may only want to keep data with a "zero" flag). You can also view a tabular summary of the flags in a dataset using the `qaqcchk` function.
 
 ```{r}
 # keep only observations that passed qaqc chekcs
@@ -121,7 +121,7 @@ range(apadb$datetimestamp)
 
 ::: {.callout-note icon="false"}
 ### `r fontawesome::fa('hat-wizard')` Exercise 1
-Repeat the above examples but do this using data for the East Bay station at Apalachicola.  Import data for `apaebwq` and `abaebmet`, clean them up with `qaqc`, and combine them with `comb`.
+Repeat the above examples but do this using data for the East Bay water quality station at Apalachicola.  Import data for `apaebwq` and `abaebmet`, clean them up with `qaqc`, and combine them with `comb`.
 
 1. Create and name a section header in your script with `Ctrl + Shift + R`. Enter all exercise code in this section.
 1. Load the SWMPr package with the `library` function.  This should already be installed from last time (i.e., `install.packages('SWMPr')`).
@@ -148,7 +148,7 @@ apaeb <- comb(apaebwq, apaebmet, timestep = 60, method = 'union')
 
 ## Preparing SWMP data for EBASE
 
-Now we want to setup our data for use with functions in the EBASE package.  As with most R functions, the input formats are very specific requiring us to make sure the column names, locations, and types of columns in our data are exactly as needed.  
+There are a few more steps before we can use EBASE now that we've combined the water quality and weather data.  As with most R functions, the input formats are very specific requiring us to make sure the column names, locations of the columns, and types of columns in our data are exactly as needed.  
 
 The example dataset from EBASE can be used to guide us in preparing the data. We can compare this to our Apalachicola dataset from above.
 
@@ -168,7 +168,7 @@ str(apadb)
 
 So, we need to do a few things to our Apalachicola dataset to match the format of the `exdat` dataset. We can use the dplyr package to "wrangle" the data into the correct format (here's a useful [cheatsheet](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for this package).  The dplyr package comes with the tidyverse.
 
-All we need to do is rename the columns and select those we want in the correct order.  This can all be done with the `select` function in dplyr.
+First we need to rename the columns and select those we want to make `apadb` look more like `exdat`.  This can all be done with the `select` function in dplyr.
 
 ```{r}
 # load dplyr
@@ -191,24 +191,25 @@ head(apadb)
 str(apadb)
 ```
 
-We can also verify the column names are the same between the two datasets.  Note the use of two equal signs - this is how we tell R to test for equality.
+We can verify the column names are the same between the two datasets.  Note the use of two equal signs - this is how we tell R to test for equality.
 
 ```{r}
 names(apadb) == names(exdat)
 ```
 
-The last thing we need to do is to make sure the units are correct. Looking at the requirements in @sec-ebasedata and those from the [CDMO](https://cdmo.baruch.sc.edu/data/parameters.cfm) website, all of the data are in the correct units except for PAR.  This should be in Watts per square meter, whereas the data are millimoles per square meter per 15 minute logging interval.  @morel1974 provide the following conversion factor:
+The last thing we need to do is to make sure the units are correct. Looking at the requirements in @sec-ebasedata (or the help file `?exdat`) and those from the [CDMO](https://cdmo.baruch.sc.edu/data/parameters.cfm) website, all of the data are in the correct units except for PAR.  This should be in Watts per square meter, whereas the data are millimoles per square meter per 15 minute logging interval.  @morel1974 provide the following conversion factor:
 
 $$
 1 \, \mu mol \, m^{-2} \, s^{-1} = 0.2175 \, W \, m^{-2}
 $$
-Before we apply the conversion factor, we need to convert the units of PAR from millimoles to micromoles and from per 15 minutes to per second.  This can be done by simply multiply PAR by 1000 (milli to micro) and dividing by 900 (15 minutes = 900 seconds).  The final conversion will look like this:
+
+Before we apply the conversion factor, we need to convert the units of PAR from millimoles to micromoles and from per 15 minutes to per second.  First we multiply PAR by 1000 to convert millimoles to micromoles and then divide by 900 to convert 15 minutes to seconds (15 minutes = 900 seconds).  Lastly, we multiply the result by the constant above to convert micromoles per square meter per second to Watts per square meter.  The final conversion will look like this:
 
 $$
 1 \, W \, m^{-2} = 1 \, mmol \, m^{-2} \, 15min^{-1} * 1000 / 900 * 0.2175
 $$
 
-We can use the `mutate` function in dplyr to convert this.
+We can use the `mutate` function in dplyr to convert PAR to the correct units in one step.
 
 ```{r}
 # convert PAR to Watts per square meter
@@ -218,9 +219,9 @@ apadb <- apadb |>
   )
 ```
 
-The Apalachicola data should now work with EBASE. However, a few additional exploratory analyses are worthwhile before we use these data.  Most functions in R deal with missing data by either not working at all or providing some work-around to accommodate the missing values. The functions in EBASE are in the latter category and we'll discuss how this is done in [Lesson @sec-ebase].  However, knowing how much and where missing observations occur is still important for interpreting results. 
+The Apalachicola data should now work with EBASE. However, a few additional exploratory analyses are worthwhile before we use these data.  Most functions in R deal with missing data by either not working at all or providing a work-around to accommodate the missing values. The functions in EBASE are in the latter category and we'll discuss how this is done in [Lesson @sec-ebase].  However, knowing how much and where missing observations occur is still important for interpreting results. 
 
-Missing data in SWMP are not uncommon and they often occur when sondes or other equipment are down for maintenance or are otherwise broken for a period of time.  Missing observations usually come in blocks where all parameters are unavailable, as opposed to only one parameter. Below, we can quickly see how many missing observations occur in column.
+Missing data in SWMP are not uncommon and they often occur when sondes or other equipment are down for maintenance or are otherwise not working for a period of time.  Missing observations usually come in blocks where all parameters are unavailable, as opposed to only one parameter. Below, we can quickly see how many missing observations occur in column.
 
 ```{r}
 apply(apadb, 2, function(x) sum(is.na(x)))
@@ -247,12 +248,12 @@ This brief assessment can give us information on which years of data are useful 
 ::: {.callout-note icon="false"}
 ## `r fontawesome::fa('hat-wizard')` Exercise 2
 
-Repeat the above examples but use the combined dataset for the Apalachicola Bay East Bay data that you created in Exercise 1.
+Repeat the above examples but use the combined dataset for Apalachicola East Bay that you created in Exercise 1.
 
 1. Create a new section in your script using `Ctrl + Shift + R` and give it an appropriate name.
 1. Load the dplyr package with the library function.
 1. Simultaneously rename and select the columns for date/time (`DateTimeStamp = datetimestamp`), dissolved oxygen (`DO_obs = do_mgl`), water temperature (`Temp = temp`), salinity (`Sal = sal`), PAR (`PAR = par`), and wind speed (`WSpd = wspd`) with the `select` function from dplyr. Don’t forget to assign the new dataset to an object in your workspace (with <-).
-1. Convert PAR to the correct units.
+1. Convert PAR to the correct units using `mutate`.
 
 ::: {.callout-tip icon="false" collapse="true"}
 ### `r fontawesome::fa('wand-magic-sparkles')` Answers
@@ -278,7 +279,7 @@ apaeb <- apaeb |>
 
 ## Preparing other data
 
-Long-term continuous monitoring data from other sources can be used with EBASE. As above, the data must include relevant water quality and weather data at an appropriate time step.  This section will show you how to prepare generic data with more general tools in R.
+Continuous monitoring data from other sources can be used with EBASE. As above, the data must include relevant water quality and weather data at an appropriate time step.  This section will show you how to prepare generic data with more general tools in R.
 
 Data from Tampa Bay will be used in this example. We'll pull water quality data from a continuous monitoring platform in the lower bay and weather data from a nearby NOAA monitoring station.  
 
@@ -292,7 +293,7 @@ head(lobo)
 str(lobo)
 ```
 
-The data are not in the right format for EBASE. We need to change the names, convert the date/time column to a POSIXct object with the correct time zone, and convert the PAR data to the correct units.  PAR is micromoles per square meter per second, so we need to convert this to Watts per square meter.  First, we select and rename the columns.
+The data are not in the right format for EBASE. We need to change the names, convert the date/time column to a POSIXct object with the correct time zone, and convert the PAR data to the correct units.  PAR is micromoles per square meter per second, so we need to convert this to Watts per square meter.  First, we select and rename the columns with `select`.
 
 ```{r}
 lobo <- lobo |> 
@@ -305,7 +306,7 @@ lobo <- lobo |>
   )
 ```
 
-Next, we use mutate to convert the date/time column to a POSIXct object and the PAR data to the correct units. For date/time, we can use a function from the lubridate package and use the "America/Jamaica" time zone, which is eastern time without daylight savings.  Note that this step is not needed for SWMP data since the SWMPr package automatically converts the date/time column using the correct time zone. The PAR column is converted using the same formula from above, except we don't need to convert from millimoles to micromoles and from 15 minutes to seconds. 
+Next, we use `mutate` to convert the date/time column to a POSIXct object and the PAR data to the correct units. For date/time, we can use the `ymd_hms` function from the lubridate package with the "America/Jamaica" time zone, which is eastern time without daylight savings.  Note that this step is not needed for SWMP data since the SWMPr package automatically converts the date/time column using the correct time zone. The PAR column is converted using the same formula from above, except we don't need to convert from millimoles to micromoles and from 15 minutes to seconds. 
 
 ```{r}
 lobo <- lobo |> 
@@ -325,7 +326,7 @@ head(ports)
 str(ports)
 ```
 
-Similar to the water quality data, we need to select and rename the columns and convert the date/time column to a POSIXct object with the correct time zone.  Instead of `ymd_hms()` as above, we'll use `ymd_hm()` because seconds are not included. We'll do this in one step.
+Similar to the water quality data, we need to select and rename the required columns and convert the date/time column to a POSIXct object with the correct time zone.  Instead of `ymd_hms` as above, we'll use `ymd_hm` because seconds are not included. We'll do this in one step.
 
 ```{r}
 ports <- ports |> 

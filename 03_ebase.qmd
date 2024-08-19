@@ -10,11 +10,49 @@ This lesson will explain the basic theory behind ecosystem metabolism and how EB
 
 ## Learning Goals
 
-- Understand the basic theory behind ecosystem metabolism
-- Learn how EBASE is used to estimate key parameters
+- Understand the basic theories of EBASE
 - Understand the Bayesian approach to estimating metabolism
+- Learn how EBASE is used to estimate key parameters
 - Use the main functions of EBASE to estimate metabolism
 - Interpret the results of EBASE
+
+## The EBASE method
+
+[Lesson @intro] provided a general description of ecosystem metabolism and why it's an important measure of ecosystem health.  The EBASE approach follows these general principles but differs in the core model for estimating production, respiration, and gas exchange and the statistical approach for how the parameters for each are estimated.  Let's revisit the core metabolic equation: 
+
+$$ 
+NEM = P - R
+$$
+
+Net ecosystem metabolism ($NEM$) is simply the difference between processes that produce organic matter (production or $P$) and those that consume organic matter (repiration or $R$).  
+
+We can estimate these rates from the dissolved oxygen ($DO$) time series by using the rate of change of $DO$ per unit time and accounting for gas exchange $D$.  Water column depth ($Z$) is used to estimate metabolism as an areal rate. 
+
+$$
+Z\frac{dC_d}{dt} = P - R + D
+$$
+
+Methods for estimating metabolism from the dissolved oxygen time series vary in how each of the key parameters are modeled.  The core equation for EBASE is the same as the previous but expanded as appropriate for estuarine applications: 
+
+$$
+Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left(C_{Sat} - C_d \right )
+$$
+
+$aPAR$ is production ($P$), $R$ is respiration, and the last term is gas exchange ($D$).  The required input data to fit this model was described in [Lesson @dataprep].  Three of these inputs are used directly in the equation as $C_d$ for dissolved oxygen, $PAR$, and wind speed as $U_10^2$ (or squared wind speed at ten meters above the surface).  The other terms are the Schmidt number ($S_c$) and dissolved oxygen at saturation ($C_sat$), both of which use water temperature and salinity from the input data. 
+
+The remaining terms $a$, $R$, and $b$ are estimated during the model fitting process, which we'll discuss in the next section.  All three provide important information about metabolic processes and are useful on their own to understand ecosystem function.
+
+* $a$: The light efficiency parameter as $\left(mmol O_2 m^{-2} d^{-1}\right) / \left(W m^{-2}\right)$, yields production when multiplied by $PAR$.  This is a measure of how efficiently light is converted to organic matter.  It provides similar information as a P/I curve by showing how production changes with light availability.
+* $R$: The respiration rate as $mmol O_2 m^{-2} d^{-1}$, is the rate at which organic matter is consumed.
+* $b$: The sensitivity of gas exchange to wind speed as $\left(cm h^{-1}\right / \left(m^2 s^{-2}\right)$.
+
+Although the core model equation may seem complicated, its formulation was chosen to describe dominant processes that influence metabolism in an estuarine setting.  The details for this justification can be found in @Beck2024.
+
+## The Bayesian approach
+
+## EBASE prep
+
+* Missing data
 
 ## Next steps
 
