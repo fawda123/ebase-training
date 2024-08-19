@@ -285,30 +285,31 @@ window.Quarto = {
 </section>
 <section id="the-ebase-method" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="the-ebase-method"><span class="header-section-number">3.3</span> The EBASE method</h2>
-<p><span class="citation" data-cites="intro">(Lesson <a href="references.html#ref-intro" role="doc-biblioref"><strong>intro?</strong></a>)</span> provided a general description of ecosystem metabolism and why it’s an important measure of ecosystem health. The EBASE approach follows these general principles but differs in the core model for estimating production, respiration, and gas exchange and the statistical approach for how the parameters for each are estimated. Let’s revisit the core metabolic equation:</p>
+<p><a href="01_intro.html" class="quarto-xref">Lesson&nbsp;<span>1</span></a> provided a general description of ecosystem metabolism and why it’s an important measure of ecosystem health. The EBASE approach follows these general principles but differs in the core model for estimating production, respiration, and gas exchange and the statistical approach for how the parameters for each are estimated. Let’s revisit the core metabolic equation:</p>
 <p><span class="math display">\[
 NEM = P - R
 \]</span></p>
-<p>Net ecosystem metabolism (<span class="math inline">\(NEM\)</span>) is simply the difference between processes that produce organic matter (production or <span class="math inline">\(P\)</span>) and those that consume organic matter (repiration or <span class="math inline">\(R\)</span>).</p>
+<p>Net ecosystem metabolism (<span class="math inline">\(NEM\)</span>) is simply the difference between processes that produce organic matter (production or <span class="math inline">\(P\)</span>) and those that consume organic matter (respiration or <span class="math inline">\(R\)</span>).</p>
 <p>We can estimate these rates from the dissolved oxygen (<span class="math inline">\(DO\)</span>) time series by using the rate of change of <span class="math inline">\(DO\)</span> per unit time and accounting for gas exchange <span class="math inline">\(D\)</span>. Water column depth (<span class="math inline">\(Z\)</span>) is used to estimate metabolism as an areal rate.</p>
 <p><span class="math display">\[
 Z\frac{dC_d}{dt} = P - R + D
 \]</span></p>
-<p>Methods for estimating metabolism from the dissolved oxygen time series vary in how each of the key parameters are modeled. The core equation for EBASE is the same as the previous but expanded as appropriate for estuarine applications:</p>
+<p>Methods for estimating metabolism from the dissolved oxygen time series vary in how each of the key parameters are modeled. The core equation for EBASE is the same as the previous but expanded using methods for estuarine applications:</p>
 <p><span class="math display">\[
 Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left(C_{Sat} - C_d \right )
 \]</span></p>
-<p><span class="math inline">\(aPAR\)</span> is production (<span class="math inline">\(P\)</span>), <span class="math inline">\(R\)</span> is respiration, and the last term is gas exchange (<span class="math inline">\(D\)</span>). The required input data to fit this model was described in <span class="citation" data-cites="dataprep">(Lesson <a href="references.html#ref-dataprep" role="doc-biblioref"><strong>dataprep?</strong></a>)</span>. Three of these inputs are used directly in the equation as <span class="math inline">\(C_d\)</span> for dissolved oxygen, <span class="math inline">\(PAR\)</span>, and wind speed as <span class="math inline">\(U_10^2\)</span> (or squared wind speed at ten meters above the surface). The other terms are the Schmidt number (<span class="math inline">\(S_c\)</span>) and dissolved oxygen at saturation (<span class="math inline">\(C_sat\)</span>), both of which use water temperature and salinity from the input data.</p>
+<p><span class="math inline">\(aPAR\)</span> is production (<span class="math inline">\(P\)</span>), <span class="math inline">\(R\)</span> is respiration, and the last term is gas exchange <span class="citation" data-cites="Wanninkohf14">(<span class="math inline">\(D\)</span>, <a href="references.html#ref-Wanninkohf14" role="doc-biblioref"><strong>Wanninkohf14?</strong></a>)</span>. The required input data to fit this model was described in <a href="02_dataprep.html" class="quarto-xref">Lesson&nbsp;<span>2</span></a>. Three of these inputs are used directly in the equation as <span class="math inline">\(C_d\)</span> for dissolved oxygen, <span class="math inline">\(PAR\)</span>, and wind speed as <span class="math inline">\(U_{10}^2\)</span> (or squared wind speed at ten meters above the surface). The other terms are the Schmidt number (<span class="math inline">\(S_c\)</span>) and dissolved oxygen at saturation (<span class="math inline">\(C_{sat}\)</span>), both of which are calculated from water temperature and salinity in the input data.</p>
 <p>The remaining terms <span class="math inline">\(a\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(b\)</span> are estimated during the model fitting process, which we’ll discuss in the next section. All three provide important information about metabolic processes and are useful on their own to understand ecosystem function.</p>
 <ul>
-<li><span class="math inline">\(a\)</span>: The light efficiency parameter as <span class="math inline">\(\left(mmol O_2 m^{-2} d^{-1}\right) / \left(W m^{-2}\right)\)</span>, yields production when multiplied by <span class="math inline">\(PAR\)</span>. This is a measure of how efficiently light is converted to organic matter. It provides similar information as a P/I curve by showing how production changes with light availability.</li>
-<li><span class="math inline">\(R\)</span>: The respiration rate as <span class="math inline">\(mmol O_2 m^{-2} d^{-1}\)</span>, is the rate at which organic matter is consumed.</li>
-<li><span class="math inline">\(b\)</span>: The sensitivity of gas exchange to wind speed as <span class="math inline">\(\left(cm h^{-1}\right / \left(m^2 s^{-2}\right)\)</span>.</li>
+<li><span class="math inline">\(a\)</span>: The light efficiency parameter as <span class="math inline">\(\left(mmol~O_2~m^{-2}~d^{-1}\right) / \left(W~m^{-2}\right)\)</span>, yields production when multiplied by <span class="math inline">\(PAR\)</span>. This is a measure of how efficiently light is converted to organic matter. It provides similar information as a P/I curve by showing how production changes with light availability.</li>
+<li><span class="math inline">\(R\)</span>: The respiration rate as <span class="math inline">\(mmol~O_2~m^{-2}~d^{-1}\)</span>, is the rate at which organic matter is consumed.</li>
+<li><span class="math inline">\(b\)</span>: The sensitivity of gas exchange to wind speed as <span class="math inline">\(\left(cm~h^{-1}\right / \left(m^2~s^{-2}\right)\)</span>.</li>
 </ul>
 <p>Although the core model equation may seem complicated, its formulation was chosen to describe dominant processes that influence metabolism in an estuarine setting. The details for this justification can be found in <span class="citation" data-cites="Beck2024">Beck et al. (<a href="references.html#ref-Beck2024" role="doc-biblioref">2024</a>)</span>.</p>
 </section>
 <section id="the-bayesian-approach" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="the-bayesian-approach"><span class="header-section-number">3.4</span> The Bayesian approach</h2>
+<p>The conventional open-water method presented by <span class="citation" data-cites="Odum56">Odum (<a href="references.html#ref-Odum56" role="doc-biblioref">1956</a>)</span> is similar to EBASE in that it uses the rate of change of <span class="math inline">\(DO\)</span> to estimate metabolism. However, the Bayesian approach used in EBASE differs in how the parameters are estimated and has several key advantages.</p>
 </section>
 <section id="ebase-prep" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="ebase-prep"><span class="header-section-number">3.5</span> EBASE prep</h2>
@@ -324,6 +325,9 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
 <div id="ref-Beck2024" class="csl-entry" role="listitem">
 Beck, M. W., J. M. Arriola, M. Herrmann, and R. G. Najjar. 2024. Fitting metabolic models to dissolved oxygen data: The estuarine bayesian single-station estimation method. Limnology and Oceanography: Methods <strong>22</strong>: 590–607. doi:<a href="https://doi.org/10.1002/lom3.10620">10.1002/lom3.10620</a>
+</div>
+<div id="ref-Odum56" class="csl-entry" role="listitem">
+Odum, H. T. 1956. Primary production in flowing waters. Limnology and Oceanography <strong>1</strong>: 102–117.
 </div>
 </div>
 </section>
