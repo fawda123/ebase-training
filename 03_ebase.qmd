@@ -1,5 +1,8 @@
 ---
 lightbox: true
+
+execute:
+  echo: true
 ---
 
 # Using EBASE {#sec-ebase}
@@ -38,7 +41,7 @@ $$
 Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left(C_{Sat} - C_d \right )
 $$
 
-$aPAR$ is production ($P$), $R$ is respiration, and the last term is gas exchange [$D$, @Wanninkohf14].  The required input data to fit this model was described in [Lesson @sec-dataprep].  Three of these inputs are used directly in the equation as $C_d$ for dissolved oxygen, $PAR$, and wind speed as $U_{10}^2$ (or squared wind speed at ten meters above the surface).  The other terms are the Schmidt number ($S_c$) and dissolved oxygen at saturation ($C_{sat}$), both of which are calculated from water temperature and salinity in the input data. 
+$aPAR$ is production ($P$), $R$ is respiration, and the last term is gas exchange [$D$, @Wanninkhof14].  The required input data to fit this model was described in [Lesson @sec-dataprep].  Three of these inputs are used directly in the equation as $C_d$ for dissolved oxygen, $PAR$, and wind speed as $U_{10}^2$ (or squared wind speed at ten meters above the surface).  The other terms are the Schmidt number ($S_c$) and dissolved oxygen at saturation ($C_{sat}$), both of which are calculated from water temperature and salinity in the input data. 
 
 The remaining terms $a$, $R$, and $b$ are estimated during the model fitting process, which we'll discuss in the next section.  All three provide important information about metabolic processes and are useful on their own to understand ecosystem function.
 
@@ -50,9 +53,25 @@ Although the core model equation may seem complicated, its formulation was chose
 
 ## The Bayesian approach
 
-The conventional open-water method presented by @Odum56 is similar to EBASE in that it uses the rate of change of $DO$ to estimate metabolism.  However, the Bayesian approach used in EBASE differs in how the parameters are estimated and has several key advantages.  
+Both the open-water method presented by @Odum56 and EBASE similarly use the rate of change of $DO$ to estimate metabolism.  However, the Bayesian approach used in EBASE differs in how the parameters are estimated and has several key advantages.  
 
-Modern statistical approaches to modelling can broadly be described as conventional "frequentist" methods or Bayesian.  The former describes standard and more commonly used methods where a model is fit to a dataset to support a hypothesis, as in a simple linear regression.  Bayesian approaches turn the paradigm around by asking the question "what is the likelihood of the data given a model?"  
+Modern statistical approaches to modelling can broadly be described as conventional "frequentist" methods or Bayesian.  The former describes standard and more commonly used methods where a model is fit to a dataset to support a hypothesis, as in a simple linear regression.  Bayesian approaches turn the paradigm around by asking the question "what is the likelihood of the data given a model?".  
+
+Bayesian approaches are fundamentally linked to Bayes theorem that describes the likelihood of observing an event as depending on the likelihood that other events have occurred. In model speak, this means we can estimate the posterior distribution of a parameter given a prior distribution.  For EBASE, we can establish a set of prior distributions of likely values for each of the unknown parameters, $a$, $R$, and $b$.  These prior distributions are used to create a refined estimate for the posterior distributions given the data that is presented to the model. The prior distributions can be precise (informed) or cover a range of potential values (uninformed).  
+
+The default prior distributions for EBASE were based on a likely range of values for each parameter that were informed by published results [primarily @Caffrey2004].  You can create a plot of these prior distributions using the `prior_plot` function in EBASE. 
+
+```{r}
+#| fig-height: 3
+#| fig-width: 7
+library(EBASE)
+
+prior_plot()
+```
+
+Running EBASE with the default arguments will use these prior distributions to estimate the parameters.  We'll discuss how to change these values later in the lesson if you have additional prior information. 
+
+Finally, the Bayesian approach in EBASE uses an MCMC (Markov Chain Monte Carlo) method to estimate the posterior distributions.  This is implemented using the JAGS software which was part of the installation during setup for the workshop.
 
 ## EBASE prep
 
