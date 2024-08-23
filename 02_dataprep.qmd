@@ -168,7 +168,7 @@ str(apadb)
 
 So, we need to do a few things to our Apalachicola dataset to match the format of the `exdat` dataset. We can use the dplyr package to "wrangle" the data into the correct format (here's a useful [cheatsheet](https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf) for this package).  The dplyr package comes with the tidyverse.
 
-First we need to rename the columns and select those we want to make `apadb` look more like `exdat`.  This can all be done with the `select` function in dplyr.
+First we need to rename the columns and select those we want to make `apadb` look more like `exdat`.  This can all be done with the `select` function in dplyr.  Note that we'll also retain the depth column, which is not needed for EBASE but is useful to retain.
 
 ```{r}
 # load dplyr
@@ -182,6 +182,7 @@ apadb <- select(apadb,
   Sal = sal,
   PAR = totpar,
   WSpd = wspd,
+  Depth = depth
 )
 
 # show first six rows
@@ -191,10 +192,10 @@ head(apadb)
 str(apadb)
 ```
 
-We can verify the column names are the same between the two datasets.  Note the use of two equal signs - this is how we tell R to test for equality.
+We can verify the column names are the same between the two datasets.
 
 ```{r}
-names(apadb) == names(exdat)
+names(apadb) %in% names(exdat)
 ```
 
 The last thing we need to do is to make sure the units are correct. Looking at the requirements in @sec-ebasedata (or the help file `?exdat`) and those from the [CDMO](https://cdmo.baruch.sc.edu/data/parameters.cfm) website, all of the data are in the correct units except for PAR.  This should be in Watts per square meter, whereas the data are millimoles per square meter per 15 minute logging interval.  @morel1974 provide the following conversion factor:
@@ -219,7 +220,15 @@ apadb <- apadb |>
   )
 ```
 
-The Apalachicola data should now work with EBASE. However, a few additional exploratory analyses are worthwhile before we use these data.  Most functions in R deal with missing data by either not working at all or providing a work-around to accommodate the missing values. The functions in EBASE are in the latter category and we'll discuss how this is done in [Lesson @sec-ebase].  However, knowing how much and where missing observations occur is still important for interpreting results. 
+The Apalachicola data should now work with EBASE.  Let's save the data for use in the [Lesson @sec-ebase].
+
+```{r}
+save(apadb, file = 'data/apadb.RData')
+```
+
+## Data assessment
+
+A few additional exploratory analyses are worthwhile before we use these data.  Most functions in R deal with missing data by either not working at all or providing a work-around to accommodate the missing values. The functions in EBASE are in the latter category and we'll discuss how this is done in [Lesson @sec-ebase].  However, knowing how much and where missing observations occur is still important for interpreting results. 
 
 Missing data in SWMP are not uncommon and they often occur when sondes or other equipment are down for maintenance or are otherwise not working for a period of time.  Missing observations usually come in blocks where all parameters are unavailable, as opposed to only one parameter. Below, we can quickly see how many missing observations occur in column.
 
@@ -265,7 +274,7 @@ apaeb <- select(apaeb,
   Temp = temp,
   Sal = sal,
   PAR = totpar,
-  WSpd = wspd,
+  WSpd = wspd
 )
 
 # convert PAR

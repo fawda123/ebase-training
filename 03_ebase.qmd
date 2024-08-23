@@ -75,7 +75,7 @@ Finally, the Bayesian approach in EBASE uses an MCMC (Markov Chain Monte Carlo) 
 
 ## EBASE minimal example
 
-Below is a minimal example of how to use EBASE with the example dataset provided in the package. We'll subset only a few days so that we can run the example in real time.  Some helper functions from dplyr are used to subset the data. 
+Below is a minimal example of how to use EBASE with the example dataset provided in the package. We'll subset only a few days so that we can run the example in real time.  Some helper functions from dplyr are used to subset the data before using EBASE. 
 
 ```{r}
 library(dplyr)
@@ -90,7 +90,7 @@ dat <- exdat |>
 head(dat)
 ```
 
-Now we run EBASE using the subsettet data and the default arguments.  We must supply values for the `interval` argument that defines the timestep in data in seconds and the water column depth `Z` in meters, which we can get from the metadata. 
+Now we run EBASE using the data subset and the default arguments.  We must supply values for the `interval` argument that defines the time step of the data seconds and the water column depth `Z` in meters, which we can get from metadata. 
 
 ```{r}
 # run ebase
@@ -99,11 +99,176 @@ res <- ebase(dat, interval = 900, Z = 1.85)
 head(res)
 ```
 
-The results are returned as a data frame with instantaneous metabolic estimates for areal gross production (O2 mmol m$^{-2}$ d$^{-1}$, `P` or $aPAR$), respiration (O2 mmol m${^{-2}$ d$^{-1}$, `R`), and gas exchange (O2 mmol m$^{-2}$ d${^-1}$, `D` or the remainder of the equation from above, positive values as ingassing, negative values as outgassing).  
+The results are returned as a data frame with instantaneous metabolic estimates for areal gross production (O2 mmol m$^{-2}$ d$^{-1}$, `P`), respiration (O2 mmol m${^{-2}$ d$^{-1}$, `R`), and gas exchange (O2 mmol m$^{-2}$ d${^-1}$, `D` or the remainder of the equation from above, positive values as ingassing, negative values as outgassing).  
 
-Additional parameters estimated by the model that are returned include `a` as (mmol O$_2$ m$^{-2}$ d$^{-1}$)/(W m$^{-2}$) and `b` as (cm h$^{-1}$)/(m$^2$ s$^{-2}$). We also see modelled DO as DO$_{mod}$ and various convergence metrics.  The upper and lower credible intervals for each estimated parameter are also provided by $lo$ or $hi$ suffixes, which we'll describe later to assess model fit. 
+Additional parameters estimated by the model that are returned include `a` as (mmol O$_2$ m$^{-2}$ d$^{-1}$)/(W m$^{-2}$) and `b` as (cm h$^{-1}$)/(m$^2$ s$^{-2}$). We also see modelled DO as `DO_mod` and various convergence metrics.  The upper and lower credible intervals for each estimated parameter are also provided by `lo` or `hi` suffixes, which we'll describe later to assess model fit. 
 
 ## EBASE full example
+
+Next we'll use EBASE to estimate metabolism using the dataset from [Lesson @sec-dataprep].  First, the dataset is loaded into your workspace. 
+
+```{r}
+load(file = 'data/apadb.RData')
+```
+
+As with the example dataset, we'll subset a few days so we can run the example in real time.  We'll use one week of data in July. 
+
+```{r}
+# dates to subset
+dts <- as.POSIXct(c("2017-03-07 00:00:00", "2017-03-14 00:00:00"), tz = 'America/Jamaica')
+
+# subset apadb
+apadbsub <- apadb |> 
+  filter(DateTimeStamp >= dts[1] & DateTimeStamp <= dts[2])
+
+head(apadbsub)
+```
+
+Now we run EBASE as before, although we have to specify different values for the `interval` and `Z` arguments.  Because we combined the data at a 60 minute time step, we can use `interval = 3600`.  The water column depth can be estimated from the data.  We'll also add a small amount to it because the pressure sensor is typically offset from the bottom.
+
+```{r}
+#| warning: true
+#| message: true
+# get depth
+zval <- mean(apadbsub$Depth, na.rm = T) + 0.3
+
+# run ebase
+res <- ebase(apadbsub, interval = 3600, Z = zval)
+
+head(res)
+```
+
+First off, we got a few warnings in the console telling us some information about our dataset.  Both of these warnings indicate the default behavior for EBASE when incomplete daily observations at the start or end of the dataset are present and if missing observations are found.  As the warnings indicate, the "dangling" observations are removed since it is impossible to estimate metabolism accurately for these data.  Missing data in the middle of the time series are interpolated and these can be handled differently depending on the user's preference.  We'll describe more about this in @sec-missing. 
+
+We'll use some additional functions in EBASE to interpret the results. A plot of the results can be made with `ebase_plot()`.  This plot shows $P$, $R$, and $D$ as instantaneous values at the same time step as the original dataset. Note that a single value for $R$ is returned each day.  The model assumes respiration is constant for each period of time the model is estimated.  This is called the "optimization period" and it is set as 1 day by default.  The `grp` column in the model output indicates which optimization period applies to each observation.  We'll talk more about how and why you might change this value in @sec-optimization.  
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+ebase_plot(res)
+```
+
+The daily averages can also be plotted by using `instantaneous = FALSE`.
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+ebase_plot(res, instantaneous = FALSE)
+```
+
+Note that $NEM$ is not returned by `ebase`, nor is it included in the plots.  We can easily calculate $NEM$ by subtracting $R$ from $P$ and use the ggplot2 package to plot the result. 
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+# calculate NEM
+res <- res |> 
+  mutate(
+    NEM = P - R
+  )
+
+# make a plot
+library(ggplot2)
+
+ggplot(res, aes(x = DateTimeStamp, y = NEM)) +
+  geom_line() +
+  labs(
+    x = NULL,
+    y = 'Net Ecosystem Metabolism (mmol O2 m-2 d-1)'
+  )
+```
+
+Or we can average NEM daily and plot it again. 
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+# calculate daily NEM
+nemdly <- res |> 
+  summarise(
+    NEM = mean(NEM, na.rm = T), 
+    .by = Date
+  )
+
+# plot daily NEM
+ggplot(nemdly, aes(x = Date, y = NEM)) +
+  geom_line() +
+  labs(
+    x = NULL,
+    y = 'Net Ecosystem Metabolism (mmol O2 m-2 d-1)'
+  )
+```
+
+## Assess model fit
+
+Model fit can be assessed using the `converge` and `rsq` columns from the returned results.  The values in these columns apply to each group in the `grp` column as specified with the `ndays` argument. The `converge` column indicates `"Check convergence"` or `"Fine"` if the JAGS estimate converged at that iteration (repeated across rows for the group).  The `n.chains` argument of `ebase` can be increased if convergence is not achieved. Similarly, the `rsq` column shows the r-squared values of the linear fit between the modeled and observed dissolved oxygen (repeated across rows for the group).  
+
+The model fit can also be assessed by comparing the observed and modeled values for dissolved oxygen with the `fit_plot()` function.  Estimated values are shown as line and observed values are shown as points.
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+fit_plot(res)
+```
+
+The comparison can also be separated by group with `bygroup = TRUE` based on the value for the `ndays` argument passed to `ebase()`.  The r-squared value of the fit between modeled and observed dissolved oxygen is also shown in the facet label for the group.
+
+```{r}
+#| fig-height: 7
+#| fig-width: 9
+fit_plot(res, bygroup = TRUE)
+```
+
+A scatterplot showing modeled versus observed dissolved oxygen can also be returned by setting `scatter = TRUE`.
+
+```{r}
+#| fig-height: 7
+#| fig-width: 9
+fit_plot(res, bygroup = TRUE, scatter = TRUE)
+```
+
+95% credible intervals for `a`, `R` (as areal), and `b` are also returned with the output from `ebase()` in the corresponding columns `alo`, `ahi`, `blo`, `bhi`, `Rlo`, and `Rhi`, for the 2.5th and 97.5th percentile estimates for each parameter, respectively.  These values indicate the interval within which there is a 95% probability that the true parameter is in this range and is a representation of the posterior distributions for each parameter. Note that all values for these parameters are repeated across rows, although only one estimate for each is returned based on the number of days defined by `ndays`. 
+
+The credible intervals can be plotted with the `credible_plot()` function.
+
+```{r}
+#| fig-height: 7
+#| fig-width: 9
+credible_plot(res)
+```
+
+The credible intervals can also be retrieved as a data frame using `credible_prep()`.  This function is provided as a convenience to parse the results from `ebase()`. 
+
+```{r}
+credible_prep(res)
+```
+
+## Using EBASE with long time seriers
+
+Execution time of the model can also be reduced by using multiple processors.  This is done using [doParrallel](https://cran.r-project.org/package=doParallel) package and registering a parallel backend as below. It doesn't really help us when the time series is short, but it can be useful when running more than a few days of data.
+
+```{r}
+#| eval: false
+# setup parallel backend
+library(doParallel)
+ncores <- detectCores() - 2
+cl <- makeCluster(ncores)
+registerDoParallel(cl)
+
+res <- ebase(apadb, interval = 3600, Z = zval)
+
+stopCluster(cl)
+```
+
+Finally, although `ebase()` can be used to estimate metabolism for time series with several years of data, the `ebase_years()` function can be used to estimate results sequentially for each year.  This is useful because model estimation using `ebase_years()` will continue after a year fails, e.g., when some years have long periods of missing or erroneous data.  This eliminates the need to restart the model or further pre-process the data.  The same arguments for `ebase()` are used for `ebase_years()`.  Progress is printed directly in the console and the user can specify the number of attempts for failed years before proceeding to the following year. 
+
+## Equation optimization length {@sec-optimization}
+
+## Starting value
+
+## Missing values {#sec-missing}
+
+## Changing priors
 
 ## Next steps
 
