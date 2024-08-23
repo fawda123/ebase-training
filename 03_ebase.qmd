@@ -262,11 +262,76 @@ stopCluster(cl)
 
 Finally, although `ebase()` can be used to estimate metabolism for time series with several years of data, the `ebase_years()` function can be used to estimate results sequentially for each year.  This is useful because model estimation using `ebase_years()` will continue after a year fails, e.g., when some years have long periods of missing or erroneous data.  This eliminates the need to restart the model or further pre-process the data.  The same arguments for `ebase()` are used for `ebase_years()`.  Progress is printed directly in the console and the user can specify the number of attempts for failed years before proceeding to the following year. 
 
-## Equation optimization length {@sec-optimization}
+## Equation optimization length {#sec-optimization}
+
+The `ndays` argument in `ebase()` defines the model optimization period as the number of days that are used for fitting the model.  By default, this is done each day, i.e., `ndays = 1`.  Individual parameter estimates for `a`, `R`, and `b` are then returned for each day.  However, more days can be used to estimate the unknown parameters - one day may not provide enough data to the model to create a reliable estimate. 
+
+Here, the number of days used to optimize the equation is set to all days in the input data. 
+
+```{r}
+res <- ebase(apadbsub, interval = 3600, Z = zval, ndays = 7)
+```
+
+And the resulting plot: 
+
+```{r, fig.height = 3, fig.width = 9}
+#| fig-height: 3
+#| fig-width: 9
+ebase_plot(res, instantaneous = TRUE)
+```
+
+And the fit of observed and modeled dissolved oxygen (note the unbroken line for all days estimated together): 
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+fit_plot(res)
+```
 
 ## Starting value
 
+The `doave` argument can be used to define which dissolved oxygen value is used as the starting point in the Bayesian estimation for the optimization period.  The default setting (`doave = TRUE`) will use the average of all the dissolved oxygen values in the optimization period defined by `ndays`.  The first dissolved oxygen observation of the time series in the optimization period will be used as the starting point if `doave = F`.  In this case, the modeled dissolved oxygen time series will always start at the first observed dissolved oxygen value for each optimization period. 
+
+Below, `doave = FALSE` is used to set the first observed dissolved oxygen as the starting value.
+
+```{r}
+res <- ebase(apadbsub, interval = 3600, Z = zval, doave = F)
+```
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+fit_plot(res)
+```
+
 ## Missing values {#sec-missing}
+
+Missing values in the input data are interpolated by `ebase` prior to estimating metabolism.  It is the responsibility of the user to verify that these interpolated values are not wildly inaccurate.  Missing values are linearly interpolated between non-missing values at the time step specified by the value in `interval`.  This works well for small gaps, but can easily create inaccurate values at gaps larger than a few hours. 
+
+Let's create some missing data in our Apalachicola subset.  We'll remove a few hours on one day and remove an entire day.
+
+```{r}
+apadbmiss <- apadbsub
+apadbmiss$DO_obs[c(57:61, 97:120)] <- NA
+```
+
+The `ebase_prep()` function is used internally to `ebase` to prepare the data for the metabolism calculations.  This function interpolates the missing data and returns a column `isinterp` that specifies `TRUE` or `FALSE` if a value is interpolated.  We'll use this function to demonstrate how the interpolation works.  
+
+```{r}
+#| warning: false
+dat2interp <- ebase_prep(apadbmiss, interval = 3600, Z = zval)
+head(dat2interp)
+```
+
+The interpolated values can be visually inspected using the `interp_plot()` function.  
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+interp_plot(dat2interp, Z = zval, interval = 3600, param = 'DO_sat')
+```
+
+The `ebase` function includes the `maxinterp` argument to assign `NA` values to continuously interpolated rows with length greater than the value defined by `maxinterp`.  This value is set to 12 hours by default and applies to the groupings defined by `ndays`, i.e., any group with a continuous set of interpolated values where the time is greater than 12 hours are assigned `NA` (except `Date` and `DateTimeStamp`).  The numeric value passed to `maxinterp` is the number of time steps for the input data, e.g., 48 would be 12 hours if the time step is 900 seconds.  
 
 ## Changing priors
 
