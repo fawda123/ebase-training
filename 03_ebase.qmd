@@ -59,11 +59,11 @@ Modern statistical approaches to modelling can broadly be described as conventio
 
 Bayesian approaches are fundamentally linked to Bayes theorem that describes the likelihood of observing an event as depending on the likelihood that other events have occurred. In model speak, this means we can estimate the posterior distribution of a parameter given a prior distribution.  For EBASE, we can establish a set of prior distributions of likely values for each of the unknown parameters, $a$, $R$, and $b$.  These prior distributions are used to create a refined estimate for the posterior distributions given the data that is presented to the model. The prior distributions can be precise (informed) or cover a range of potential values (uninformed).  
 
-The default prior distributions for EBASE were based on a likely range of values for each parameter that were informed by published results [primarily @Caffrey2004].  You can create a plot of these prior distributions using the `prior_plot` function in EBASE. 
+The default prior distributions for EBASE were based on a likely range of values for each parameter that were informed by published results [primarily @caffrey2004; details in @Beck2024].  You can create a plot of these prior distributions using the `prior_plot` function in EBASE. 
 
 ```{r}
 #| fig-height: 3
-#| fig-width: 7
+#| fig-width: 8
 library(EBASE)
 
 prior_plot()
@@ -71,7 +71,7 @@ prior_plot()
 
 Running EBASE with the default arguments will use these prior distributions to estimate the parameters.  We'll discuss how to change these values later in the lesson if you have additional prior information. 
 
-Finally, the Bayesian approach in EBASE uses an MCMC (Markov Chain Monte Carlo) method to estimate the posterior distributions.  This is implemented using the JAGS software which was part of the installation during setup for the workshop.
+Finally, the Bayesian approach in EBASE uses an MCMC (Markov Chain Monte Carlo) method to estimate the posterior distributions.  This is implemented using the [JAGS](https://mcmc-jags.sourceforge.io/) software which was part of the installation during [setup](setup.qmd#sec-instjags) for the workshop.  These methods are used to estimate the posterior distributions by repeated sampling of the priors given the data until a stable estimate is reached (i.e., convergence) using a Markov Chain.  Because of this, estimation can take a while and we'll talk about arguments in EBASE to control the process.  
 
 ## EBASE prep
 
@@ -79,4 +79,4 @@ Finally, the Bayesian approach in EBASE uses an MCMC (Markov Chain Monte Carlo) 
 
 ## Next steps
 
-You now understand the basics of ecosystem metabolism and how EBASE is used to estimate key parameters using a Bayesian approach.  We've explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and various plotting methods.  Next, we'll explore the EBASE results in more detail to demonstrate how the results can inform the understanding of ecosystem health and function.
+You now understand the basics of ecosystem metabolism using EBASE and how it's used to estimate key parameters using a Bayesian approach.  We've explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and various plotting methods.  Next, we'll explore the EBASE results in more detail to demonstrate how the results can inform the understanding of ecosystem health and function.
