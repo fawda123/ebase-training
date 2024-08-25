@@ -724,10 +724,45 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </section>
 <section id="changing-priors" class="level2" data-number="3.12">
 <h2 data-number="3.12" class="anchored" data-anchor-id="changing-priors"><span class="header-section-number">3.12</span> Changing priors</h2>
+<p>A main advantage of the Bayesian approach is the use of prior information to estimate parameters. By default, the prior distributions for the <span class="math inline">\(a\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(b\)</span> parameters are informed by the literature, although they are generally uninformed by allowing a large range of values to be considered given the data. We can further constrain the parameters if we have reason to do so.</p>
+<p>Here, the prior distribution for the <span class="math inline">\(b\)</span> parameter is fixed to 0.251 (cm h<span class="math inline">\(^{-1}\)</span>)/(m<span class="math inline">\(^2\)</span> s<span class="math inline">\(^{-2}\)</span>), as suggested by <span class="citation" data-cites="Wanninkhof2024">(<a href="references.html#ref-Wanninkhof2024" role="doc-biblioref"><strong>Wanninkhof2024?</strong></a>)</span>. We can view this change with the <code>prior_plot</code> function before using <code>ebase</code>. Note that we define the mean as our desired value and assign a very small range for the standard deviation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_plot</span>(<span class="at">bprior =</span> <span class="fu">c</span>(<span class="fl">0.251</span>, <span class="fl">1e-6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-26-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="03_ebase_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="864"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The same change to the prior distribution for the <span class="math inline">\(b\)</span> parameter is applied to <code>ebase</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">bprior =</span> <span class="fu">c</span>(<span class="fl">0.251</span>, <span class="fl">1e-6</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res, <span class="at">instantaneous =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-27-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="03_ebase_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="864"></a></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The <code>credible_plot</code> function can be used to assess how changing the prior distributions has an influence on the posterior distributions of the parameters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-28-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="03_ebase_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="864"></a></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="next-steps" class="level2" data-number="3.13">
 <h2 data-number="3.13" class="anchored" data-anchor-id="next-steps"><span class="header-section-number">3.13</span> Next steps</h2>
-<p>You now understand the basics of ecosystem metabolism using EBASE and how it’s used to estimate key parameters using a Bayesian approach. We’ve explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and various plotting methods. Next, we’ll explore the EBASE results in more detail to demonstrate how the results can inform the understanding of ecosystem health and function.</p>
+<p>You now understand the basics of ecosystem metabolism with EBASE and how it estimates key parameters using a Bayesian approach. We’ve explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and various plotting methods. Next, we’ll explore the EBASE results in more detail to demonstrate how the results can inform the understanding of ecosystem health and function.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
@@ -1244,7 +1279,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"loop":false,"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
