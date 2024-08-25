@@ -103,6 +103,35 @@ The results are returned as a data frame with instantaneous metabolic estimates 
 
 Additional parameters estimated by the model that are returned include `a` as (mmol O$_2$ m$^{-2}$ d$^{-1}$)/(W m$^{-2}$) and `b` as (cm h$^{-1}$)/(m$^2$ s$^{-2}$). We also see modelled DO as `DO_mod` and various convergence metrics.  The upper and lower credible intervals for each estimated parameter are also provided by `lo` or `hi` suffixes, which we'll describe later to assess model fit. 
 
+::: {.callout-note icon="false"}
+### `r fontawesome::fa('hat-wizard')` Exercise 1
+Repeat the above example but use a different date range.
+
+1. Create and name a section header in your script with `Ctrl + Shift + R`. Enter all exercise code in this section.
+1. Create another date range of similar length (four days).
+1. Subset the `exdat` data to this new date range.
+1. Run `ebase` on the new data subset.  
+1. Examine the results - what do the columns tell you? 
+
+::: {.callout-tip icon="false" collapse="true"}
+#### `r fontawesome::fa('wand-magic-sparkles')` Answers
+```{r}
+#| eval: false
+# dates to subset
+dts <- as.POSIXct(c("2012-07-01 00:00:00", "2012-07-05 00:00:00"), tz = 'America/Jamaica')
+
+# subset exdat
+dat <- exdat |> 
+  filter(DateTimeStamp >= dts[1] & DateTimeStamp <= dts[2])
+
+# run ebase
+res <- ebase(dat, interval = 900, Z = 1.85)
+
+head(res)
+```
+:::
+:::
+
 ## EBASE full example
 
 Next we'll use EBASE to estimate metabolism using the dataset from [Lesson @sec-dataprep].  First, the dataset is loaded into your workspace. 
@@ -282,7 +311,7 @@ And the resulting plot:
 ```{r, fig.height = 3, fig.width = 9}
 #| fig-height: 3
 #| fig-width: 9
-ebase_plot(res, instantaneous = TRUE)
+ebase_plot(res)
 ```
 
 And the fit of observed and modeled dissolved oxygen (note the unbroken line for all days estimated together): 
@@ -295,21 +324,40 @@ fit_plot(res)
 
 Choosing the number of days to optimize the equation is a user choice based on questions of interest for the dataset.  Typically, using one day for optimization may not provide enough data to meaningfully describe metabolism, although this may be the only option for very short time series.  Longer optimization periods can be used for longer time series, but key events driving metabolism may be missed if the optimization period is too long, e.g., monthly. 
 
-## Starting value
+::: {.callout-note icon="false"}
+### `r fontawesome::fa('hat-wizard')` Exercise 2
+Run `ebase` on a different data subset, change the optimization period, and examine the results.
 
-The `doave` argument can be used to define which dissolved oxygen value is used as the starting point in the Bayesian estimation for the optimization period.  The default setting (`doave = TRUE`) will use the average of all the dissolved oxygen values in the optimization period defined by `ndays`.  Conversely, the first dissolved oxygen observation of the time series in the optimization period will be used as the starting point if `doave = F`.
+1. Create and name a section header in your script with `Ctrl + Shift + R`. Enter all exercise code in this section.
+1. Create another date range of similar length for 2017.
+1. Subset the `apadb` data to this new date range.
+1. Estimate average depth from the data subset.
+1. Run `ebase` on the new data subset using a different optimization length for the `ndays` argument. Make sure to also pass the `Z` argument with the average depth.
+1. Examine the results using `fit_plot`, `ebase_plot`, and `credible_plot`.
 
-Below, `doave = FALSE` is used to set the first observed dissolved oxygen as the starting value.
-
+::: {.callout-tip icon="false" collapse="true"}
+#### `r fontawesome::fa('wand-magic-sparkles')` Answers
 ```{r}
-res <- ebase(apadbsub, interval = 3600, Z = zval, doave = F)
-```
+#| eval: false
+# dates to subset
+dts <- as.POSIXct(c("2017-08-01 00:00:00", "2017-08-08 00:00:00"), tz = 'America/Jamaica')
 
-```{r}
-#| fig-height: 3
-#| fig-width: 9
+# subset exdat
+apadbsub <- apadb |> 
+  filter(DateTimeStamp >= dts[1] & DateTimeStamp <= dts[2])
+
+# get average depth
+zval <- mean(apadbsub$Depth, na.rm = T)
+
+# run ebase
+res <- ebase(apadbsub, interval = 3600, Z = zval, ndays = 2)
+
 fit_plot(res)
+ebase_plot(res)
+credible_plot(res)
 ```
+:::
+:::
 
 ## Missing values {#sec-missing}
 
@@ -338,7 +386,7 @@ Running `ebase` on the time series with missing data shows how the interpolatd d
 #| fig-height: 3
 #| fig-width: 9
 res <- ebase(apadbmiss, interval = 3600, Z = zval)
-ebase_plot(res, instantaneous = TRUE)
+ebase_plot(res)
 ```
 
 ## Changing priors
@@ -359,7 +407,7 @@ The same change to the prior distribution for the $b$ parameter is applied to `e
 #| fig-height: 3
 #| fig-width: 9
 res <- ebase(apadbsub, interval = 3600, Z = zval, bprior = c(0.251, 1e-6))
-ebase_plot(res, instantaneous = TRUE)
+ebase_plot(res)
 ```
 
 The `credible_plot` function can be used to assess how changing the prior distributions has an influence on the posterior distributions of the parameters.
@@ -369,6 +417,44 @@ The `credible_plot` function can be used to assess how changing the prior distri
 #| fig-width: 9
 credible_plot(res)
 ```
+
+::: {.callout-note icon="false"}
+### `r fontawesome::fa('hat-wizard')` Exercise 3
+Run `ebase` using a different set of prior distributions.
+
+1. Create and name a section header in your script with `Ctrl + Shift + R`. Enter all exercise code in this section.
+1. Use the same data subset and mean depth as the previous exercise.
+1. Change the prior distribution for the $a$ parameter to a mean of 1 and a standard deviation of 1 and the prior distribution for the $b$ parameter to a mean of 0.251 and a standard deviation of 1e-6.
+1. Before running `ebase`, evaluate the prior distribution using `prior_plot`.
+1. Run `ebase` using the new prior distribution. Use `ndays = 2`. 
+1. Examine the results using `fit_plot`, `ebase_plot`, and `credible_plot`.
+
+::: {.callout-tip icon="false" collapse="true"}
+#### `r fontawesome::fa('wand-magic-sparkles')` Answers
+```{r}
+#| eval: false
+# dates to subset
+dts <- as.POSIXct(c("2017-08-01 00:00:00", "2017-08-08 00:00:00"), tz = 'America/Jamaica')
+
+# subset exdat
+apadbsub <- apadb |> 
+  filter(DateTimeStamp >= dts[1] & DateTimeStamp <= dts[2])
+
+# get average depth
+zval <- mean(apadbsub$Depth, na.rm = T)
+
+# use prior_plot
+prior_plot(aprior = c(1, 1), bprior = c(0.251, 1e-6))
+
+# run ebase
+res <- ebase(apadbsub, interval = 3600, Z = zval, aprior = c(1, 1), bprior = c(0.251, 1e-6), ndays = 2)
+
+fit_plot(res)
+ebase_plot(res)
+credible_plot(res)
+```
+:::
+:::
 
 ## Next steps
 
