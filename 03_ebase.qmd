@@ -343,6 +343,33 @@ ebase_plot(res, instantaneous = TRUE)
 
 ## Changing priors
 
+A main advantage of the Bayesian approach is the use of prior information to estimate parameters.  By default, the prior distributions for the $a$, $R$, and $b$ parameters are informed by the literature, although they are generally uninformed by allowing a large range of values to be considered given the data.  We can further constrain the parameters if we have reason to do so.
+
+Here, the prior distribution for the $b$ parameter is fixed to 0.251 (cm h$^{-1}$)/(m$^2$ s$^{-2}$), as suggested by @Wanninkhof2024.  We can view this change with the `prior_plot` function before using `ebase`. Note that we define the mean as our desired value and assign a very small range for the standard deviation.
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+prior_plot(bprior = c(0.251, 1e-6))
+```
+
+The same change to the prior distribution for the $b$ parameter is applied to `ebase`
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+res <- ebase(apadbsub, interval = 3600, Z = zval, bprior = c(0.251, 1e-6))
+ebase_plot(res, instantaneous = TRUE)
+```
+
+The `credible_plot` function can be used to assess how changing the prior distributions has an influence on the posterior distributions of the parameters.
+
+```{r}
+#| fig-height: 7
+#| fig-width: 9
+credible_plot(res)
+```
+
 ## Next steps
 
-You now understand the basics of ecosystem metabolism using EBASE and how it's used to estimate key parameters using a Bayesian approach.  We've explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and various plotting methods.  Next, we'll explore the EBASE results in more detail to demonstrate how the results can inform the understanding of ecosystem health and function.
+You now understand the basics of ecosystem metabolism with EBASE and how it estimates key parameters using a Bayesian approach.  We've explored additional functions in EBASE to help interpret the results, which include an evaluation of goodness of fit and various plotting methods.  Next, we'll explore the EBASE results in more detail to demonstrate how the results can inform the understanding of ecosystem health and function.
