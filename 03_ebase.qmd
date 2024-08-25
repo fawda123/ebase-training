@@ -99,7 +99,7 @@ res <- ebase(dat, interval = 900, Z = 1.85)
 head(res)
 ```
 
-The results are returned as a data frame with instantaneous metabolic estimates for areal gross production (O2 mmol m$^{-2}$ d$^{-1}$, `P`), respiration (O2 mmol m${^{-2}$ d$^{-1}$, `R`), and gas exchange (O2 mmol m$^{-2}$ d${^-1}$, `D` or the remainder of the equation from above, positive values as ingassing, negative values as outgassing).  
+The results are returned as a data frame with instantaneous metabolic estimates for areal gross production (O2 mmol m$^{-2}$ d$^{-1}$, `P`), respiration (O2 mmol m$^{-2}$ d$^{-1}$, `R`), and gas exchange (O2 mmol m$^{-2}$ d$^{-1}$, `D` or the remainder of the equation from above, positive values as ingassing, negative values as outgassing).  
 
 Additional parameters estimated by the model that are returned include `a` as (mmol O$_2$ m$^{-2}$ d$^{-1}$)/(W m$^{-2}$) and `b` as (cm h$^{-1}$)/(m$^2$ s$^{-2}$). We also see modelled DO as `DO_mod` and various convergence metrics.  The upper and lower credible intervals for each estimated parameter are also provided by `lo` or `hi` suffixes, which we'll describe later to assess model fit. 
 
@@ -134,11 +134,9 @@ zval <- mean(apadbsub$Depth, na.rm = T) + 0.3
 
 # run ebase
 res <- ebase(apadbsub, interval = 3600, Z = zval)
-
-head(res)
 ```
 
-First off, we got a few warnings in the console telling us some information about our dataset.  Both of these warnings indicate the default behavior for EBASE when incomplete daily observations at the start or end of the dataset are present and if missing observations are found.  As the warnings indicate, the "dangling" observations are removed since it is impossible to estimate metabolism accurately for these data.  Missing data in the middle of the time series are interpolated and these can be handled differently depending on the user's preference.  We'll describe more about this in @sec-missing. 
+First off, we got a few warnings in the console telling us some information about our dataset.  Both of these warnings indicate the default behavior for EBASE when incomplete daily observations at the start or end of the dataset are present and if missing observations are found.  As the warnings indicate, the "dangling" observations are removed since it is impossible to estimate metabolism accurately for these data.  Missing data in the middle of the time series are also interpolated and these can be handled differently depending on the user's preference.  We'll describe more about this in @sec-missing. 
 
 We'll use some additional functions in EBASE to interpret the results. A plot of the results can be made with `ebase_plot()`.  This plot shows $P$, $R$, and $D$ as instantaneous values at the same time step as the original dataset. Note that a single value for $R$ is returned each day.  The model assumes respiration is constant for each period of time the model is estimated.  This is called the "optimization period" and it is set as 1 day by default.  The `grp` column in the model output indicates which optimization period applies to each observation.  We'll talk more about how and why you might change this value in @sec-optimization.  
 
@@ -172,13 +170,14 @@ library(ggplot2)
 
 ggplot(res, aes(x = DateTimeStamp, y = NEM)) +
   geom_line() +
+  theme_minimal() + 
   labs(
     x = NULL,
-    y = 'Net Ecosystem Metabolism (mmol O2 m-2 d-1)'
+    y = 'NEM (mmol O2 m-2 d-1)'
   )
 ```
 
-Or we can average NEM daily and plot it again. 
+Or we can average NEM each day and plot it again. 
 
 ```{r}
 #| fig-height: 3
@@ -193,17 +192,18 @@ nemdly <- res |>
 # plot daily NEM
 ggplot(nemdly, aes(x = Date, y = NEM)) +
   geom_line() +
+  theme_minimal() +
   labs(
     x = NULL,
-    y = 'Net Ecosystem Metabolism (mmol O2 m-2 d-1)'
+    y = 'NEM (mmol O2 m-2 d-1)'
   )
 ```
 
 ## Assess model fit
 
-Model fit can be assessed using the `converge` and `rsq` columns from the returned results.  The values in these columns apply to each group in the `grp` column as specified with the `ndays` argument. The `converge` column indicates `"Check convergence"` or `"Fine"` if the JAGS estimate converged at that iteration (repeated across rows for the group).  The `n.chains` argument of `ebase` can be increased if convergence is not achieved. Similarly, the `rsq` column shows the r-squared values of the linear fit between the modeled and observed dissolved oxygen (repeated across rows for the group).  
+Model fit can be assessed using the `converge` and `rsq` columns from the returned results.  The values in these columns apply to each group in the `grp` column as specified with the `ndays` argument. The `converge` column indicates `"Check convergence"` or `"Fine"` if the JAGS estimate converged at that iteration or optimization period (repeated across rows for the group). Similarly, the `rsq` column shows the r-squared values of the linear fit between the modeled and observed dissolved oxygen (repeated across rows for the group).  
 
-The model fit can also be assessed by comparing the observed and modeled values for dissolved oxygen with the `fit_plot()` function.  Estimated values are shown as line and observed values are shown as points.
+The model fit can also be assessed by comparing the observed and modeled values for dissolved oxygen with the `fit_plot()` function.  Estimated values are shown as lines and observed values are shown as points.
 
 ```{r}
 #| fig-height: 3
@@ -211,7 +211,7 @@ The model fit can also be assessed by comparing the observed and modeled values 
 fit_plot(res)
 ```
 
-The comparison can also be separated by group with `bygroup = TRUE` based on the value for the `ndays` argument passed to `ebase()`.  The r-squared value of the fit between modeled and observed dissolved oxygen is also shown in the facet label for the group.
+The comparison can also be separated by group with `bygroup = TRUE` based on the value for the `ndays` argument passed to `ebase()`, default as 1 day.  The r-squared value of the fit between modeled and observed dissolved oxygen is also shown in the facet label for the group.
 
 ```{r}
 #| fig-height: 7
@@ -227,7 +227,7 @@ A scatterplot showing modeled versus observed dissolved oxygen can also be retur
 fit_plot(res, bygroup = TRUE, scatter = TRUE)
 ```
 
-95% credible intervals for `a`, `R` (as areal), and `b` are also returned with the output from `ebase()` in the corresponding columns `alo`, `ahi`, `blo`, `bhi`, `Rlo`, and `Rhi`, for the 2.5th and 97.5th percentile estimates for each parameter, respectively.  These values indicate the interval within which there is a 95% probability that the true parameter is in this range and is a representation of the posterior distributions for each parameter. Note that all values for these parameters are repeated across rows, although only one estimate for each is returned based on the number of days defined by `ndays`. 
+95% credible intervals for `a`, `R`, and `b` are also returned with the output from `ebase()` in the corresponding columns `alo`, `ahi`, `blo`, `bhi`, `Rlo`, and `Rhi`, for the 2.5th and 97.5th percentile estimates for each parameter, respectively.  These values indicate the interval within which there is a 95% probability that the true parameter is in this range and is a representation of the posterior distributions for each parameter. 
 
 The credible intervals can be plotted with the `credible_plot()` function.
 
@@ -243,9 +243,9 @@ The credible intervals can also be retrieved as a data frame using `credible_pre
 credible_prep(res)
 ```
 
-## Using EBASE with long time seriers
+## Using EBASE with long time series
 
-Execution time of the model can also be reduced by using multiple processors.  This is done using [doParrallel](https://cran.r-project.org/package=doParallel) package and registering a parallel backend as below. It doesn't really help us when the time series is short, but it can be useful when running more than a few days of data.
+Execution time of the model can also be reduced by using multiple processors.  This is done using the [doParrallel](https://cran.r-project.org/package=doParallel) package and creating a parallel backend as below. It doesn't really help us when the time series is short, but it can be useful when running more than a few days of data.
 
 ```{r}
 #| eval: false
@@ -261,6 +261,11 @@ stopCluster(cl)
 ```
 
 Finally, although `ebase()` can be used to estimate metabolism for time series with several years of data, the `ebase_years()` function can be used to estimate results sequentially for each year.  This is useful because model estimation using `ebase_years()` will continue after a year fails, e.g., when some years have long periods of missing or erroneous data.  This eliminates the need to restart the model or further pre-process the data.  The same arguments for `ebase()` are used for `ebase_years()`.  Progress is printed directly in the console and the user can specify the number of attempts for failed years before proceeding to the following year. 
+
+```{r}
+#| eval: false
+res <- ebase_years(apadb, Z = zval, interval = 3600, ncores = ncores, quiet = F)
+```
 
 ## Equation optimization length {#sec-optimization}
 
@@ -288,9 +293,11 @@ And the fit of observed and modeled dissolved oxygen (note the unbroken line for
 fit_plot(res)
 ```
 
+Choosing the number of days to optimize the equation is a user choice based on questions of interest for the dataset.  Typically, using one day for optimization may not provide enough data to meaningfully describe metabolism, although this may be the only option for very short time series.  Longer optimization periods can be used for longer time series, but key events driving metabolism may be missed if the optimization period is too long, e.g., monthly. 
+
 ## Starting value
 
-The `doave` argument can be used to define which dissolved oxygen value is used as the starting point in the Bayesian estimation for the optimization period.  The default setting (`doave = TRUE`) will use the average of all the dissolved oxygen values in the optimization period defined by `ndays`.  The first dissolved oxygen observation of the time series in the optimization period will be used as the starting point if `doave = F`.  In this case, the modeled dissolved oxygen time series will always start at the first observed dissolved oxygen value for each optimization period. 
+The `doave` argument can be used to define which dissolved oxygen value is used as the starting point in the Bayesian estimation for the optimization period.  The default setting (`doave = TRUE`) will use the average of all the dissolved oxygen values in the optimization period defined by `ndays`.  Conversely, the first dissolved oxygen observation of the time series in the optimization period will be used as the starting point if `doave = F`.
 
 Below, `doave = FALSE` is used to set the first observed dissolved oxygen as the starting value.
 
@@ -315,23 +322,24 @@ apadbmiss <- apadbsub
 apadbmiss$DO_obs[c(57:61, 97:120)] <- NA
 ```
 
-The `ebase_prep()` function is used internally to `ebase` to prepare the data for the metabolism calculations.  This function interpolates the missing data and returns a column `isinterp` that specifies `TRUE` or `FALSE` if a value is interpolated.  We'll use this function to demonstrate how the interpolation works.  
-
-```{r}
-#| warning: false
-dat2interp <- ebase_prep(apadbmiss, interval = 3600, Z = zval)
-head(dat2interp)
-```
-
 The interpolated values can be visually inspected using the `interp_plot()` function.  
 
 ```{r}
 #| fig-height: 3
 #| fig-width: 9
-interp_plot(dat2interp, Z = zval, interval = 3600, param = 'DO_sat')
+interp_plot(apadbmiss, Z = zval, interval = 3600, param = 'DO_obs')
 ```
 
-The `ebase` function includes the `maxinterp` argument to assign `NA` values to continuously interpolated rows with length greater than the value defined by `maxinterp`.  This value is set to 12 hours by default and applies to the groupings defined by `ndays`, i.e., any group with a continuous set of interpolated values where the time is greater than 12 hours are assigned `NA` (except `Date` and `DateTimeStamp`).  The numeric value passed to `maxinterp` is the number of time steps for the input data, e.g., 48 would be 12 hours if the time step is 900 seconds.  
+The `ebase` function includes the `maxinterp` argument to assign `NA` values to continuously interpolated rows with length greater than the value defined by `maxinterp`.  This value is set to 12 hours by default and applies to the groupings defined by `ndays`, i.e., any group with a continuous set of interpolated values where the time is greater than 12 hours are assigned `NA` (except `Date` and `DateTimeStamp`).  The numeric value passed to `maxinterp` is the number of time steps for the input data.
+
+Running `ebase` on the time series with missing data shows how the interpolatd data are handled.  Note that results for the long gap are removed, whereas those for the shorter gaps are retained. 
+
+```{r}
+#| fig-height: 3
+#| fig-width: 9
+res <- ebase(apadbmiss, interval = 3600, Z = zval)
+ebase_plot(res, instantaneous = TRUE)
+```
 
 ## Changing priors
 
