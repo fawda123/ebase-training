@@ -282,7 +282,7 @@ window.Quarto = {
   <li><a href="#ebase-minimal-example" id="toc-ebase-minimal-example" class="nav-link" data-scroll-target="#ebase-minimal-example"><span class="header-section-number">3.5</span> EBASE minimal example</a></li>
   <li><a href="#ebase-full-example" id="toc-ebase-full-example" class="nav-link" data-scroll-target="#ebase-full-example"><span class="header-section-number">3.6</span> EBASE full example</a></li>
   <li><a href="#assess-model-fit" id="toc-assess-model-fit" class="nav-link" data-scroll-target="#assess-model-fit"><span class="header-section-number">3.7</span> Assess model fit</a></li>
-  <li><a href="#using-ebase-with-long-time-seriers" id="toc-using-ebase-with-long-time-seriers" class="nav-link" data-scroll-target="#using-ebase-with-long-time-seriers"><span class="header-section-number">3.8</span> Using EBASE with long time seriers</a></li>
+  <li><a href="#using-ebase-with-long-time-series" id="toc-using-ebase-with-long-time-series" class="nav-link" data-scroll-target="#using-ebase-with-long-time-series"><span class="header-section-number">3.8</span> Using EBASE with long time series</a></li>
   <li><a href="#sec-optimization" id="toc-sec-optimization" class="nav-link" data-scroll-target="#sec-optimization"><span class="header-section-number">3.9</span> Equation optimization length</a></li>
   <li><a href="#starting-value" id="toc-starting-value" class="nav-link" data-scroll-target="#starting-value"><span class="header-section-number">3.10</span> Starting value</a></li>
   <li><a href="#sec-missing" id="toc-sec-missing" class="nav-link" data-scroll-target="#sec-missing"><span class="header-section-number">3.11</span> Missing values</a></li>
@@ -433,7 +433,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 6 20.56160</code></pre>
 </div>
 </div>
-<p>The results are returned as a data frame with instantaneous metabolic estimates for areal gross production (O2 mmol m<span class="math inline">\(^{-2}\)</span> d<span class="math inline">\(^{-1}\)</span>, <code>P</code>), respiration (O2 mmol m<span class="math inline">\({^{-2}\)</span> d<span class="math inline">\(^{-1}\)</span>, <code>R</code>), and gas exchange (O2 mmol m<span class="math inline">\(^{-2}\)</span> d<span class="math inline">\({^-1}\)</span>, <code>D</code> or the remainder of the equation from above, positive values as ingassing, negative values as outgassing).</p>
+<p>The results are returned as a data frame with instantaneous metabolic estimates for areal gross production (O2 mmol m<span class="math inline">\(^{-2}\)</span> d<span class="math inline">\(^{-1}\)</span>, <code>P</code>), respiration (O2 mmol m<span class="math inline">\(^{-2}\)</span> d<span class="math inline">\(^{-1}\)</span>, <code>R</code>), and gas exchange (O2 mmol m<span class="math inline">\(^{-2}\)</span> d<span class="math inline">\(^{-1}\)</span>, <code>D</code> or the remainder of the equation from above, positive values as ingassing, negative values as outgassing).</p>
 <p>Additional parameters estimated by the model that are returned include <code>a</code> as (mmol O<span class="math inline">\(_2\)</span> m<span class="math inline">\(^{-2}\)</span> d<span class="math inline">\(^{-1}\)</span>)/(W m<span class="math inline">\(^{-2}\)</span>) and <code>b</code> as (cm h<span class="math inline">\(^{-1}\)</span>)/(m<span class="math inline">\(^2\)</span> s<span class="math inline">\(^{-2}\)</span>). We also see modelled DO as <code>DO_mod</code> and various convergence metrics. The upper and lower credible intervals for each estimated parameter are also provided by <code>lo</code> or <code>hi</code> suffixes, which we’ll describe later to assess model fit.</p>
 </section>
 <section id="ebase-full-example" class="level2" data-number="3.6">
@@ -475,42 +475,11 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: More than one time step or missing values will be interpolated</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        DateTimeStamp       Date grp        Z  DO_obs   DO_mod DO_modlo
-1 2017-03-07 00:00:00 2017-03-07   1 1.717083 268.750 270.8333 270.8314
-2 2017-03-07 01:00:00 2017-03-07   1 1.717083 278.125 269.3205 268.0669
-3 2017-03-07 02:00:00 2017-03-07   1 1.717083 271.875 268.0298 265.6517
-4 2017-03-07 03:00:00 2017-03-07   1 1.717083 275.000 266.7119 263.2662
-5 2017-03-07 04:00:00 2017-03-07   1 1.717083 262.500 265.6931 261.4019
-6 2017-03-07 05:00:00 2017-03-07   1 1.717083 271.875 264.7194 259.3586
-  DO_modhi       dDO converge       rsq         a       alo      ahi         b
-1 270.8353        NA     Fine 0.1840882        NA        NA       NA        NA
-2 270.4468 -36.30767     Fine 0.1840882 0.6233181 0.2292881 1.098696 0.2486319
-3 270.2101 -30.97790     Fine 0.1840882 0.6233181 0.2292881 1.098696 0.2486319
-4 269.8746 -31.62892     Fine 0.1840882 0.6233181 0.2292881 1.098696 0.2486319
-5 269.8640 -24.45129     Fine 0.1840882 0.6233181 0.2292881 1.098696 0.2486319
-6 269.7869 -23.36881     Fine 0.1840882 0.6233181 0.2292881 1.098696 0.2486319
-         blo       bhi  P Plo Phi        R      Rlo      Rhi         D
-1         NA        NA NA  NA  NA       NA       NA       NA        NA
-2 0.04482773 0.4501714  0   0   0 64.22865 17.36652 117.0242  1.885348
-3 0.04482773 0.4501714  0   0   0 64.22865 17.36652 117.0242 11.037011
-4 0.04482773 0.4501714  0   0   0 64.22865 17.36652 117.0242  9.919155
-5 0.04482773 0.4501714  0   0   0 64.22865 17.36652 117.0242 22.243748
-6 0.04482773 0.4501714  0   0   0 64.22865 17.36652 117.0242 24.102462
-        Dlo       Dhi
-1        NA        NA
-2 0.3398168  3.413524
-3 1.8475525 21.937421
-4 1.4699728 22.284321
-5 3.6605093 45.659507
-6 4.1069630 48.430889</code></pre>
 </div>
-</div>
-<p>First off, we got a few warnings in the console telling us some information about our dataset. Both of these warnings indicate the default behavior for EBASE when incomplete daily observations at the start or end of the dataset are present and if missing observations are found. As the warnings indicate, the “dangling” observations are removed since it is impossible to estimate metabolism accurately for these data. Missing data in the middle of the time series are interpolated and these can be handled differently depending on the user’s preference. We’ll describe more about this in <a href="#sec-missing" class="quarto-xref"><span>Section 3.11</span></a>.</p>
+<p>First off, we got a few warnings in the console telling us some information about our dataset. Both of these warnings indicate the default behavior for EBASE when incomplete daily observations at the start or end of the dataset are present and if missing observations are found. As the warnings indicate, the “dangling” observations are removed since it is impossible to estimate metabolism accurately for these data. Missing data in the middle of the time series are also interpolated and these can be handled differently depending on the user’s preference. We’ll describe more about this in <a href="#sec-missing" class="quarto-xref"><span>Section 3.11</span></a>.</p>
 <p>We’ll use some additional functions in EBASE to interpret the results. A plot of the results can be made with <code>ebase_plot()</code>. This plot shows <span class="math inline">\(P\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(D\)</span> as instantaneous values at the same time step as the original dataset. Note that a single value for <span class="math inline">\(R\)</span> is returned each day. The model assumes respiration is constant for each period of time the model is estimated. This is called the “optimization period” and it is set as 1 day by default. The <code>grp</code> column in the model output indicates which optimization period applies to each observation. We’ll talk more about how and why you might change this value in <a href="#sec-optimization" class="quarto-xref"><span>Section 3.9</span></a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -521,7 +490,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 <p>The daily averages can also be plotted by using <code>instantaneous = FALSE</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res, <span class="at">instantaneous =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res, <span class="at">instantaneous =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -532,21 +501,22 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 <p>Note that <span class="math inline">\(NEM\)</span> is not returned by <code>ebase</code>, nor is it included in the plots. We can easily calculate <span class="math inline">\(NEM\)</span> by subtracting <span class="math inline">\(R\)</span> from <span class="math inline">\(P\)</span> and use the ggplot2 package to plot the result.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate NEM</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> res <span class="sc">|&gt;</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">NEM =</span> P <span class="sc">-</span> R</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># make a plot</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(res, <span class="fu">aes</span>(<span class="at">x =</span> DateTimeStamp, <span class="at">y =</span> NEM)) <span class="sc">+</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">'Net Ecosystem Metabolism (mmol O2 m-2 d-1)'</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate NEM</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> res <span class="sc">|&gt;</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">NEM =</span> P <span class="sc">-</span> R</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># make a plot</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(res, <span class="fu">aes</span>(<span class="at">x =</span> DateTimeStamp, <span class="at">y =</span> NEM)) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> </span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">'NEM (mmol O2 m-2 d-1)'</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -555,22 +525,23 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 </div>
 </div>
-<p>Or we can average NEM daily and plot it again.</p>
+<p>Or we can average NEM each day and plot it again.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate daily NEM</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>nemdly <span class="ot">&lt;-</span> res <span class="sc">|&gt;</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">NEM =</span> <span class="fu">mean</span>(NEM, <span class="at">na.rm =</span> T), </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> Date</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># plot daily NEM</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nemdly, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> NEM)) <span class="sc">+</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">'Net Ecosystem Metabolism (mmol O2 m-2 d-1)'</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate daily NEM</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>nemdly <span class="ot">&lt;-</span> res <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">NEM =</span> <span class="fu">mean</span>(NEM, <span class="at">na.rm =</span> T), </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.by =</span> Date</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># plot daily NEM</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nemdly, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> NEM)) <span class="sc">+</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">'NEM (mmol O2 m-2 d-1)'</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -582,10 +553,10 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </section>
 <section id="assess-model-fit" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="assess-model-fit"><span class="header-section-number">3.7</span> Assess model fit</h2>
-<p>Model fit can be assessed using the <code>converge</code> and <code>rsq</code> columns from the returned results. The values in these columns apply to each group in the <code>grp</code> column as specified with the <code>ndays</code> argument. The <code>converge</code> column indicates <code>"Check convergence"</code> or <code>"Fine"</code> if the JAGS estimate converged at that iteration (repeated across rows for the group). The <code>n.chains</code> argument of <code>ebase</code> can be increased if convergence is not achieved. Similarly, the <code>rsq</code> column shows the r-squared values of the linear fit between the modeled and observed dissolved oxygen (repeated across rows for the group).</p>
-<p>The model fit can also be assessed by comparing the observed and modeled values for dissolved oxygen with the <code>fit_plot()</code> function. Estimated values are shown as line and observed values are shown as points.</p>
+<p>Model fit can be assessed using the <code>converge</code> and <code>rsq</code> columns from the returned results. The values in these columns apply to each group in the <code>grp</code> column as specified with the <code>ndays</code> argument. The <code>converge</code> column indicates <code>"Check convergence"</code> or <code>"Fine"</code> if the JAGS estimate converged at that iteration or optimization period (repeated across rows for the group). Similarly, the <code>rsq</code> column shows the r-squared values of the linear fit between the modeled and observed dissolved oxygen (repeated across rows for the group).</p>
+<p>The model fit can also be assessed by comparing the observed and modeled values for dissolved oxygen with the <code>fit_plot()</code> function. Estimated values are shown as lines and observed values are shown as points.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -594,9 +565,9 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 </div>
 </div>
-<p>The comparison can also be separated by group with <code>bygroup = TRUE</code> based on the value for the <code>ndays</code> argument passed to <code>ebase()</code>. The r-squared value of the fit between modeled and observed dissolved oxygen is also shown in the facet label for the group.</p>
+<p>The comparison can also be separated by group with <code>bygroup = TRUE</code> based on the value for the <code>ndays</code> argument passed to <code>ebase()</code>, default as 1 day. The r-squared value of the fit between modeled and observed dissolved oxygen is also shown in the facet label for the group.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res, <span class="at">bygroup =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res, <span class="at">bygroup =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -607,7 +578,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 <p>A scatterplot showing modeled versus observed dissolved oxygen can also be returned by setting <code>scatter = TRUE</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res, <span class="at">bygroup =</span> <span class="cn">TRUE</span>, <span class="at">scatter =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res, <span class="at">bygroup =</span> <span class="cn">TRUE</span>, <span class="at">scatter =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -616,10 +587,10 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 </div>
 </div>
-<p>95% credible intervals for <code>a</code>, <code>R</code> (as areal), and <code>b</code> are also returned with the output from <code>ebase()</code> in the corresponding columns <code>alo</code>, <code>ahi</code>, <code>blo</code>, <code>bhi</code>, <code>Rlo</code>, and <code>Rhi</code>, for the 2.5th and 97.5th percentile estimates for each parameter, respectively. These values indicate the interval within which there is a 95% probability that the true parameter is in this range and is a representation of the posterior distributions for each parameter. Note that all values for these parameters are repeated across rows, although only one estimate for each is returned based on the number of days defined by <code>ndays</code>.</p>
+<p>95% credible intervals for <code>a</code>, <code>R</code>, and <code>b</code> are also returned with the output from <code>ebase()</code> in the corresponding columns <code>alo</code>, <code>ahi</code>, <code>blo</code>, <code>bhi</code>, <code>Rlo</code>, and <code>Rhi</code>, for the 2.5th and 97.5th percentile estimates for each parameter, respectively. These values indicate the interval within which there is a 95% probability that the true parameter is in this range and is a representation of the posterior distributions for each parameter.</p>
 <p>The credible intervals can be plotted with the <code>credible_plot()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -630,7 +601,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 <p>The credible intervals can also be retrieved as a data frame using <code>credible_prep()</code>. This function is provided as a convenience to parse the results from <code>ebase()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_prep</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_prep</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 21 × 6
 # Groups:   grp [7]
@@ -650,65 +621,69 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 </div>
 </section>
-<section id="using-ebase-with-long-time-seriers" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="using-ebase-with-long-time-seriers"><span class="header-section-number">3.8</span> Using EBASE with long time seriers</h2>
-<p>Execution time of the model can also be reduced by using multiple processors. This is done using <a href="https://cran.r-project.org/package=doParallel">doParrallel</a> package and registering a parallel backend as below. It doesn’t really help us when the time series is short, but it can be useful when running more than a few days of data.</p>
+<section id="using-ebase-with-long-time-series" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="using-ebase-with-long-time-series"><span class="header-section-number">3.8</span> Using EBASE with long time series</h2>
+<p>Execution time of the model can also be reduced by using multiple processors. This is done using the <a href="https://cran.r-project.org/package=doParallel">doParrallel</a> package and creating a parallel backend as below. It doesn’t really help us when the time series is short, but it can be useful when running more than a few days of data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup parallel backend</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">2</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(ncores)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cl)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadb, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup parallel backend</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(ncores)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadb, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, although <code>ebase()</code> can be used to estimate metabolism for time series with several years of data, the <code>ebase_years()</code> function can be used to estimate results sequentially for each year. This is useful because model estimation using <code>ebase_years()</code> will continue after a year fails, e.g., when some years have long periods of missing or erroneous data. This eliminates the need to restart the model or further pre-process the data. The same arguments for <code>ebase()</code> are used for <code>ebase_years()</code>. Progress is printed directly in the console and the user can specify the number of attempts for failed years before proceeding to the following year.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase_years</span>(apadb, <span class="at">Z =</span> zval, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">ncores =</span> ncores, <span class="at">quiet =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="sec-optimization" class="level2" data-number="3.9">
 <h2 data-number="3.9" class="anchored" data-anchor-id="sec-optimization"><span class="header-section-number">3.9</span> Equation optimization length</h2>
 <p>The <code>ndays</code> argument in <code>ebase()</code> defines the model optimization period as the number of days that are used for fitting the model. By default, this is done each day, i.e., <code>ndays = 1</code>. Individual parameter estimates for <code>a</code>, <code>R</code>, and <code>b</code> are then returned for each day. However, more days can be used to estimate the unknown parameters - one day may not provide enough data to the model to create a reliable estimate.</p>
 <p>Here, the number of days used to optimize the equation is set to all days in the input data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">ndays =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">ndays =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And the resulting plot:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res, <span class="at">instantaneous =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res, <span class="at">instantaneous =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-18-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="03_ebase_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-19-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="03_ebase_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>And the fit of observed and modeled dissolved oxygen (note the unbroken line for all days estimated together):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-19-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="03_ebase_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-20-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="03_ebase_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
 </div>
+<p>Choosing the number of days to optimize the equation is a user choice based on questions of interest for the dataset. Typically, using one day for optimization may not provide enough data to meaningfully describe metabolism, although this may be the only option for very short time series. Longer optimization periods can be used for longer time series, but key events driving metabolism may be missed if the optimization period is too long, e.g., monthly.</p>
 </section>
 <section id="starting-value" class="level2" data-number="3.10">
 <h2 data-number="3.10" class="anchored" data-anchor-id="starting-value"><span class="header-section-number">3.10</span> Starting value</h2>
-<p>The <code>doave</code> argument can be used to define which dissolved oxygen value is used as the starting point in the Bayesian estimation for the optimization period. The default setting (<code>doave = TRUE</code>) will use the average of all the dissolved oxygen values in the optimization period defined by <code>ndays</code>. The first dissolved oxygen observation of the time series in the optimization period will be used as the starting point if <code>doave = F</code>. In this case, the modeled dissolved oxygen time series will always start at the first observed dissolved oxygen value for each optimization period.</p>
+<p>The <code>doave</code> argument can be used to define which dissolved oxygen value is used as the starting point in the Bayesian estimation for the optimization period. The default setting (<code>doave = TRUE</code>) will use the average of all the dissolved oxygen values in the optimization period defined by <code>ndays</code>. Conversely, the first dissolved oxygen observation of the time series in the optimization period will be used as the starting point if <code>doave = F</code>.</p>
 <p>Below, <code>doave = FALSE</code> is used to set the first observed dissolved oxygen as the starting value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">doave =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">doave =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-21-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="03_ebase_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-22-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="03_ebase_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
@@ -719,33 +694,12 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 <p>Missing values in the input data are interpolated by <code>ebase</code> prior to estimating metabolism. It is the responsibility of the user to verify that these interpolated values are not wildly inaccurate. Missing values are linearly interpolated between non-missing values at the time step specified by the value in <code>interval</code>. This works well for small gaps, but can easily create inaccurate values at gaps larger than a few hours.</p>
 <p>Let’s create some missing data in our Apalachicola subset. We’ll remove a few hours on one day and remove an entire day.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>apadbmiss <span class="ot">&lt;-</span> apadbsub</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>apadbmiss<span class="sc">$</span>DO_obs[<span class="fu">c</span>(<span class="dv">57</span><span class="sc">:</span><span class="dv">61</span>, <span class="dv">97</span><span class="sc">:</span><span class="dv">120</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The <code>ebase_prep()</code> function is used internally to <code>ebase</code> to prepare the data for the metabolism calculations. This function interpolates the missing data and returns a column <code>isinterp</code> that specifies <code>TRUE</code> or <code>FALSE</code> if a value is interpolated. We’ll use this function to demonstrate how the interpolation works.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>dat2interp <span class="ot">&lt;-</span> <span class="fu">ebase_prep</span>(apadbmiss, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat2interp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>        Date       DateTimeStamp isinterp  DO_obs   DO_sat        Z Temp  Sal
-1 2017-03-07 2017-03-07 00:00:00    FALSE 268.750 273.4912 1.717083 18.6 11.0
-2 2017-03-07 2017-03-07 01:00:00    FALSE 278.125 274.0895 1.717083 18.7 10.3
-3 2017-03-07 2017-03-07 02:00:00    FALSE 271.875 272.1891 1.717083 18.6 11.8
-4 2017-03-07 2017-03-07 03:00:00    FALSE 275.000 275.5122 1.717083 18.5 10.1
-5 2017-03-07 2017-03-07 04:00:00    FALSE 262.500 277.3853 1.717083 18.4  9.3
-6 2017-03-07 2017-03-07 05:00:00    FALSE 271.875 277.1615 1.717083 18.5  9.1
-  PAR WSpd Depth       sc grp
-1   0  3.4  1.78 567.3772   1
-2   0  6.1  1.73 563.2445   1
-3   0  6.2  1.64 568.7908   1
-4   0  6.4  1.56 568.7010   1
-5   0  5.8  1.47 570.2081   1
-6   0  5.1  1.41 566.9257   1</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>apadbmiss <span class="ot">&lt;-</span> apadbsub</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>apadbmiss<span class="sc">$</span>DO_obs[<span class="fu">c</span>(<span class="dv">57</span><span class="sc">:</span><span class="dv">61</span>, <span class="dv">97</span><span class="sc">:</span><span class="dv">120</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The interpolated values can be visually inspected using the <code>interp_plot()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interp_plot</span>(dat2interp, <span class="at">Z =</span> zval, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">param =</span> <span class="st">'DO_sat'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interp_plot</span>(apadbmiss, <span class="at">Z =</span> zval, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">param =</span> <span class="st">'DO_obs'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -754,7 +708,19 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 </div>
 </div>
-<p>The <code>ebase</code> function includes the <code>maxinterp</code> argument to assign <code>NA</code> values to continuously interpolated rows with length greater than the value defined by <code>maxinterp</code>. This value is set to 12 hours by default and applies to the groupings defined by <code>ndays</code>, i.e., any group with a continuous set of interpolated values where the time is greater than 12 hours are assigned <code>NA</code> (except <code>Date</code> and <code>DateTimeStamp</code>). The numeric value passed to <code>maxinterp</code> is the number of time steps for the input data, e.g., 48 would be 12 hours if the time step is 900 seconds.</p>
+<p>The <code>ebase</code> function includes the <code>maxinterp</code> argument to assign <code>NA</code> values to continuously interpolated rows with length greater than the value defined by <code>maxinterp</code>. This value is set to 12 hours by default and applies to the groupings defined by <code>ndays</code>, i.e., any group with a continuous set of interpolated values where the time is greater than 12 hours are assigned <code>NA</code> (except <code>Date</code> and <code>DateTimeStamp</code>). The numeric value passed to <code>maxinterp</code> is the number of time steps for the input data.</p>
+<p>Running <code>ebase</code> on the time series with missing data shows how the interpolatd data are handled. Note that results for the long gap are removed, whereas those for the shorter gaps are retained.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbmiss, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res, <span class="at">instantaneous =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-25-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="03_ebase_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="864"></a></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="changing-priors" class="level2" data-number="3.12">
 <h2 data-number="3.12" class="anchored" data-anchor-id="changing-priors"><span class="header-section-number">3.12</span> Changing priors</h2>
@@ -1278,7 +1244,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"loop":false,"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
