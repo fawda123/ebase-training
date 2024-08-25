@@ -284,7 +284,7 @@ ncores <- detectCores() - 2
 cl <- makeCluster(ncores)
 registerDoParallel(cl)
 
-res <- ebase(apadb, interval = 3600, Z = zval)
+res <- ebase(apadbsub, interval = 3600, Z = zval)
 
 stopCluster(cl)
 ```
@@ -293,7 +293,9 @@ Finally, although `ebase()` can be used to estimate metabolism for time series w
 
 ```{r}
 #| eval: false
-res <- ebase_years(apadb, Z = zval, interval = 3600, ncores = ncores, quiet = F)
+zval <- mean(apadb$Depth, na.rm = T)
+resfull <- ebase_years(apadb, Z = zval, interval = 3600, ncores = ncores, quiet = F)
+save(resfull, file = 'data/resfull.RData')
 ```
 
 ## Equation optimization length {#sec-optimization}
