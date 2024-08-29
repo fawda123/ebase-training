@@ -199,6 +199,7 @@ library(ggplot2)
 
 ggplot(res, aes(x = DateTimeStamp, y = NEM)) +
   geom_line() +
+  geom_hline(yintercept = 0, linetype = 'dashed') +
   theme_minimal() + 
   labs(
     x = NULL,
@@ -221,6 +222,7 @@ nemdly <- res |>
 # plot daily NEM
 ggplot(nemdly, aes(x = Date, y = NEM)) +
   geom_line() +
+  geom_hline(yintercept = 0, linetype = 'dashed') +
   theme_minimal() +
   labs(
     x = NULL,
