@@ -369,7 +369,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 </div>
 <p>Running EBASE with the default arguments will use these prior distributions to estimate the parameters. We’ll discuss how to change these values later in the lesson if you have additional prior information.</p>
-<p>Finally, the Bayesian approach in EBASE uses an MCMC (Markov Chain Monte Carlo) method to estimate the posterior distributions. This is implemented using the <a href="https://mcmc-jags.sourceforge.io/">JAGS</a> software which was part of the installation during <a href="./setup.html#sec-instjags">setup</a> for the workshop. These methods are used to estimate the posterior distributions by repeated sampling of the priors given the data until a stable estimate is reached (i.e., convergence) using a Markov Chain. Because of this, estimation can take a while and we’ll talk about arguments in EBASE to control the process.</p>
+<p>Finally, the Bayesian approach in EBASE uses an MCMC (Markov Chain Monte Carlo) method to estimate the posterior distributions. This is implemented using the <a href="https://mcmc-jags.sourceforge.io/">JAGS</a> software which was part of the installation during <a href="./setup.html#sec-instjags">setup</a> for the workshop. These methods are used to estimate the posterior distributions by repeated sampling of the priors given the data until a stable estimate is reached (i.e., convergence) using a Markov Chain. Because of this, estimation can take a while and we’ll talk about arguments in EBASE to control the process. See <a href="https://biometry.github.io/APES//LectureNotes/StatsCafe/Linear_models_jags.html">here</a> for a more in depth introduction to JAGS.</p>
 </section>
 <section id="ebase-minimal-example" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="ebase-minimal-example"><span class="header-section-number">3.5</span> EBASE minimal example</h2>
@@ -813,7 +813,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 <section id="changing-priors" class="level2" data-number="3.11">
 <h2 data-number="3.11" class="anchored" data-anchor-id="changing-priors"><span class="header-section-number">3.11</span> Changing priors</h2>
 <p>A main advantage of the Bayesian approach is the use of prior information to estimate parameters. By default, the prior distributions for the <span class="math inline">\(a\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(b\)</span> parameters are informed by the literature, although they are generally uninformed by allowing a large range of values to be considered given the data. We can further constrain the parameters if we have reason to do so.</p>
-<p>Here, the prior distribution for the <span class="math inline">\(b\)</span> parameter is fixed to 0.251 (cm h<span class="math inline">\(^{-1}\)</span>)/(m<span class="math inline">\(^2\)</span> s<span class="math inline">\(^{-2}\)</span>), as suggested by <span class="citation" data-cites="Wanninkhof2024">(<a href="references.html#ref-Wanninkhof2024" role="doc-biblioref"><strong>Wanninkhof2024?</strong></a>)</span>. We can view this change with the <code>prior_plot</code> function before using <code>ebase</code>. Note that we define the mean as our desired value and assign a very small range for the standard deviation.</p>
+<p>Here, the prior distribution for the <span class="math inline">\(b\)</span> parameter is fixed to 0.251 (cm h<span class="math inline">\(^{-1}\)</span>)/(m<span class="math inline">\(^2\)</span> s<span class="math inline">\(^{-2}\)</span>), as suggested by <span class="citation" data-cites="Wanninkhof14">Wanninkhof (<a href="references.html#ref-Wanninkhof14" role="doc-biblioref">2014</a>)</span>. We can view this change with the <code>prior_plot</code> function before using <code>ebase</code>. Note that we define the mean as our desired value and assign a very small range for the standard deviation.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_plot</span>(<span class="at">bprior =</span> <span class="fu">c</span>(<span class="fl">0.251</span>, <span class="fl">1e-6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1424,7 +1424,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox","descPosition":"bottom","loop":false});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
