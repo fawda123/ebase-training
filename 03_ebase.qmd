@@ -71,7 +71,7 @@ prior_plot()
 
 Running EBASE with the default arguments will use these prior distributions to estimate the parameters.  We'll discuss how to change these values later in the lesson if you have additional prior information. 
 
-Finally, the Bayesian approach in EBASE uses an MCMC (Markov Chain Monte Carlo) method to estimate the posterior distributions.  This is implemented using the [JAGS](https://mcmc-jags.sourceforge.io/) software which was part of the installation during [setup](setup.qmd#sec-instjags) for the workshop.  These methods are used to estimate the posterior distributions by repeated sampling of the priors given the data until a stable estimate is reached (i.e., convergence) using a Markov Chain.  Because of this, estimation can take a while and we'll talk about arguments in EBASE to control the process.  
+Finally, the Bayesian approach in EBASE uses an MCMC (Markov Chain Monte Carlo) method to estimate the posterior distributions.  This is implemented using the [JAGS](https://mcmc-jags.sourceforge.io/) software which was part of the installation during [setup](setup.qmd#sec-instjags) for the workshop.  These methods are used to estimate the posterior distributions by repeated sampling of the priors given the data until a stable estimate is reached (i.e., convergence) using a Markov Chain.  Because of this, estimation can take a while and we'll talk about arguments in EBASE to control the process.  See [here](https://biometry.github.io/APES//LectureNotes/StatsCafe/Linear_models_jags.html) for a more in depth introduction to JAGS.  
 
 ## EBASE minimal example
 
@@ -397,7 +397,7 @@ ebase_plot(res)
 
 A main advantage of the Bayesian approach is the use of prior information to estimate parameters.  By default, the prior distributions for the $a$, $R$, and $b$ parameters are informed by the literature, although they are generally uninformed by allowing a large range of values to be considered given the data.  We can further constrain the parameters if we have reason to do so.
 
-Here, the prior distribution for the $b$ parameter is fixed to 0.251 (cm h$^{-1}$)/(m$^2$ s$^{-2}$), as suggested by @Wanninkhof2024.  We can view this change with the `prior_plot` function before using `ebase`. Note that we define the mean as our desired value and assign a very small range for the standard deviation.
+Here, the prior distribution for the $b$ parameter is fixed to 0.251 (cm h$^{-1}$)/(m$^2$ s$^{-2}$), as suggested by @Wanninkhof14.  We can view this change with the `prior_plot` function before using `ebase`. Note that we define the mean as our desired value and assign a very small range for the standard deviation.
 
 ```{r}
 #| fig-height: 3

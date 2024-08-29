@@ -8,9 +8,13 @@ lightbox: true
 
 This discussion is your time to share some ideas about evaluating the results from EBASE.  We'll go through some live coding examples based on these ideas. Below are some examples and code to get us started. 
 
-## Example 1: Compare results to nutrient data
+## Example 1: Piney Point
 
-## Example 2: Site comparisons
+Effects of inorganic nutrient influx
+
+## Example 2: Apalachicola storm influences
+
+Effects of winter storm passages
 
 ## Next steps
 
