@@ -287,14 +287,14 @@ window.Quarto = {
   <li><a href="#lesson-outline" id="toc-lesson-outline" class="nav-link active" data-scroll-target="#lesson-outline"><span class="header-section-number">3.1</span> Lesson Outline</a></li>
   <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals"><span class="header-section-number">3.2</span> Learning Goals</a></li>
   <li><a href="#the-ebase-method" id="toc-the-ebase-method" class="nav-link" data-scroll-target="#the-ebase-method"><span class="header-section-number">3.3</span> The EBASE method</a></li>
-  <li><a href="#the-bayesian-approach" id="toc-the-bayesian-approach" class="nav-link" data-scroll-target="#the-bayesian-approach"><span class="header-section-number">3.4</span> The Bayesian approach</a></li>
+  <li><a href="#sec-bayes" id="toc-sec-bayes" class="nav-link" data-scroll-target="#sec-bayes"><span class="header-section-number">3.4</span> The Bayesian approach</a></li>
   <li><a href="#ebase-minimal-example" id="toc-ebase-minimal-example" class="nav-link" data-scroll-target="#ebase-minimal-example"><span class="header-section-number">3.5</span> EBASE minimal example</a></li>
   <li><a href="#ebase-full-example" id="toc-ebase-full-example" class="nav-link" data-scroll-target="#ebase-full-example"><span class="header-section-number">3.6</span> EBASE full example</a></li>
   <li><a href="#assess-model-fit" id="toc-assess-model-fit" class="nav-link" data-scroll-target="#assess-model-fit"><span class="header-section-number">3.7</span> Assess model fit</a></li>
   <li><a href="#using-ebase-with-long-time-series" id="toc-using-ebase-with-long-time-series" class="nav-link" data-scroll-target="#using-ebase-with-long-time-series"><span class="header-section-number">3.8</span> Using EBASE with long time series</a></li>
   <li><a href="#sec-optimization" id="toc-sec-optimization" class="nav-link" data-scroll-target="#sec-optimization"><span class="header-section-number">3.9</span> Equation optimization length</a></li>
   <li><a href="#sec-missing" id="toc-sec-missing" class="nav-link" data-scroll-target="#sec-missing"><span class="header-section-number">3.10</span> Missing values</a></li>
-  <li><a href="#changing-priors" id="toc-changing-priors" class="nav-link" data-scroll-target="#changing-priors"><span class="header-section-number">3.11</span> Changing priors</a></li>
+  <li><a href="#sec-changingpriors" id="toc-sec-changingpriors" class="nav-link" data-scroll-target="#sec-changingpriors"><span class="header-section-number">3.11</span> Changing priors</a></li>
   <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps"><span class="header-section-number">3.12</span> Next steps</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/fawda123/ebase-training/edit/main/03_ebase.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
@@ -351,19 +351,46 @@ Z\frac{dC_d}{dt} = P - R + D
 Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left(C_{Sat} - C_d \right )
 \]</span></p>
 <p><span class="math inline">\(aPAR\)</span> is production (<span class="math inline">\(P\)</span>), <span class="math inline">\(R\)</span> is respiration, and the last term is gas exchange <span class="citation" data-cites="Wanninkhof14">(<span class="math inline">\(D\)</span>, <a href="references.html#ref-Wanninkhof14" role="doc-biblioref">Wanninkhof 2014</a>)</span>. The required input data to fit this model was described in <a href="02_dataprep.html" class="quarto-xref">Lesson&nbsp;<span>2</span></a>. Three of these inputs are used directly in the equation as <span class="math inline">\(C_d\)</span> for dissolved oxygen, <span class="math inline">\(PAR\)</span>, and wind speed as <span class="math inline">\(U_{10}^2\)</span> (or squared wind speed at ten meters above the surface). The other terms are the Schmidt number (<span class="math inline">\(S_c\)</span>) and dissolved oxygen at saturation (<span class="math inline">\(C_{sat}\)</span>), both of which are calculated from water temperature and salinity in the input data.</p>
-<p>The remaining terms <span class="math inline">\(a\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(b\)</span> are estimated during the model fitting process, which we’ll discuss in the next section. All three provide important information about metabolic processes and are useful on their own to understand ecosystem function.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>EBASE estimates <span class="math inline">\(a\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(b\)</span>.</p>
+</div>
+</div>
+<p>The remaining terms <span class="math inline">\(a\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(b\)</span> are estimated during the model fitting process, which we’ll discuss in <a href="#sec-bayes" class="quarto-xref"><span>Section 3.4</span></a>. All three provide important information about metabolic processes and are useful on their own to understand ecosystem function.</p>
 <ul>
 <li><span class="math inline">\(a\)</span>: The light efficiency parameter as <span class="math inline">\(\left(mmol~O_2~m^{-2}~d^{-1}\right) / \left(W~m^{-2}\right)\)</span>, yields production when multiplied by <span class="math inline">\(PAR\)</span>. This is a measure of how efficiently light is converted to organic matter. It provides similar information as a P/I curve by showing how production changes with light availability.</li>
 <li><span class="math inline">\(R\)</span>: The respiration rate as <span class="math inline">\(mmol~O_2~m^{-2}~d^{-1}\)</span>, is the rate at which organic matter is consumed.</li>
-<li><span class="math inline">\(b\)</span>: The sensitivity of gas exchange to wind speed as <span class="math inline">\(\left(cm~h^{-1}\right) / \left(m^2~s^{-2}\right)\)</span>.</li>
+<li><span class="math inline">\(b\)</span>: The sensitivity of gas exchange to wind speed as <span class="math inline">\(\left(cm~h^{-1}\right) / \left(m^2~s^{-2}\right)\)</span>. This can provide information on the importance of gas exchange in the system.</li>
 </ul>
 <p>Although the core model equation may seem complicated, its formulation was chosen to describe dominant processes that influence metabolism in an estuarine setting. The details for this justification can be found in <span class="citation" data-cites="Beck2024">Beck et al. (<a href="references.html#ref-Beck2024" role="doc-biblioref">2024</a>)</span>.</p>
 </section>
-<section id="the-bayesian-approach" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="the-bayesian-approach"><span class="header-section-number">3.4</span> The Bayesian approach</h2>
+<section id="sec-bayes" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-bayes"><span class="header-section-number">3.4</span> The Bayesian approach</h2>
 <p>Both the open-water method presented by <span class="citation" data-cites="Odum56">Odum (<a href="references.html#ref-Odum56" role="doc-biblioref">1956</a>)</span> and EBASE similarly use the rate of change of <span class="math inline">\(DO\)</span> to estimate metabolism. However, the Bayesian approach used in EBASE differs in how the parameters are estimated and has several key advantages.</p>
-<p>Modern statistical approaches to modelling can broadly be described as conventional “frequentist” methods or Bayesian. The former describes standard and more commonly used methods where a model is fit to a dataset to support a hypothesis, as in a simple linear regression. Bayesian approaches turn the paradigm around by asking the question “what is the likelihood of the data given a model?”.</p>
-<p>Bayesian approaches are fundamentally linked to Bayes theorem that describes the likelihood of observing an event as depending on the likelihood that other events have occurred. In model speak, this means we can estimate the posterior distribution of a parameter given a prior distribution. For EBASE, we can establish a set of prior distributions of likely values for each of the unknown parameters, <span class="math inline">\(a\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(b\)</span>. These prior distributions are used to create a refined estimate for the posterior distributions given the data that is presented to the model. The prior distributions can be precise (informed) or cover a range of potential values (uninformed).</p>
+<p>Modern statistical approaches can broadly be described as conventional “frequentist” methods or Bayesian. The former describes more commonly used methods where a model is fit to a dataset to support a hypothesis, as in a simple linear regression. Bayesian approaches turn the paradigm around by asking the question “what is the likelihood of the data given a model?”.</p>
+<p>Bayesian approaches are fundamentally linked to <a href="https://en.wikipedia.org/wiki/Bayes%27_theorem" target="&quot;_blank">Bayes’ theorem</a> that describes conditional probabilities or the likelihood of observing an event given that other events have occurred. In model speak, this means we can estimate the posterior distribution of a parameter given a prior distribution.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Bayesian models require a <em>prior</em> distribution for each parameter.</p>
+</div>
+</div>
+<p>For EBASE, we can establish a set of prior distributions of likely values for each of the unknown parameters, <span class="math inline">\(a\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(b\)</span>. These prior distributions are used to create a refined estimate for the posterior distributions given the data that is presented to the model. The prior distributions can be precise (informed) or cover a range of potential values (uninformed).</p>
 <p>The default prior distributions for EBASE were based on a likely range of values for each parameter that were informed by published results <span class="citation" data-cites="caffrey2004 Beck2024">(primarily <a href="references.html#ref-caffrey2004" role="doc-biblioref">Caffrey 2004</a>; details in <a href="references.html#ref-Beck2024" role="doc-biblioref">Beck et al. 2024</a>)</span>. You can create a plot of these prior distributions using the <code>prior_plot</code> function in EBASE.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EBASE)</span>
@@ -377,7 +404,20 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 </div>
 </div>
-<p>Running EBASE with the default arguments will use these prior distributions to estimate the parameters. We’ll discuss how to change these values later in the lesson if you have additional prior information.</p>
+<p>Running EBASE with the default arguments will use these prior distributions to estimate the parameters. We’ll discuss how to change these values in <a href="#sec-changingpriors" class="quarto-xref"><span>Section 3.11</span></a> if you have additional prior information.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prior distributions can be <em>informed</em> or <em>uninformed</em>.</p>
+</div>
+</div>
 <p>Finally, the Bayesian approach in EBASE uses an MCMC (Markov Chain Monte Carlo) method to estimate the posterior distributions. This is implemented using the <a href="https://mcmc-jags.sourceforge.io/">JAGS</a> software which was part of the installation during <a href="./setup.html#sec-instjags">setup</a> for the workshop. These methods are used to estimate the posterior distributions by repeated sampling of the priors given the data until a stable estimate is reached (i.e., convergence) using a Markov Chain. Because of this, estimation can take a while and we’ll talk about arguments in EBASE to control the process. See <a href="https://biometry.github.io/APES//LectureNotes/StatsCafe/Linear_models_jags.html">here</a> for a more in depth introduction to JAGS.</p>
 </section>
 <section id="ebase-minimal-example" class="level2" data-number="3.5">
@@ -463,7 +503,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 <li>Examine the results - what do the columns tell you?</li>
 </ol>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -472,7 +512,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dates to subset</span></span>
@@ -751,7 +791,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 <li>Examine the results using <code>fit_plot</code>, <code>ebase_plot</code>, and <code>credible_plot</code>.</li>
 </ol>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -760,7 +800,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dates to subset</span></span>
@@ -819,8 +859,8 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 </div>
 </section>
-<section id="changing-priors" class="level2" data-number="3.11">
-<h2 data-number="3.11" class="anchored" data-anchor-id="changing-priors"><span class="header-section-number">3.11</span> Changing priors</h2>
+<section id="sec-changingpriors" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="sec-changingpriors"><span class="header-section-number">3.11</span> Changing priors</h2>
 <p>A main advantage of the Bayesian approach is the use of prior information to estimate parameters. By default, the prior distributions for the <span class="math inline">\(a\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(b\)</span> parameters are informed by the literature, although they are generally uninformed by allowing a large range of values to be considered given the data. We can further constrain the parameters if we have reason to do so.</p>
 <p>Here, the prior distribution for the <span class="math inline">\(b\)</span> parameter is fixed to 0.251 (cm h<span class="math inline">\(^{-1}\)</span>)/(m<span class="math inline">\(^2\)</span> s<span class="math inline">\(^{-2}\)</span>), as suggested by <span class="citation" data-cites="Wanninkhof14">Wanninkhof (<a href="references.html#ref-Wanninkhof14" role="doc-biblioref">2014</a>)</span>. We can view this change with the <code>prior_plot</code> function before using <code>ebase</code>. Note that we define the mean as our desired value and assign a very small range for the standard deviation.</p>
 <div class="cell">
@@ -876,7 +916,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 <li>Examine the results using <code>fit_plot</code>, <code>ebase_plot</code>, and <code>credible_plot</code>.</li>
 </ol>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -885,7 +925,7 @@ Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dates to subset</span></span>
@@ -1433,7 +1473,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","openEffect":"zoom","closeEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","openEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
