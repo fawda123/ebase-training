@@ -43,21 +43,31 @@ $$
 
 $aPAR$ is production ($P$), $R$ is respiration, and the last term is gas exchange [$D$, @Wanninkhof14].  The required input data to fit this model was described in [Lesson @sec-dataprep].  Three of these inputs are used directly in the equation as $C_d$ for dissolved oxygen, $PAR$, and wind speed as $U_{10}^2$ (or squared wind speed at ten meters above the surface).  The other terms are the Schmidt number ($S_c$) and dissolved oxygen at saturation ($C_{sat}$), both of which are calculated from water temperature and salinity in the input data. 
 
-The remaining terms $a$, $R$, and $b$ are estimated during the model fitting process, which we'll discuss in the next section.  All three provide important information about metabolic processes and are useful on their own to understand ecosystem function.
+::: {.callout-tip}
+EBASE estimates $a$, $R$, and $b$.
+:::
+
+The remaining terms $a$, $R$, and $b$ are estimated during the model fitting process, which we'll discuss in @sec-bayes.  All three provide important information about metabolic processes and are useful on their own to understand ecosystem function.
 
 * $a$: The light efficiency parameter as $\left(mmol~O_2~m^{-2}~d^{-1}\right) / \left(W~m^{-2}\right)$, yields production when multiplied by $PAR$.  This is a measure of how efficiently light is converted to organic matter.  It provides similar information as a P/I curve by showing how production changes with light availability.
 * $R$: The respiration rate as $mmol~O_2~m^{-2}~d^{-1}$, is the rate at which organic matter is consumed.
-* $b$: The sensitivity of gas exchange to wind speed as $\left(cm~h^{-1}\right) / \left(m^2~s^{-2}\right)$.
+* $b$: The sensitivity of gas exchange to wind speed as $\left(cm~h^{-1}\right) / \left(m^2~s^{-2}\right)$. This can provide information on the importance of gas exchange in the system.
 
 Although the core model equation may seem complicated, its formulation was chosen to describe dominant processes that influence metabolism in an estuarine setting.  The details for this justification can be found in @Beck2024.
 
-## The Bayesian approach
+## The Bayesian approach {#sec-bayes}
 
 Both the open-water method presented by @Odum56 and EBASE similarly use the rate of change of $DO$ to estimate metabolism.  However, the Bayesian approach used in EBASE differs in how the parameters are estimated and has several key advantages.  
 
-Modern statistical approaches to modelling can broadly be described as conventional "frequentist" methods or Bayesian.  The former describes standard and more commonly used methods where a model is fit to a dataset to support a hypothesis, as in a simple linear regression.  Bayesian approaches turn the paradigm around by asking the question "what is the likelihood of the data given a model?".  
+Modern statistical approaches can broadly be described as conventional "frequentist" methods or Bayesian.  The former describes more commonly used methods where a model is fit to a dataset to support a hypothesis, as in a simple linear regression.  Bayesian approaches turn the paradigm around by asking the question "what is the likelihood of the data given a model?".  
 
-Bayesian approaches are fundamentally linked to Bayes theorem that describes the likelihood of observing an event as depending on the likelihood that other events have occurred. In model speak, this means we can estimate the posterior distribution of a parameter given a prior distribution.  For EBASE, we can establish a set of prior distributions of likely values for each of the unknown parameters, $a$, $R$, and $b$.  These prior distributions are used to create a refined estimate for the posterior distributions given the data that is presented to the model. The prior distributions can be precise (informed) or cover a range of potential values (uninformed).  
+Bayesian approaches are fundamentally linked to [Bayes' theorem](https://en.wikipedia.org/wiki/Bayes%27_theorem){target="_blank} that describes conditional probabilities or the likelihood of observing an event given that other events have occurred. In model speak, this means we can estimate the posterior distribution of a parameter given a prior distribution.  
+
+::: {.callout-tip}
+Bayesian models require a *prior* distribution for each parameter.
+:::
+
+For EBASE, we can establish a set of prior distributions of likely values for each of the unknown parameters, $a$, $R$, and $b$.  These prior distributions are used to create a refined estimate for the posterior distributions given the data that is presented to the model. The prior distributions can be precise (informed) or cover a range of potential values (uninformed).  
 
 The default prior distributions for EBASE were based on a likely range of values for each parameter that were informed by published results [primarily @caffrey2004; details in @Beck2024].  You can create a plot of these prior distributions using the `prior_plot` function in EBASE. 
 
@@ -69,7 +79,11 @@ library(EBASE)
 prior_plot()
 ```
 
-Running EBASE with the default arguments will use these prior distributions to estimate the parameters.  We'll discuss how to change these values later in the lesson if you have additional prior information. 
+Running EBASE with the default arguments will use these prior distributions to estimate the parameters.  We'll discuss how to change these values in @sec-changingpriors if you have additional prior information. 
+
+::: {.callout-tip}
+Prior distributions can be *informed* or *uninformed*.
+:::
 
 Finally, the Bayesian approach in EBASE uses an MCMC (Markov Chain Monte Carlo) method to estimate the posterior distributions.  This is implemented using the [JAGS](https://mcmc-jags.sourceforge.io/) software which was part of the installation during [setup](setup.qmd#sec-instjags) for the workshop.  These methods are used to estimate the posterior distributions by repeated sampling of the priors given the data until a stable estimate is reached (i.e., convergence) using a Markov Chain.  Because of this, estimation can take a while and we'll talk about arguments in EBASE to control the process.  See [here](https://biometry.github.io/APES//LectureNotes/StatsCafe/Linear_models_jags.html) for a more in depth introduction to JAGS.  
 
@@ -393,7 +407,7 @@ res <- ebase(apadbmiss, interval = 3600, Z = zval)
 ebase_plot(res)
 ```
 
-## Changing priors
+## Changing priors {#sec-changingpriors}
 
 A main advantage of the Bayesian approach is the use of prior information to estimate parameters.  By default, the prior distributions for the $a$, $R$, and $b$ parameters are informed by the literature, although they are generally uninformed by allowing a large range of values to be considered given the data.  We can further constrain the parameters if we have reason to do so.
 
