@@ -118,7 +118,7 @@ The `ebase()` function only requires input data, time step, and water column dep
 
 ```{r}
 #| warning: true
-#| message: true
+#| message: false
 # get depth
 zval <- mean(apadbsub$Depth, na.rm = T) + 0.3
 
