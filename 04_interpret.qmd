@@ -10,11 +10,183 @@ This discussion is your time to share some ideas about evaluating the results fr
 
 ## Example 1: Piney Point
 
-Effects of inorganic nutrient influx
+This example evaluates the effects of a large influx of inorganic nutrients into Tampa Bay from a legacy fertilizer processing.  
+
+```{r}
+#| eval: false
+#| collapse: true
+library(tidyverse)
+library(EBASE)
+library(doParallel)
+library(here)
+library(patchwork)
+
+# prep data -----------------------------------------------------------------------------------
+
+url <- 'http://tampabay.loboviz.com/cgi-data/nph-data.cgi?node=82&min_date=20210701&max_date=20210801&y=salinity,temperature,oxygen,par,pressure&data_format=text'
+
+lobo <- read.table(url, skip = 2, sep = '\t', header = T) |> 
+  select(
+    DateTimeStamp = date..EST.,
+    DO_obs = dissolved.oxygen..mg.L.,
+    Temp = temperature..C.,
+    Sal = salinity..PSU.,
+    PAR = PAR..uM.m.2.sec.,
+    Tide = pressure..dBar.
+  ) |> 
+  mutate(
+    DateTimeStamp = lubridate::ymd_hms(DateTimeStamp, tz = 'America/Jamaica'),
+    PAR = PAR * 0.2175, 
+    Tide = Tide + 2.4
+  )
+
+url <- 'https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?product=wind&application=NOS.COOPS.TAC.MET&begin_date=20210701&end_date=20210801&station=8726520&time_zone=LST&units=metric&format=CSV'
+
+ports <- read.table(url, sep = ',', header = T) |> 
+  select(
+    DateTimeStamp = Date.Time,
+    WSpd = Speed
+  ) |> 
+  mutate(
+    DateTimeStamp = lubridate::ymd_hm(DateTimeStamp, tz = 'America/Jamaica')
+  )
+
+tbdat <- left_join(lobo, ports, by = 'DateTimeStamp')
+
+# exploratory plots ---------------------------------------------------------------------------
+
+toplo <- tbdat |> 
+  pivot_longer(-DateTimeStamp) 
+
+ggplot(tbdat, aes( x = DateTimeStamp)) +
+  geom_line(aes(y = value), data = toplo) +
+  facet_wrap(~name, scales = 'free_y', ncol = 1) +
+  theme_minimal()
+
+# run EBASE -----------------------------------------------------------------------------------
+
+# setup parallel backend
+ncores <- detectCores()
+cl <- makeCluster(ncores - 2)
+registerDoParallel(cl)
+
+tbdatebase <- ebase(tbdat, interval = 3600, Z = tbdat$Tide, ndays = 1)
+
+stopCluster(cl)
+
+save(tbdatebase, file = here('data/tbdatebase.RData'))
+
+# evaluate fit --------------------------------------------------------------------------------
+
+load(file = here('data/tbdatebase.RData'))
+
+fit_plot(tbdatebase)
+fit_plot(tbdatebase, bygroup = T)
+fit_plot(tbdatebase, bygroup = T, scatter = T)
+
+table(tbdatebase$converge)
+unique(tbdatebase$rsq)
+range(tbdatebase$rsq)
+
+credible_plot(tbdatebase)
+
+# evaluate metabolism -------------------------------------------------------------------------
+
+ebase_plot(tbdatebase)
+ebase_plot(tbdatebase, instantaneous = F)
+
+toplo <- tbdatebase |> 
+  select(
+    DateTimeStamp, 
+    Date, 
+    Pg = P, 
+    Rt = R
+  ) |> 
+  summarise(
+    Pg = mean(Pg, na.rm = T),
+    Rt = mean(Rt, na.rm = T), 
+    .by = Date
+  ) |> 
+  mutate(
+    NEM = Pg - Rt, 
+    Rt = -Rt
+  ) |> 
+  pivot_longer(cols = c(Pg, Rt, NEM), names_to = 'Variable', values_to = 'Value')
+
+p1 <- ggplot(toplo, aes(x = Date, y = Value, color = Variable)) +
+  geom_hline(yintercept = 0) +
+  geom_line() + 
+  geom_point() + 
+  theme_bw() + 
+  labs(
+    x = NULL, 
+    y = expression(paste('mmol ', O [2], ' ', m^-2, d^-1)), 
+    color = 'Estimate'
+  )
+
+p2 <- ggplot(tbdat, aes(x = DateTimeStamp, y = DO_obs)) +
+  geom_line() + 
+  theme_bw() + 
+  labs(
+    x = NULL, 
+    y = 'DO (mg/L)'
+  )
+
+p1 + p2 + plot_layout(ncol = 1)
+```
 
 ## Example 2: Apalachicola storm influences
 
-Effects of winter storm passages
+This examples compares metabolism at two locations in Apalachicola Bay to evaluate the effects of winter storm passages.
+
+```{r}
+#| eval: false
+#| collapse: true
+library(SWMPr)
+library(dplyr)
+
+# data prep -----------------------------------------------------------------------------------
+
+# weather
+apaebmet <- import_local(path = 'data/367272.zip', station_code = 'apaebmet')
+apaebmet <- qaqc(apaebmet, qaqc_keep = c('0', '1', '2', '3', '4', '5'))
+
+# apadb
+apadbwq <- import_local(path = 'data/367272.zip', station_code = 'apadbwq')
+apadbwq <- qaqc(apadbwq, qaqc_keep = c('0', '1', '2', '3', '4', '5'))
+apadb <- comb(apadbwq, apaebmet, timestep = 60, method = 'union')
+apadb <- select(apadb,
+  DateTimeStamp = datetimestamp,
+  DO_obs = do_mgl,
+  Temp = temp,
+  Sal = sal,
+  PAR = totpar,
+  WSpd = wspd,
+  Depth = depth
+  ) |> 
+  mutate(
+    PAR = PAR * 1000 / 900 * 0.2175
+  )
+
+# apaeb
+apaebwq <- import_local(path = 'data/367272.zip', station_code = 'apaebwq')
+apaebwq <- qaqc(apaebwq, qaqc_keep = c('0', '1', '2', '3', '4', '5'))
+apaebmet <- import_local(path = 'data/367272.zip', station_code = 'apaebmet')
+apaebmet <- qaqc(apaebmet, qaqc_keep = c('0', '1', '2', '3', '4', '5'))
+apaeb <- comb(apaebwq, apaebmet, timestep = 60, method = 'union')
+apaeb <- select(apaeb,
+    DateTimeStamp = datetimestamp,
+    DO_obs = do_mgl,
+    Temp = temp,
+    Sal = sal,
+    PAR = totpar,
+    WSpd = wspd,
+    Depth = depth
+  ) |> 
+  mutate(
+    PAR = PAR * 1000 / 900 * 0.2175
+  )
+```
 
 ## Next steps
 
