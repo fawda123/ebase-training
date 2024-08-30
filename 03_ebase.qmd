@@ -311,8 +311,8 @@ Finally, although `ebase()` can be used to estimate metabolism for time series w
 ```{r}
 #| eval: false
 zval <- mean(apadb$Depth, na.rm = T)
-resfull <- ebase_years(apadb, Z = zval, interval = 3600, ncores = ncores, quiet = F)
-save(resfull, file = 'data/resfull.RData')
+apadbfull <- ebase_years(apadb, Z = zval, interval = 3600, ncores = ncores, quiet = F)
+save(apadbfull, file = 'data/apadbfull.RData')
 ```
 
 ## Equation optimization length {#sec-optimization}

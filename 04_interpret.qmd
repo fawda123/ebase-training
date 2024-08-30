@@ -1,5 +1,8 @@
 ---
 lightbox: true
+
+execute: 
+  echo: true
 ---
 
 # Interpreting Results {#sec-interpret}
@@ -144,6 +147,9 @@ This examples compares metabolism at two locations in Apalachicola Bay to evalua
 #| collapse: true
 library(SWMPr)
 library(dplyr)
+library(plotly)
+library(EBASE)
+library(doParallel)
 
 # data prep -----------------------------------------------------------------------------------
 
@@ -186,6 +192,33 @@ apaeb <- select(apaeb,
   mutate(
     PAR = PAR * 1000 / 900 * 0.2175
   )
+
+# exploratory plots ---------------------------------------------------------------------------
+
+p1 <- plot_ly(apadb, x = ~DateTimeStamp, y = ~DO_obs, type = 'scatter', mode = 'lines')
+p2 <- plot_ly(apaeb, x = ~DateTimeStamp, y = ~DO_obs, type = 'scatter', mode = 'lines')
+p3 <- plot_ly(apaeb, x = ~DateTimeStamp, y = ~PAR, type = 'scatter', mode = 'lines')
+
+subplot(p1, p2, p3, nrows = 3)
+
+# run EBASE -----------------------------------------------------------------------------------
+
+# this takes several hours!
+
+ncores <- detectCores() - 2
+
+apadbzval <- mean(apadb$Depth, na.rm = T)
+apadbfull <- ebase_years(apadb, Z = apadbzval, interval = 3600, ncores = ncores, quiet = F)
+save(apadbfull, file = 'data/apadbfull.RData')
+
+apaebzval <- mean(apaeb$Depth, na.rm = T)
+apaebfull <- ebase_years(apadeb, Z = apaebzval, interval = 3600, ncores = ncores, quiet = F)
+save(apaebfull, file = 'data/apaebfull.RData')
+
+# evaluate fit --------------------------------------------------------------------------------
+
+# evaluate metabolism -------------------------------------------------------------------------
+
 ```
 
 ## Next steps
