@@ -15,6 +15,8 @@ book:
   date: today
   date-format: "YYYY-MM-DD"
   page-navigation: true
+  google-analytics:
+    tracking-id: G-WNG6NX5SZL
   page-footer:
     left: |
       Website created by the instructor, with attribution to external content
