@@ -786,8 +786,8 @@ Note
 <p>Finally, although <code>ebase()</code> can be used to estimate metabolism for time series with several years of data, the <code>ebase_years()</code> function can be used to estimate results sequentially for each year. This is useful because model estimation using <code>ebase_years()</code> will continue after a year fails, e.g., when some years have long periods of missing or erroneous data. This eliminates the need to restart the model or further pre-process the data. The same arguments for <code>ebase()</code> are used for <code>ebase_years()</code>. Progress is printed directly in the console and the user can specify the number of attempts for failed years before proceeding to the following year.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>zval <span class="ot">&lt;-</span> <span class="fu">mean</span>(apadb<span class="sc">$</span>Depth, <span class="at">na.rm =</span> T)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>resfull <span class="ot">&lt;-</span> <span class="fu">ebase_years</span>(apadb, <span class="at">Z =</span> zval, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">ncores =</span> ncores, <span class="at">quiet =</span> F)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(resfull, <span class="at">file =</span> <span class="st">'data/resfull.RData'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>apadbfull <span class="ot">&lt;-</span> <span class="fu">ebase_years</span>(apadb, <span class="at">Z =</span> zval, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">ncores =</span> ncores, <span class="at">quiet =</span> F)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(apadbfull, <span class="at">file =</span> <span class="st">'data/apadbfull.RData'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sec-optimization" class="level2" data-number="3.8">
@@ -1574,7 +1574,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom","loop":false});
+<script>var lightboxQuarto = GLightbox({"loop":false,"descPosition":"bottom","selector":".lightbox","openEffect":"zoom","closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
