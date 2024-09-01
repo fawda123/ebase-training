@@ -460,7 +460,7 @@ gtag('config', 'G-WNG6NX5SZL', { 'anonymize_ip': true});
 <span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(apadbfull, <span class="at">file =</span> <span class="st">'data/apadbfull.RData'</span>)</span>
 <span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>apaebzval <span class="ot">&lt;-</span> <span class="fu">mean</span>(apaeb<span class="sc">$</span>Depth, <span class="at">na.rm =</span> T)</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>apaebfull <span class="ot">&lt;-</span> <span class="fu">ebase_years</span>(apadeb, <span class="at">Z =</span> apaebzval, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">ncores =</span> ncores, <span class="at">quiet =</span> F)</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>apaebfull <span class="ot">&lt;-</span> <span class="fu">ebase_years</span>(apaeb, <span class="at">Z =</span> apaebzval, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">ncores =</span> ncores, <span class="at">quiet =</span> F)</span>
 <span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(apaebfull, <span class="at">file =</span> <span class="st">'data/apaebfull.RData'</span>)</span>
 <span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a><span class="co"># evaluate fit --------------------------------------------------------------------------------</span></span>
