@@ -212,7 +212,7 @@ apadbfull <- ebase_years(apadb, Z = apadbzval, interval = 3600, ncores = ncores,
 save(apadbfull, file = 'data/apadbfull.RData')
 
 apaebzval <- mean(apaeb$Depth, na.rm = T)
-apaebfull <- ebase_years(apadeb, Z = apaebzval, interval = 3600, ncores = ncores, quiet = F)
+apaebfull <- ebase_years(apaeb, Z = apaebzval, interval = 3600, ncores = ncores, quiet = F)
 save(apaebfull, file = 'data/apaebfull.RData')
 
 # evaluate fit --------------------------------------------------------------------------------
