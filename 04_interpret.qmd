@@ -18,6 +18,7 @@ This example evaluates the effects of a large influx of inorganic nutrients into
 ```{r}
 #| eval: false
 #| collapse: true
+#| code-fold: true
 library(tidyverse)
 library(EBASE)
 library(doParallel)
@@ -99,22 +100,16 @@ ebase_plot(tbdatebase)
 ebase_plot(tbdatebase, instantaneous = F)
 
 toplo <- tbdatebase |> 
-  select(
-    DateTimeStamp, 
-    Date, 
-    Pg = P, 
-    Rt = R
-  ) |> 
   summarise(
-    Pg = mean(Pg, na.rm = T),
-    Rt = mean(Rt, na.rm = T), 
+    P = mean(P, na.rm = T),
+    R = mean(R, na.rm = T), 
     .by = Date
   ) |> 
   mutate(
-    NEM = Pg - Rt, 
-    Rt = -Rt
+    NEM = P - R, 
+    R = -R
   ) |> 
-  pivot_longer(cols = c(Pg, Rt, NEM), names_to = 'Variable', values_to = 'Value')
+  pivot_longer(cols = c(P, R, NEM), names_to = 'Variable', values_to = 'Value')
 
 p1 <- ggplot(toplo, aes(x = Date, y = Value, color = Variable)) +
   geom_hline(yintercept = 0) +
@@ -127,7 +122,7 @@ p1 <- ggplot(toplo, aes(x = Date, y = Value, color = Variable)) +
     color = 'Estimate'
   )
 
-p2 <- ggplot(tbdat, aes(x = DateTimeStamp, y = DO_obs)) +
+p2 <- ggplot(tbdatebase, aes(x = DateTimeStamp, y = DO_obs)) +
   geom_line() + 
   theme_bw() + 
   labs(
@@ -138,18 +133,20 @@ p2 <- ggplot(tbdat, aes(x = DateTimeStamp, y = DO_obs)) +
 p1 + p2 + plot_layout(ncol = 1)
 ```
 
-## Example 2: Apalachicola storm influences
+## Example 2: Apalachicola intersite comparisons
 
-This examples compares metabolism at two locations in Apalachicola Bay to evaluate the effects of winter storm passages.
+This examples compares metabolism at two locations in Apalachicola Bay.
 
 ```{r}
 #| eval: false
 #| collapse: true
+#| code-fold: true
 library(SWMPr)
-library(dplyr)
 library(plotly)
 library(EBASE)
 library(doParallel)
+library(here)
+library(tidyverse)
 
 # data prep -----------------------------------------------------------------------------------
 
@@ -162,14 +159,14 @@ apadbwq <- import_local(path = 'data/367272.zip', station_code = 'apadbwq')
 apadbwq <- qaqc(apadbwq, qaqc_keep = c('0', '1', '2', '3', '4', '5'))
 apadb <- comb(apadbwq, apaebmet, timestep = 60, method = 'union')
 apadb <- select(apadb,
-  DateTimeStamp = datetimestamp,
-  DO_obs = do_mgl,
-  Temp = temp,
-  Sal = sal,
-  PAR = totpar,
-  WSpd = wspd,
-  Depth = depth
-  ) |> 
+                DateTimeStamp = datetimestamp,
+                DO_obs = do_mgl,
+                Temp = temp,
+                Sal = sal,
+                PAR = totpar,
+                WSpd = wspd,
+                Depth = depth
+) |> 
   mutate(
     PAR = PAR * 1000 / 900 * 0.2175
   )
@@ -181,14 +178,14 @@ apaebmet <- import_local(path = 'data/367272.zip', station_code = 'apaebmet')
 apaebmet <- qaqc(apaebmet, qaqc_keep = c('0', '1', '2', '3', '4', '5'))
 apaeb <- comb(apaebwq, apaebmet, timestep = 60, method = 'union')
 apaeb <- select(apaeb,
-    DateTimeStamp = datetimestamp,
-    DO_obs = do_mgl,
-    Temp = temp,
-    Sal = sal,
-    PAR = totpar,
-    WSpd = wspd,
-    Depth = depth
-  ) |> 
+                DateTimeStamp = datetimestamp,
+                DO_obs = do_mgl,
+                Temp = temp,
+                Sal = sal,
+                PAR = totpar,
+                WSpd = wspd,
+                Depth = depth
+) |> 
   mutate(
     PAR = PAR * 1000 / 900 * 0.2175
   )
@@ -217,8 +214,93 @@ save(apaebfull, file = 'data/apaebfull.RData')
 
 # evaluate fit --------------------------------------------------------------------------------
 
+load(file = here('data/apadbfull.RData'))
+load(file = here('data/apaebfull.RData'))
+
+table(apadbfull$converge)
+range(apadbfull$rsq, na.rm = T)
+
+lowrsq <- sort(unique(apadbfull$rsq), decreasing = F)[1:10]
+fit_plot(apadbfull[which(apadbfull$rsq %in% lowrsq), ], bygroup = T)
+
+credible_plot(apadbfull)
+
+table(apaebfull$converge)
+range(apaebfull$rsq, na.rm = T)
+
+lowrsq <- sort(unique(apaebfull$rsq), decreasing = F)[1:10]
+fit_plot(apaebfull[which(apaebfull$rsq %in% lowrsq), ], bygroup = T)
+
+credible_plot(apaebfull)
+
 # evaluate metabolism -------------------------------------------------------------------------
 
+wxdat <- apadb |> 
+  mutate(
+    Date = as.Date(DateTimeStamp)
+  ) |> 
+  summarise(
+    PAR = mean(PAR, na.rm = T),
+    Sal = mean(Sal, na.rm = T),
+    WSpd = mean(WSpd, na.rm = T), 
+    Temp = mean(Temp, na.rm = T),
+    .by = Date
+  ) |> 
+  filter(year(Date) == 2017)
+
+apacmb <- list(
+    `Dry Bar` = apadbfull,
+    `East Bay` = apaebfull
+  ) |> 
+  enframe() |> 
+  unnest('value') |> 
+  filter(year(Date) == 2017) |>
+  select(name, Date, P, R, a, b) |> 
+  mutate(NEM = P - R) |> 
+  summarise(
+    a = mean(a, na.rm = T),
+    b = mean(b, na.rm = T),
+    NEM = mean(NEM, na.rm = T),
+    R = mean(R, na.rm = T),
+    P = mean(P, na.rm = T),
+    .by = c(name, Date)
+  ) |> 
+  left_join(wxdat, by = 'Date')
+
+ggplot(apacmb, aes(x = Date, y = NEM)) +
+  geom_hline(yintercept = 0) +
+  geom_line() + 
+  geom_point() + 
+  facet_wrap(~name, ncol = 1) +
+  theme_bw() + 
+  labs(
+    x = NULL, 
+    y = 'NEM'
+  )
+
+ggplot(apacmb, aes(x = WSpd, y = b)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm', se = F, formula = y~x) +
+  theme_bw() + 
+  facet_wrap(~name)
+
+ggplot(apacmb, aes(x = PAR, y = P)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm', se = F, formula = y~x) +
+  theme_bw() + 
+  facet_wrap(~name)
+
+ggplot(apacmb, aes(x = Temp, y = R)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm', se = F, formula = y~x) +
+  theme_bw() + 
+  facet_wrap(~name)
+
+ggplot(apacmb, aes(x = Sal, y = NEM)) +
+  geom_point() + 
+  geom_smooth(method = 'lm', se = F, formula = y~x) +
+  theme_bw() + 
+  facet_wrap(~name)
 ```
 
 ## Next steps

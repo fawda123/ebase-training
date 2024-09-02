@@ -87,6 +87,7 @@ install.packages('EBASE')
 install.packages('SWMPr')
 install.packages('tidyverse')
 install.packages('plotly')
+install.packages('here')
 ```
 
 After installation, check the packages can be loaded without error:
@@ -96,6 +97,7 @@ library(EBASE)
 library(SWMPr)
 library(tidyverse)
 library(plotly)
+library(here)
 ```
 
 ## Download the data {#sec-data}
