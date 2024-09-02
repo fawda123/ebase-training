@@ -135,6 +135,7 @@ Let's run through the basics of creating a project in RStudio.
     library(tidyverse)
     library(plotly)
     library(here)
+    library(doParallel)
     ```
     Save the script again and send the commands from the source script to the console.  Do they load properly??
 

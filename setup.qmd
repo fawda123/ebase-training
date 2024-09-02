@@ -88,6 +88,7 @@ install.packages('SWMPr')
 install.packages('tidyverse')
 install.packages('plotly')
 install.packages('here')
+install.packages('doParallel')
 ```
 
 After installation, check the packages can be loaded without error:
@@ -98,6 +99,7 @@ library(SWMPr)
 library(tidyverse)
 library(plotly)
 library(here)
+library(doParallel)
 ```
 
 ## Download the data {#sec-data}
