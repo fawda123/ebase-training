@@ -135,6 +135,7 @@ head(res)
 ```
 
 The results are returned as a data frame with instantaneous metabolic estimates for areal gross production (O2 mmol m$^{-2}$ d$^{-1}$, `P`), respiration (O2 mmol m$^{-2}$ d$^{-1}$, `R`), and gas exchange (O2 mmol m$^{-2}$ d$^{-1}$, `D` or the remainder of the equation from above, positive values as ingassing, negative values as outgassing).  
+
 ::: {.callout-note}
 `ebase()` returns modeled dissolved oxygen and metabolic parameters with their credible intervals.
 :::
