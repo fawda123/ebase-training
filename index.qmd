@@ -66,7 +66,7 @@ We are dedicated to providing a welcoming and supportive environment for all peo
 
 EBASE is a tool for you and we sincerely appreciate any feedback on ways to improve its functionality to serve your needs.  We encourage you to contact the [instructor](mailto:mbeck@tbep.org) with any feedback or suggestions.  Alternatively, [issues](https://github.com/fawda123/EBASE/issues){target="_blank"} can be posted on the main GitHub page (requires a GitHub account).
 
-## Instructor {.unnumbered}
+## Conveners {.unnumbered}
 
 ### Marcus Beck, Ph.D.
 
