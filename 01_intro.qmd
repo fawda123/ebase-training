@@ -2,7 +2,7 @@
 lightbox: true
 ---
 
-# Inroduction {#sec-intro}
+# Introduction {#sec-intro}
 
 ## Lesson Outline
 
