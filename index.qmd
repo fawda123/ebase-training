@@ -62,6 +62,10 @@ Please visit the [setup](setup.qmd) page for instructions on preparing for this 
 
 We are dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity. We are adopting [The Carpentries Code of Conduct](https://docs.carpentries.org/topic_folders/policies/code-of-conduct.html){target="_blank"} for this workshop.
 
+## Feedback {.unnumered}
+
+EBASE is a tool for you and we sincerely appreciate any feedback on ways to improve its functionality to serve your needs.  We encourage you to contact the [instructor](mailto:mbeck@tbep.org) with any feedback or suggestions.  Alternatively, [issues](https://github.com/fawda123/EBASE/issues){target="_blank"} can be posted on the main GitHub page (requires a GitHub account).
+
 ## Instructor {.unnumbered}
 
 ### Marcus Beck, Ph.D.
@@ -74,6 +78,20 @@ We are dedicated to providing a welcoming and supportive environment for all peo
 
 ::: {.column .p-right width="70%"}
 Marcus Beck is the Program Scientist for the Tampa Bay Estuary Program in St. Petersburg, Florida and is developing data analysis and visualization methods for Bay health indicators. Marcus has experience researching environmental indicators and developing open science products to support environmental decision-making. He has been using the R statistical programming language for over 15 years and has taught several workshops on its application to environmental sciences. Marcus has also developed several R packages and currently maintains 7 on CRAN. He received a PhD in Conservation Biology with a minor in Statistics from the University of Minnesota in 2013, his Masters in Conservation Biology from the University of Minnesota in 2009, and his Bachelors in Zoology from the University of Florida in 2007. Links: [Email](mailto:mbeck@tbep.org){target="_blank"}, [CV](https://github.com/fawda123/CV/blob/master/Beck_CV.pdf){target="_blank"}, [GitHub](https://github.com/fawda123){target="_blank"}, [Scholar](https://scholar.google.com/citations?user=9ZDDQ_8AAAAJ&hl=en&authuser=2){target="_blank"}
+:::
+
+:::
+
+### Jill Arriola, Ph.D.
+
+::: columns
+
+::: {.column width="30%"}
+![](figs/headshot_jill.jpeg)
+:::
+
+::: {.column .p-right width="70%"}
+Jill Arriola will soon be a staff scientist with the Alliance for Aquatic Resource Monitoring (ALLARM) at Dickinson College in Carlisle, Pennsylvania. Jill has over 15 years of experience as an estuary scientist, primarily in tidal wetland biogeochemistry. She was recently a Postdoctoral Scholar at Pennsylvania State University in the Department of Meteorology and Atmospheric Science. She received her Ph.D. in Marine Science from the University of North Carolina in 2019 and a Bachelors in Environmental and Ocean Science from the University of Massachusetts in 2012.
 :::
 
 :::
