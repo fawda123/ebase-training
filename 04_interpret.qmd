@@ -135,7 +135,7 @@ p1 + p2 + plot_layout(ncol = 1)
 
 ## Example 2: Apalachicola intersite comparisons
 
-This examples compares metabolism at two locations in Apalachicola Bay.
+This example compares metabolism at two locations in Apalachicola Bay.
 
 ```{r}
 #| eval: false
