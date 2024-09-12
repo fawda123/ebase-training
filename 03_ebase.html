@@ -322,7 +322,7 @@ window.Quarto = {
 
 <section id="lesson-outline" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="lesson-outline"><span class="header-section-number">3.1</span> Lesson Outline</h2>
-<p>This lesson will explain the basic theory behind ecosystem metabolism and how EBASE is used to estimate key parameters. EBASE is a Bayesian implementation for estimating metabolism that differs from more conventional approaches. We’ll also explore the main functions of EBASE to estimate metabolism, how the Bayesian approach can be used to incorporate prior knowledge, and interpret the results.</p>
+<p>This lesson will explain the basic theory behind EBASE and how it’s used to estimate key parameters. We’ll also explore the main functions of EBASE to estimate metabolism, how the Bayesian approach can be used to incorporate prior knowledge, and interpret the results.</p>
 </section>
 <section id="learning-goals" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="learning-goals"><span class="header-section-number">3.2</span> Learning Goals</h2>
@@ -345,11 +345,11 @@ NEM = P - R
 <p><span class="math display">\[
 Z\frac{dC_d}{dt} = P - R + D
 \]</span></p>
-<p>Methods for estimating metabolism from the dissolved oxygen time series vary in how each of the key parameters are modeled. The core equation for EBASE is the same as the previous but expanded using methods for estuarine applications:</p>
+<p>Methods for estimating metabolism from the dissolved oxygen time series vary in how each of the key parameters are modeled. The core equation for EBASE is the same as the previous but expanded using methods appropriate for estuarine applications:</p>
 <p><span class="math display">\[
 Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left(C_{Sat} - C_d \right )
 \]</span></p>
-<p><span class="math inline">\(aPAR\)</span> is production (<span class="math inline">\(P\)</span>), <span class="math inline">\(R\)</span> is respiration, and the last term is gas exchange <span class="citation" data-cites="Wanninkhof14">(<span class="math inline">\(D\)</span>, <a href="references.html#ref-Wanninkhof14" role="doc-biblioref">Wanninkhof 2014</a>)</span>. The required input data to fit this model was described in <a href="02_dataprep.html" class="quarto-xref">Lesson&nbsp;<span>2</span></a>. Three of these inputs are used directly in the equation as <span class="math inline">\(C_d\)</span> for dissolved oxygen, <span class="math inline">\(PAR\)</span>, and wind speed as <span class="math inline">\(U_{10}^2\)</span> (or squared wind speed at ten meters above the surface). The other terms are the Schmidt number (<span class="math inline">\(S_c\)</span>) and dissolved oxygen at saturation (<span class="math inline">\(C_{sat}\)</span>), both of which are calculated from water temperature and salinity in the input data.</p>
+<p><span class="math inline">\(aPAR\)</span> is production (<span class="math inline">\(P\)</span>), <span class="math inline">\(R\)</span> is respiration, and the last term is gas exchange <span class="citation" data-cites="Wanninkhof14">(<span class="math inline">\(D\)</span>, <a href="references.html#ref-Wanninkhof14" role="doc-biblioref">Wanninkhof 2014</a>)</span>. The required input data to fit this model was described in <a href="02_dataprep.html" class="quarto-xref">Lesson&nbsp;<span>2</span></a>. Three of these inputs are used directly in the equation as <span class="math inline">\(C_d\)</span> for dissolved oxygen, <span class="math inline">\(PAR\)</span>, and wind speed as <span class="math inline">\(U_{10}^2\)</span> (or squared wind speed at ten meters above the surface). The other terms are the Schmidt number (<span class="math inline">\(Sc\)</span>) and dissolved oxygen at saturation (<span class="math inline">\(C_{sat}\)</span>), both of which are calculated from water temperature and salinity in the input data.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -390,7 +390,7 @@ Note
 </div>
 </div>
 <p>For EBASE, we can establish a set of prior distributions of likely values for each of the unknown parameters, <span class="math inline">\(a\)</span>, <span class="math inline">\(R\)</span>, and <span class="math inline">\(b\)</span>. These prior distributions are used to create a refined estimate for the posterior distributions given the data that is presented to the model. The prior distributions can be precise (informed) or cover a range of potential values (uninformed).</p>
-<p>The default prior distributions for EBASE were based on a likely range of values for each parameter that were informed by published results <span class="citation" data-cites="caffrey2004 Beck2024">(primarily <a href="references.html#ref-caffrey2004" role="doc-biblioref">Caffrey 2004</a>; details in <a href="references.html#ref-Beck2024" role="doc-biblioref">Beck et al. 2024</a>)</span>. You can create a plot of these prior distributions using the <code>prior_plot</code> function in EBASE.</p>
+<p>The default prior distributions for EBASE were based on a likely range of values for each parameter that were informed by published results <span class="citation" data-cites="caffrey2004 Beck2024">(primarily <a href="references.html#ref-caffrey2004" role="doc-biblioref">Caffrey 2004</a>; details in <a href="references.html#ref-Beck2024" role="doc-biblioref">Beck et al. 2024</a>)</span>. You can create a plot of these prior distributions using the <code>prior_plot()</code> function in EBASE.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EBASE)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -458,7 +458,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <code>ebase()</code> function only requires input data, time step, and water column depth.</p>
+<p>The <code>ebase()</code> function only requires choosing input data, time step, and water column depth.</p>
 </div>
 </div>
 <div class="cell">
@@ -498,7 +498,7 @@ Attaching package: 'R2jags'</code></pre>
     traceplot</code></pre>
 </div>
 </div>
-<p>First off, we got a few warnings in the console telling us some information about our dataset. Both of these warnings indicate the default behavior for EBASE when incomplete daily observations at the start or end of the dataset are present and if missing observations are found. As the warnings indicate, the “dangling” observations are removed since it is impossible to estimate metabolism accurately for these data. Missing data in the middle of the time series are also interpolated and these can be handled differently depending on the user’s preference. We’ll describe more about this in <a href="#sec-missing" class="quarto-xref"><span>Section 3.9</span></a>.</p>
+<p>First off, we got a bunch of warnings and messages in the console, which is okay. The first two warnings indicate the default behavior for EBASE when incomplete daily observations at the start or end of the dataset are present and if missing observations are found. We’ll talk more about this in <a href="#sec-missing" class="quarto-xref"><span>Section 3.9</span></a>.</p>
 <p>Let’s look at the output.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -692,40 +692,39 @@ Note
 <section id="assess-model-fit" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="assess-model-fit"><span class="header-section-number">3.6</span> Assess model fit</h2>
 <p>Model fit can be assessed using the <code>converge</code> and <code>rsq</code> columns from the returned results. The values in these columns apply to each group in the <code>grp</code> column as specified with the <code>ndays</code> argument. The <code>converge</code> column indicates <code>"Check convergence"</code> or <code>"Fine"</code> if the JAGS estimate converged at that iteration or optimization period (repeated across rows for the group). Similarly, the <code>rsq</code> column shows the r-squared values of the linear fit between the modeled and observed dissolved oxygen (repeated across rows for the group).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(res<span class="sc">$</span>converge)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Fine"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(res<span class="sc">$</span>rsq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.18408824 0.30130050 0.62816666 0.04325989 0.24173619 0.49801772 0.17176168</code></pre>
+</div>
+</div>
 <p>The model fit can also be assessed by comparing the observed and modeled values for dissolved oxygen with the <code>fit_plot()</code> function. Estimated values are shown as lines and observed values are shown as points.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-11-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="03_ebase_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-12-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="03_ebase_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>The comparison can also be separated by group with <code>bygroup = TRUE</code> based on the value for the <code>ndays</code> argument passed to <code>ebase()</code>, default as 1 day. The r-squared value of the fit between modeled and observed dissolved oxygen is also shown in the facet label for the group.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res, <span class="at">bygroup =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res, <span class="at">bygroup =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-12-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="03_ebase_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-13-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="03_ebase_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
 </div>
-<p>A scatterplot showing modeled versus observed dissolved oxygen can also be returned by setting <code>scatter = TRUE</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res, <span class="at">bygroup =</span> <span class="cn">TRUE</span>, <span class="at">scatter =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-13-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="03_ebase_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="864"></a></p>
-</figure>
-</div>
-</div>
-</div>
-<p>95% credible intervals for <code>a</code>, <code>R</code>, and <code>b</code> are also returned with the output from <code>ebase()</code> in the corresponding columns <code>alo</code>, <code>ahi</code>, <code>blo</code>, <code>bhi</code>, <code>Rlo</code>, and <code>Rhi</code>, for the 2.5th and 97.5th percentile estimates for each parameter, respectively. These values indicate the interval within which there is a 95% probability that the true parameter is in this range and is a representation of the posterior distributions for each parameter.</p>
+<p>95% credible intervals for <code>a</code>, <code>R</code>, and <code>b</code> are also returned with the output from <code>ebase()</code> in the corresponding columns <code>alo</code>, <code>ahi</code>, <code>blo</code>, <code>bhi</code>, <code>Rlo</code>, and <code>Rhi</code>, for the 2.5th and 97.5th percentile estimates for each parameter, respectively. These values indicate the interval within which there is a 95% probability that the true parameter is in this range and is derived from the posterior distributions for each parameter.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -741,18 +740,18 @@ Note
 </div>
 <p>The credible intervals can be plotted with the <code>credible_plot()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-14-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="03_ebase_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-14-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="03_ebase_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>The credible intervals can also be retrieved as a data frame using <code>credible_prep()</code>. This function is provided as a convenience to parse the results from <code>ebase()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_prep</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_prep</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 21 × 6
 # Groups:   grp [7]
@@ -774,17 +773,17 @@ Note
 </section>
 <section id="using-ebase-with-long-time-series" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="using-ebase-with-long-time-series"><span class="header-section-number">3.7</span> Using EBASE with long time series</h2>
-<p>Execution time of the model can also be reduced by using multiple processors. This is done using the <a href="https://cran.r-project.org/package=doParallel">doParrallel</a> package and creating a parallel backend as below. It doesn’t really help us when the time series is short, but it can be useful when running more than a few days of data.</p>
+<p>Running EBASE with more than a few days of data can take several hours. Execution time of the model can be reduced by using multiple processors on your computer. This is done using the <a href="https://cran.r-project.org/package=doParallel">doParallel</a> package and creating a parallel backend as below. It doesn’t really help us when the time series is short, but it can be useful when running more than a few days of data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup parallel backend</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">2</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(ncores)</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cl)</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval)</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># setup parallel backend</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(ncores)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(cl)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="fu">stopCluster</span>(cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -799,11 +798,11 @@ Note
 <p><code>ebase()</code> can be run on long time series with parallel processing.</p>
 </div>
 </div>
-<p>Finally, although <code>ebase()</code> can be used to estimate metabolism for time series with several years of data, the <code>ebase_years()</code> function can be used to estimate results sequentially for each year. This is useful because model estimation using <code>ebase_years()</code> will continue after a year fails, e.g., when some years have long periods of missing or erroneous data. This eliminates the need to restart the model or further pre-process the data. The same arguments for <code>ebase()</code> are used for <code>ebase_years()</code>. Progress is printed directly in the console and the user can specify the number of attempts for failed years before proceeding to the following year.</p>
+<p>Finally, although <code>ebase()</code> can be used to estimate metabolism for time series with several years of data, the <code>ebase_years()</code> function can be used to estimate results sequentially for each year. This is useful because model estimation using <code>ebase_years()</code> will continue after a year fails, e.g., when some years have long periods of missing or erroneous data. This eliminates the need to restart the model or further pre-process the data. The same arguments for <code>ebase()</code> are used for <code>ebase_years()</code>. Progress is printed directly in the console.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>zval <span class="ot">&lt;-</span> <span class="fu">mean</span>(apadb<span class="sc">$</span>Depth, <span class="at">na.rm =</span> T)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>apadbfull <span class="ot">&lt;-</span> <span class="fu">ebase_years</span>(apadb, <span class="at">Z =</span> zval, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">ncores =</span> ncores, <span class="at">quiet =</span> F)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(apadbfull, <span class="at">file =</span> <span class="st">'data/apadbfull.RData'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>zval <span class="ot">&lt;-</span> <span class="fu">mean</span>(apadb<span class="sc">$</span>Depth, <span class="at">na.rm =</span> T)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>apadbfull <span class="ot">&lt;-</span> <span class="fu">ebase_years</span>(apadb, <span class="at">Z =</span> zval, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">ncores =</span> ncores, <span class="at">quiet =</span> F)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(apadbfull, <span class="at">file =</span> <span class="st">'data/apadbfull.RData'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="sec-optimization" class="level2" data-number="3.8">
@@ -824,26 +823,26 @@ Note
 </div>
 <p>Here, the number of days used to optimize the equation is set to all days in the input data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">ndays =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">ndays =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>And the resulting plot:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-19-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="03_ebase_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-19-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="03_ebase_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>And the fit of observed and modeled dissolved oxygen (note the unbroken line for all days estimated together):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-20-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="03_ebase_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-20-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="03_ebase_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
@@ -881,22 +880,22 @@ Note
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dates to subset</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>dts <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="fu">c</span>(<span class="st">"2017-08-01 00:00:00"</span>, <span class="st">"2017-08-08 00:00:00"</span>), <span class="at">tz =</span> <span class="st">'America/Jamaica'</span>)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># subset exdat</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>apadbsub <span class="ot">&lt;-</span> apadb <span class="sc">|&gt;</span> </span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(DateTimeStamp <span class="sc">&gt;=</span> dts[<span class="dv">1</span>] <span class="sc">&amp;</span> DateTimeStamp <span class="sc">&lt;=</span> dts[<span class="dv">2</span>])</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># get average depth</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>zval <span class="ot">&lt;-</span> <span class="fu">mean</span>(apadbsub<span class="sc">$</span>Depth, <span class="at">na.rm =</span> T)</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co"># run ebase</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">ndays =</span> <span class="dv">2</span>)</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dates to subset</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>dts <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="fu">c</span>(<span class="st">"2017-08-01 00:00:00"</span>, <span class="st">"2017-08-08 00:00:00"</span>), <span class="at">tz =</span> <span class="st">'America/Jamaica'</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># subset exdat</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>apadbsub <span class="ot">&lt;-</span> apadb <span class="sc">|&gt;</span> </span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(DateTimeStamp <span class="sc">&gt;=</span> dts[<span class="dv">1</span>] <span class="sc">&amp;</span> DateTimeStamp <span class="sc">&lt;=</span> dts[<span class="dv">2</span>])</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="co"># get average depth</span></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>zval <span class="ot">&lt;-</span> <span class="fu">mean</span>(apadbsub<span class="sc">$</span>Depth, <span class="at">na.rm =</span> T)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="co"># run ebase</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">ndays =</span> <span class="dv">2</span>)</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -922,16 +921,16 @@ Note
 </div>
 <p>Let’s create some missing data in our Apalachicola subset. We’ll remove a few hours on one day and remove an entire day.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>apadbmiss <span class="ot">&lt;-</span> apadbsub</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>apadbmiss<span class="sc">$</span>DO_obs[<span class="fu">c</span>(<span class="dv">57</span><span class="sc">:</span><span class="dv">61</span>, <span class="dv">97</span><span class="sc">:</span><span class="dv">120</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>apadbmiss <span class="ot">&lt;-</span> apadbsub</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>apadbmiss<span class="sc">$</span>DO_obs[<span class="fu">c</span>(<span class="dv">57</span><span class="sc">:</span><span class="dv">61</span>, <span class="dv">97</span><span class="sc">:</span><span class="dv">120</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The interpolated values can be visually inspected using the <code>interp_plot()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interp_plot</span>(apadbmiss, <span class="at">Z =</span> zval, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">param =</span> <span class="st">'DO_obs'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">interp_plot</span>(apadbmiss, <span class="at">Z =</span> zval, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">param =</span> <span class="st">'DO_obs'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-23-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="03_ebase_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-23-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="03_ebase_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
@@ -939,12 +938,12 @@ Note
 <p>The <code>ebase()</code> function includes the <code>maxinterp</code> argument to assign <code>NA</code> values to continuously interpolated rows with length greater than the value defined by <code>maxinterp</code>. This value is set to 12 hours by default and applies to the groupings defined by <code>ndays</code>, i.e., any group with a continuous set of interpolated values where the time is greater than 12 hours are assigned <code>NA</code> (except <code>Date</code> and <code>DateTimeStamp</code>). The numeric value passed to <code>maxinterp</code> is the number of time steps for the input data.</p>
 <p>Running <code>ebase()</code> on the time series with missing data shows how the interpolatd data are handled. Note that results for the long gap are removed, whereas those for the shorter gaps are retained.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbmiss, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbmiss, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-24-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="03_ebase_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-24-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="03_ebase_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
@@ -968,23 +967,23 @@ Note
 </div>
 <p>Here, the prior distribution for the <span class="math inline">\(b\)</span> parameter is fixed to 0.251 (cm h<span class="math inline">\(^{-1}\)</span>)/(m<span class="math inline">\(^2\)</span> s<span class="math inline">\(^{-2}\)</span>), as suggested by <span class="citation" data-cites="Wanninkhof14">Wanninkhof (<a href="references.html#ref-Wanninkhof14" role="doc-biblioref">2014</a>)</span>. We can view this change with the <code>prior_plot</code> function before using <code>ebase()</code>. Note that we define the mean as our desired value and assign a very small range for the standard deviation.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_plot</span>(<span class="at">bprior =</span> <span class="fu">c</span>(<span class="fl">0.251</span>, <span class="fl">1e-6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_plot</span>(<span class="at">bprior =</span> <span class="fu">c</span>(<span class="fl">0.251</span>, <span class="fl">1e-6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-25-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="03_ebase_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-25-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="03_ebase_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
 </div>
 <p>The same change to the prior distribution for the <span class="math inline">\(b\)</span> parameter is applied to <code>ebase()</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">bprior =</span> <span class="fu">c</span>(<span class="fl">0.251</span>, <span class="fl">1e-6</span>))</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">bprior =</span> <span class="fu">c</span>(<span class="fl">0.251</span>, <span class="fl">1e-6</span>))</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-26-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="03_ebase_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-26-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="03_ebase_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
@@ -1004,11 +1003,11 @@ Note
 </div>
 <p>The <code>credible_plot</code> function can be used to assess how changing the prior distributions has an influence on the posterior distributions of the parameters.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="03_ebase_files/figure-html/unnamed-chunk-27-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="03_ebase_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="864"></a></p>
+<p><a href="03_ebase_files/figure-html/unnamed-chunk-27-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="03_ebase_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="864"></a></p>
 </figure>
 </div>
 </div>
@@ -1045,25 +1044,25 @@ Note
 <div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dates to subset</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>dts <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="fu">c</span>(<span class="st">"2017-08-01 00:00:00"</span>, <span class="st">"2017-08-08 00:00:00"</span>), <span class="at">tz =</span> <span class="st">'America/Jamaica'</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># subset exdat</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>apadbsub <span class="ot">&lt;-</span> apadb <span class="sc">|&gt;</span> </span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(DateTimeStamp <span class="sc">&gt;=</span> dts[<span class="dv">1</span>] <span class="sc">&amp;</span> DateTimeStamp <span class="sc">&lt;=</span> dts[<span class="dv">2</span>])</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="co"># get average depth</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>zval <span class="ot">&lt;-</span> <span class="fu">mean</span>(apadbsub<span class="sc">$</span>Depth, <span class="at">na.rm =</span> T)</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="co"># use prior_plot</span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_plot</span>(<span class="at">aprior =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">bprior =</span> <span class="fu">c</span>(<span class="fl">0.251</span>, <span class="fl">1e-6</span>))</span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="co"># run ebase</span></span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">aprior =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">bprior =</span> <span class="fu">c</span>(<span class="fl">0.251</span>, <span class="fl">1e-6</span>), <span class="at">ndays =</span> <span class="dv">2</span>)</span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dates to subset</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>dts <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="fu">c</span>(<span class="st">"2017-08-01 00:00:00"</span>, <span class="st">"2017-08-08 00:00:00"</span>), <span class="at">tz =</span> <span class="st">'America/Jamaica'</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># subset exdat</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>apadbsub <span class="ot">&lt;-</span> apadb <span class="sc">|&gt;</span> </span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(DateTimeStamp <span class="sc">&gt;=</span> dts[<span class="dv">1</span>] <span class="sc">&amp;</span> DateTimeStamp <span class="sc">&lt;=</span> dts[<span class="dv">2</span>])</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co"># get average depth</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>zval <span class="ot">&lt;-</span> <span class="fu">mean</span>(apadbsub<span class="sc">$</span>Depth, <span class="at">na.rm =</span> T)</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="co"># use prior_plot</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="fu">prior_plot</span>(<span class="at">aprior =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">bprior =</span> <span class="fu">c</span>(<span class="fl">0.251</span>, <span class="fl">1e-6</span>))</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="co"># run ebase</span></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval, <span class="at">aprior =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="at">bprior =</span> <span class="fu">c</span>(<span class="fl">0.251</span>, <span class="fl">1e-6</span>), <span class="at">ndays =</span> <span class="dv">2</span>)</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a><span class="fu">fit_plot</span>(res)</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a><span class="fu">credible_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1590,7 +1589,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom","selector":".lightbox"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","loop":false,"openEffect":"zoom","closeEffect":"zoom"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
