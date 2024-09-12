@@ -48,7 +48,7 @@ knitr::kable(agenda)
 Please read these housekeeping items on the day of the training so that everything runs smoothly. 
 
 1. Feel free to verbally ask questions during the training by unmuting your microphone.  You can also type questions in the chat.  Other attendees are welcome to respond to questions in the chat.  
-1. Please use RStudio installed on your computer to follow along during the workshop.  RStudio Cloud can also be used as a backup option.  See the setup instructions below for more information.
+1. Please use RStudio installed on your computer to follow along during the workshop.  RStudio Cloud can also be used as a backup option.  See the [setup](setup.qmd) instructions for more information.
 
 1. We have a [live coding](https://tinyurl.com/live-ebase){target="_blank"} link that we’ll be using as we go through the lessons. If you get lost, you can copy/paste code from this link into RStudio.
 
@@ -77,7 +77,7 @@ EBASE is a tool for you and we sincerely appreciate any feedback on ways to impr
 :::
 
 ::: {.column .p-right width="70%"}
-Marcus Beck is the Program Scientist for the Tampa Bay Estuary Program in St. Petersburg, Florida and is developing data analysis and visualization methods for Bay health indicators. Marcus has experience researching environmental indicators and developing open science products to support environmental decision-making. He has been using the R statistical programming language for over 15 years and has taught several workshops on its application to environmental sciences. Marcus has also developed several R packages and currently maintains 7 on CRAN. He received a PhD in Conservation Biology with a minor in Statistics from the University of Minnesota in 2013, his Masters in Conservation Biology from the University of Minnesota in 2009, and his Bachelors in Zoology from the University of Florida in 2007. Links: [Email](mailto:mbeck@tbep.org){target="_blank"}, [CV](https://github.com/fawda123/CV/blob/master/Beck_CV.pdf){target="_blank"}, [GitHub](https://github.com/fawda123){target="_blank"}, [Scholar](https://scholar.google.com/citations?user=9ZDDQ_8AAAAJ&hl=en&authuser=2){target="_blank"}
+Marcus Beck is the Program Scientist for the Tampa Bay Estuary Program in St. Petersburg, Florida and is developing data analysis and visualization methods for Bay health indicators. Marcus has experience researching environmental indicators and developing open science products to support environmental decision-making. He has been using the R statistical programming language for over 15 years and has taught several workshops on its application to environmental sciences. Marcus has also developed several R packages and currently maintains 9 on CRAN. He received a PhD in Conservation Biology with a minor in Statistics from the University of Minnesota in 2013, his Masters in Conservation Biology from the University of Minnesota in 2009, and his Bachelors in Zoology from the University of Florida in 2007. Links: [Email](mailto:mbeck@tbep.org){target="_blank"}, [CV](https://fawda123.github.io/CV/Beck_CV.pdf){target="_blank"}, [GitHub](https://github.com/fawda123){target="_blank"}, [Scholar](https://scholar.google.com/citations?user=9ZDDQ_8AAAAJ&hl=en&authuser=2){target="_blank"}
 :::
 
 :::

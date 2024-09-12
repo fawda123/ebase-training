@@ -34,7 +34,7 @@ $NEM$ can tell us a lot about an ecosystem:
 -   If positive, the ecosystem is ***autotrophic***, meaning it produces more organic matter than it consumes. Organic matter will accumulate.
 -   If negative, the ecosystem is ***heterotrophic***, meaning it consumes more organic matter than it produces. Organic matter will deplete.
 
-Autotrophy and heterotrophy can be governed by many factors. For example, autotrophy may occur more often during warmer months, as temperature can stimulate growth of algae and other primary primary producers. Similarly, hyper-eutrophic systems may be more heterotrophic during the summer as the rapid decomposition of organic matter that was produced by excess nutrients may be increased with temperature. A single pulse of nutrients can create autotrophic conditions as production increases followed by heterotrophic conditions as the new organic material settles to the bottom and is decomposed.
+Autotrophy and heterotrophy can be governed by many factors. For example, autotrophy may occur more often during warmer months, as temperature can stimulate growth of algae and other primary producers. Similarly, hyper-eutrophic systems may be more heterotrophic during the summer as the rapid decomposition of organic matter that was produced by excess nutrients may be increased with temperature. A single pulse of nutrients can create autotrophic conditions as production increases followed by heterotrophic conditions as the new organic material settles to the bottom and is decomposed.
 
 This graphic from a synthesis study of 350 sites by @Hoellein2013 shows how metabolic ranges vary across different aquatic ecosystems.  Here we can see that the largest ranges in production and respiration occur in estuaries and most aquatic systems tend towards heterotrophy.  Note the units as grams of oxygen per m$^{-2}$ per day. 
 
@@ -87,7 +87,7 @@ $$
 
 The change in dissolved oxygen ($dC_d$) over time ($dt$) (a rate) is equal to the difference between production ($P$) and respiration ($R$) plus the exchange of oxygen with the atmosphere ($D$). The units are converted from volumetric ($m^{-3}$) to areal ($m^{-2}$) by multiplying the equation by water column depth ($Z$). In this example, $D$ is positive for ingassing and negative for outgassing.
 
-$P$, $R$, and $D$ can be estimated several ways depending on which "open-water" technique is used. The most popular method is that of @Odum56, modified extensively by others since its original presentation. The method calculates the DO flux (DO change per unit time) during day and night periods and corrects it for gas exchange. This is also called the book-keeping method since it's "simple" arithmetic.
+$P$, $R$, and $D$ can be estimated several ways depending on which "open-water" technique is used. The most popular method is that of @Odum56, modified extensively by others since its original presentation. The method calculates the DO flux (DO change per unit time) during day and night periods and corrects it for gas exchange. This is also called the book-keeping method because it is basically "simple" arithmetic.
 
 Gas exchange can also be estimated several ways, but the core concept is that the flux in or out of the water is proportional to the difference between the DO saturation concentration ($C_s$) and the measured concentration in the water ($C_d$). This difference is also multiplied by a gas exchange coefficient ($k$), which can vary by wind, temperature, or other factors depending on the model.
 
@@ -95,7 +95,7 @@ $$
 D = k(C_s - C_d)
 $$
 
-Fortunately for us, there are existing packages in R that can estimate these parameters. One is the [WtRegDO](https://github.com/fawda123/WtRegDO){target="_blank"} package that uses the Odum technique [@Beck15], which was covered in a [workshop](https://tbep-tech.github.io/ecometab-r-training/){target="_blank"} a few years ago. Another is EBASE, which we'll discuss today. EBASE follows the same general principles as the Odum technique, but differs in the statistical method to estimate the parameter (i.e., Bayesian) and the model used for each parameter [@Beck2024].
+Fortunately for us, there are existing packages in R that can estimate these parameters. One is the [WtRegDO](https://github.com/fawda123/WtRegDO){target="_blank"} package that uses the Odum technique [@Beck15], which was covered in a [workshop](https://tbep-tech.github.io/ecometab-r-training/){target="_blank"} a few years ago. Another is EBASE, which we'll discuss today. EBASE follows the same general principles as the Odum technique, but differs in the statistical method to estimate the parameters (i.e., Bayesian) and the model used for each parameter [@Beck2024].
 
 We'll talk more about how EBASE estimates metabolism in [Lesson @sec-ebase], but first we need to get setup with R and prepare our data in [Lesson @sec-dataprep].
 
@@ -123,7 +123,7 @@ Let's run through the basics of creating a project in RStudio.
 
     ![](figs/newfile.png){width=500}
     
-    Save the file in your working directory by clicking the file icon on the top right.  Give it an informative name. For example, "ebase_intro.R".  The file should be saved to the project root or home directory.
+    Save the file in your working directory by clicking the file icon on the top right.  Give it an informative name, e.g., "ebase_intro.R".  The file should be saved to the project root or home directory.
     
     ![](figs/savefile.png)
 
