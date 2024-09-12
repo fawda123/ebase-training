@@ -561,6 +561,7 @@ Note
 <p>Repeat the above example but use a different date range.</p>
 <ol type="1">
 <li>Create and name a section header in your script with <code>Ctrl + Shift + R</code>. Enter all exercise code in this section.</li>
+<li>Load the <code>apadb</code> dataset you saved in your data folder in Lesson 2.</li>
 <li>Create another date range of similar length (seven days).</li>
 <li>Subset the <code>apadb</code> data to this new date range.</li>
 <li>Run <code>ebase()</code> on the new data subset. Just use 1.7 for the depth and don’t forget to enter a value for <code>interval</code>.</li>
@@ -579,17 +580,20 @@ Note
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dates to subset</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>dts <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="fu">c</span>(<span class="st">"2012-07-01 00:00:00"</span>, <span class="st">"2012-07-07 00:00:00"</span>), <span class="at">tz =</span> <span class="st">'America/Jamaica'</span>)</span>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load apadb</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">'data/apadb.RData'</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># subset apadb</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>apadbsub <span class="ot">&lt;-</span> apadb <span class="sc">|&gt;</span> </span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(DateTimeStamp <span class="sc">&gt;=</span> dts[<span class="dv">1</span>] <span class="sc">&amp;</span> DateTimeStamp <span class="sc">&lt;=</span> dts[<span class="dv">2</span>])</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># run ebase</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> <span class="fl">1.7</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># dates to subset</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>dts <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="fu">c</span>(<span class="st">"2012-07-01 00:00:00"</span>, <span class="st">"2012-07-07 00:00:00"</span>), <span class="at">tz =</span> <span class="st">'America/Jamaica'</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># subset apadb</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>apadbsub <span class="ot">&lt;-</span> apadb <span class="sc">|&gt;</span> </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(DateTimeStamp <span class="sc">&gt;=</span> dts[<span class="dv">1</span>] <span class="sc">&amp;</span> DateTimeStamp <span class="sc">&lt;=</span> dts[<span class="dv">2</span>])</span>
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># run ebase</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbsub, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> <span class="fl">1.7</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1586,7 +1590,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":false});
+<script>var lightboxQuarto = GLightbox({"loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
