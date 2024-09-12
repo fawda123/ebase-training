@@ -309,7 +309,7 @@ stopCluster(cl)
 `ebase()` can be run on long time series with parallel processing.
 :::
 
-Finally, although `ebase()` can be used to estimate metabolism for time series with several years of data, the `ebase_years()` function can be used to estimate results sequentially for each year.  This is useful because model estimation using `ebase_years()` will continue after a year fails, e.g., when some years have long periods of missing or erroneous data.  This eliminates the need to restart the model or further pre-process the data.  The same arguments for `ebase()` are used for `ebase_years()`.  Progress is printed directly in the console. 
+Finally, although `ebase()` can be used to estimate metabolism for time series with several years of data, the `ebase_years()` function can be used to estimate results sequentially for each year.  This is useful because model estimation using `ebase_years()` will continue after a year fails, e.g., when some years have long periods of missing or erroneous data.  This eliminates the need to restart the model or further pre-process the data.  The same arguments for `ebase()` are used for `ebase_years()`.  Progress is printed directly in the console. __EBASE v1.0.2 does not include `ebase_years()` - this will be in the next release.__
 
 ```{r}
 #| eval: false
@@ -320,10 +320,10 @@ save(apadbfull, file = 'data/apadbfull.RData')
 
 ## Equation optimization length {#sec-optimization}
 
-The `ndays` argument in `ebase()` defines the model optimization period as the number of days that are used for fitting the model.  By default, this is done each day, i.e., `ndays = 1`.  Individual parameter estimates for `a`, `R`, and `b` are then returned for each day.  However, more days can be used to estimate the unknown parameters - one day may not provide enough data to the model to create a reliable estimate. 
+The `ndays` argument in `ebase()` defines the model optimization period as the number of days that are used for fitting the model.  By default, this is done each day, i.e., `ndays = 1`.  Individual parameter estimates for `a`, `R`, and `b` are then returned for each day.  However, more days can be used to estimate the unknown parameters - one day may not be enough data for the model to create a reliable estimate. 
 
 :::{.callout-note}
-The model optimization period depends on your analysis goals.
+The model optimization period defined by `ndays` depends on your analysis goals.
 :::
 
 Here, the number of days used to optimize the equation is set to all days in the input data. 
@@ -387,13 +387,13 @@ credible_plot(res)
 
 ## Missing values {#sec-missing}
 
-Missing values in the input data are interpolated by `ebase()` prior to estimating metabolism.  It is the responsibility of the user to verify that these interpolated values are not wildly inaccurate.  Missing values are linearly interpolated between non-missing values at the time step specified by the value in `interval`.  This works well for small gaps, but can easily create inaccurate values at gaps larger than a few hours. 
+Missing values in the input data are interpolated by `ebase()` prior to estimating metabolism.  Predicted results from large gaps are then removed automatically after the model is fit.  It is the responsibility of the user to verify that any retained results using interpolated values are not wildly inaccurate.  This works well for small gaps, but can easily create inaccurate values at gaps larger than a few hours.  A default length for retaining interpolated results is set at 12 hours. 
 
 :::{.callout-note}
 It is not necessary to remove missing data before running `ebase()`.
 :::
 
-Let's create some missing data in our Apalachicola subset.  We'll remove a few hours on one day and remove an entire day.
+Let's create some missing data in our Apalachicola subset.  We'll remove a few hours on one day and also remove an entire day.
 
 ```{r}
 apadbmiss <- apadbsub
@@ -408,7 +408,7 @@ The interpolated values can be visually inspected using the `interp_plot()` func
 interp_plot(apadbmiss, Z = zval, interval = 3600, param = 'DO_obs')
 ```
 
-The `ebase()` function includes the `maxinterp` argument to assign `NA` values to continuously interpolated rows with length greater than the value defined by `maxinterp`.  This value is set to 12 hours by default and applies to the groupings defined by `ndays`, i.e., any group with a continuous set of interpolated values where the time is greater than 12 hours are assigned `NA` (except `Date` and `DateTimeStamp`).  The numeric value passed to `maxinterp` is the number of time steps for the input data.
+The `ebase()` function includes the `maxinterp` argument to assign `NA` values to continuously interpolated rows in the results with length greater than the value defined by `maxinterp`.  This value is set to 12 hours by default and applies to the groupings defined by `ndays`, i.e., any group with a continuous set of interpolated values where the time is greater than 12 hours are assigned `NA` (except `Date` and `DateTimeStamp`).  The numeric value passed to `maxinterp` is the number of time steps for the input data.
 
 Running `ebase()` on the time series with missing data shows how the interpolatd data are handled.  Note that results for the long gap are removed, whereas those for the shorter gaps are retained. 
 
@@ -427,7 +427,7 @@ A main advantage of the Bayesian approach is the use of prior information to est
 Change the prior distributions for `ebase()` using the `aprior`, `rprior`, and `bprior` arguments. 
 :::
 
-Here, the prior distribution for the $b$ parameter is fixed to 0.251 (cm h$^{-1}$)/(m$^2$ s$^{-2}$), as suggested by @Wanninkhof14.  We can view this change with the `prior_plot` function before using `ebase()`. Note that we define the mean as our desired value and assign a very small range for the standard deviation.
+Here, the prior distribution for the $b$ parameter is fixed to 0.251 (cm h$^{-1}$)/(m$^2$ s$^{-2}$), as suggested by @Wanninkhof14.  We can view this change with the `prior_plot` function before using `ebase()`. We define the __mean__ as our desired value and assign a very small range for the __standard deviation__.
 
 ```{r}
 #| fig-height: 3
@@ -448,7 +448,7 @@ ebase_plot(res)
 Use a very small value for the standard deviation to fix the prior distribution to a constant.
 :::
 
-The `credible_plot` function can be used to assess how changing the prior distributions has an influence on the posterior distributions of the parameters.
+The `credible_plot()` function can be used to assess how changing the prior distributions has an influence on the posterior distributions of the parameters.
 
 ```{r}
 #| fig-height: 7

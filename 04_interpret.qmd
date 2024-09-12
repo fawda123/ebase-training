@@ -166,7 +166,7 @@ apadb <- select(apadb,
                 PAR = totpar,
                 WSpd = wspd,
                 Depth = depth
-) |> 
+  ) |> 
   mutate(
     PAR = PAR * 1000 / 900 * 0.2175
   )
@@ -185,7 +185,7 @@ apaeb <- select(apaeb,
                 PAR = totpar,
                 WSpd = wspd,
                 Depth = depth
-) |> 
+  ) |> 
   mutate(
     PAR = PAR * 1000 / 900 * 0.2175
   )
