@@ -9,7 +9,7 @@ execute:
 
 ## Lesson Outline
 
-This lesson will explain the basic theory behind ecosystem metabolism and how EBASE is used to estimate key parameters.  EBASE is a Bayesian implementation for estimating metabolism that differs from more conventional approaches.  We'll also explore the main functions of EBASE to estimate metabolism, how the Bayesian approach can be used to incorporate prior knowledge, and interpret the results. 
+This lesson will explain the basic theory behind EBASE and how it's used to estimate key parameters. We'll also explore the main functions of EBASE to estimate metabolism, how the Bayesian approach can be used to incorporate prior knowledge, and interpret the results. 
 
 ## Learning Goals
 
@@ -35,13 +35,13 @@ $$
 Z\frac{dC_d}{dt} = P - R + D
 $$
 
-Methods for estimating metabolism from the dissolved oxygen time series vary in how each of the key parameters are modeled.  The core equation for EBASE is the same as the previous but expanded using methods for estuarine applications: 
+Methods for estimating metabolism from the dissolved oxygen time series vary in how each of the key parameters are modeled.  The core equation for EBASE is the same as the previous but expanded using methods appropriate for estuarine applications: 
 
 $$
 Z\frac{dC_d}{dt} = aPAR - R + bU_{10}^2\left(\frac{Sc}{600} \right)^{-0.5} \left(C_{Sat} - C_d \right )
 $$
 
-$aPAR$ is production ($P$), $R$ is respiration, and the last term is gas exchange [$D$, @Wanninkhof14].  The required input data to fit this model was described in [Lesson @sec-dataprep].  Three of these inputs are used directly in the equation as $C_d$ for dissolved oxygen, $PAR$, and wind speed as $U_{10}^2$ (or squared wind speed at ten meters above the surface).  The other terms are the Schmidt number ($S_c$) and dissolved oxygen at saturation ($C_{sat}$), both of which are calculated from water temperature and salinity in the input data. 
+$aPAR$ is production ($P$), $R$ is respiration, and the last term is gas exchange [$D$, @Wanninkhof14].  The required input data to fit this model was described in [Lesson @sec-dataprep].  Three of these inputs are used directly in the equation as $C_d$ for dissolved oxygen, $PAR$, and wind speed as $U_{10}^2$ (or squared wind speed at ten meters above the surface).  The other terms are the Schmidt number ($Sc$) and dissolved oxygen at saturation ($C_{sat}$), both of which are calculated from water temperature and salinity in the input data. 
 
 ::: {.callout-note}
 EBASE estimates $a$, $R$, and $b$.
@@ -69,7 +69,7 @@ Bayesian models require a *prior* distribution for each parameter.
 
 For EBASE, we can establish a set of prior distributions of likely values for each of the unknown parameters, $a$, $R$, and $b$.  These prior distributions are used to create a refined estimate for the posterior distributions given the data that is presented to the model. The prior distributions can be precise (informed) or cover a range of potential values (uninformed).  
 
-The default prior distributions for EBASE were based on a likely range of values for each parameter that were informed by published results [primarily @caffrey2004; details in @Beck2024].  You can create a plot of these prior distributions using the `prior_plot` function in EBASE. 
+The default prior distributions for EBASE were based on a likely range of values for each parameter that were informed by published results [primarily @caffrey2004; details in @Beck2024].  You can create a plot of these prior distributions using the `prior_plot()` function in EBASE. 
 
 ```{r}
 #| fig-height: 3
@@ -113,7 +113,7 @@ head(apadbsub)
 Now we run EBASE using the data subset and the default arguments.  We must supply values for the `interval` argument that defines the time step of the data in seconds and the water column depth `Z` in meters.  Because we combined the data at a 60 minute time step, we can use `interval = 3600`.  The water column depth can be estimated from the data.  We'll also add a small amount to it because the pressure sensor is typically offset from the bottom.
 
 ::: {.callout-note}
-The `ebase()` function only requires input data, time step, and water column depth.
+The `ebase()` function only requires choosing input data, time step, and water column depth.
 :::
 
 ```{r}
@@ -126,7 +126,7 @@ zval <- mean(apadbsub$Depth, na.rm = T) + 0.3
 res <- ebase(apadbsub, interval = 3600, Z = zval)
 ```
 
-First off, we got a few warnings in the console telling us some information about our dataset.  Both of these warnings indicate the default behavior for EBASE when incomplete daily observations at the start or end of the dataset are present and if missing observations are found.  As the warnings indicate, the "dangling" observations are removed since it is impossible to estimate metabolism accurately for these data.  Missing data in the middle of the time series are also interpolated and these can be handled differently depending on the user's preference.  We'll describe more about this in @sec-missing. 
+First off, we got a bunch of warnings and messages in the console, which is okay.  The first two warnings indicate the default behavior for EBASE when incomplete daily observations at the start or end of the dataset are present and if missing observations are found.  We'll talk more about this in @sec-missing.
 
 Let's look at the output.
 
@@ -247,6 +247,11 @@ NEM can be estimated by hand using the output from `ebase()`.
 
 Model fit can be assessed using the `converge` and `rsq` columns from the returned results.  The values in these columns apply to each group in the `grp` column as specified with the `ndays` argument. The `converge` column indicates `"Check convergence"` or `"Fine"` if the JAGS estimate converged at that iteration or optimization period (repeated across rows for the group). Similarly, the `rsq` column shows the r-squared values of the linear fit between the modeled and observed dissolved oxygen (repeated across rows for the group).  
 
+```{r}
+unique(res$converge)
+unique(res$rsq)
+```
+
 The model fit can also be assessed by comparing the observed and modeled values for dissolved oxygen with the `fit_plot()` function.  Estimated values are shown as lines and observed values are shown as points.
 
 ```{r}
@@ -263,15 +268,7 @@ The comparison can also be separated by group with `bygroup = TRUE` based on the
 fit_plot(res, bygroup = TRUE)
 ```
 
-A scatterplot showing modeled versus observed dissolved oxygen can also be returned by setting `scatter = TRUE`.
-
-```{r}
-#| fig-height: 7
-#| fig-width: 9
-fit_plot(res, bygroup = TRUE, scatter = TRUE)
-```
-
-95% credible intervals for `a`, `R`, and `b` are also returned with the output from `ebase()` in the corresponding columns `alo`, `ahi`, `blo`, `bhi`, `Rlo`, and `Rhi`, for the 2.5th and 97.5th percentile estimates for each parameter, respectively.  These values indicate the interval within which there is a 95% probability that the true parameter is in this range and is a representation of the posterior distributions for each parameter. 
+95% credible intervals for `a`, `R`, and `b` are also returned with the output from `ebase()` in the corresponding columns `alo`, `ahi`, `blo`, `bhi`, `Rlo`, and `Rhi`, for the 2.5th and 97.5th percentile estimates for each parameter, respectively.  These values indicate the interval within which there is a 95% probability that the true parameter is in this range and is derived from the posterior distributions for each parameter. 
 
 ::: {.callout-note}
 Assess model fit using the `converge` and `rsq` columns in the output, plotting the modeled DO with `fit_plot()`, and checking the credible intervals with `credible_plot()`.
@@ -293,7 +290,7 @@ credible_prep(res)
 
 ## Using EBASE with long time series
 
-Execution time of the model can also be reduced by using multiple processors.  This is done using the [doParrallel](https://cran.r-project.org/package=doParallel) package and creating a parallel backend as below. It doesn't really help us when the time series is short, but it can be useful when running more than a few days of data.
+Running EBASE with more than a few days of data can take several hours. Execution time of the model can be reduced by using multiple processors on your computer.  This is done using the [doParallel](https://cran.r-project.org/package=doParallel) package and creating a parallel backend as below. It doesn't really help us when the time series is short, but it can be useful when running more than a few days of data.
 
 ```{r}
 #| eval: false
@@ -312,7 +309,7 @@ stopCluster(cl)
 `ebase()` can be run on long time series with parallel processing.
 :::
 
-Finally, although `ebase()` can be used to estimate metabolism for time series with several years of data, the `ebase_years()` function can be used to estimate results sequentially for each year.  This is useful because model estimation using `ebase_years()` will continue after a year fails, e.g., when some years have long periods of missing or erroneous data.  This eliminates the need to restart the model or further pre-process the data.  The same arguments for `ebase()` are used for `ebase_years()`.  Progress is printed directly in the console and the user can specify the number of attempts for failed years before proceeding to the following year. 
+Finally, although `ebase()` can be used to estimate metabolism for time series with several years of data, the `ebase_years()` function can be used to estimate results sequentially for each year.  This is useful because model estimation using `ebase_years()` will continue after a year fails, e.g., when some years have long periods of missing or erroneous data.  This eliminates the need to restart the model or further pre-process the data.  The same arguments for `ebase()` are used for `ebase_years()`.  Progress is printed directly in the console. 
 
 ```{r}
 #| eval: false
