@@ -147,6 +147,7 @@ Additional parameters estimated by the model that are returned include `a` as (m
 Repeat the above example but use a different date range.
 
 1. Create and name a section header in your script with `Ctrl + Shift + R`. Enter all exercise code in this section.
+1. Load the `apadb` dataset you saved in your data folder in Lesson 2.
 1. Create another date range of similar length (seven days).
 1. Subset the `apadb` data to this new date range.
 1. Run `ebase()` on the new data subset. Just use 1.7 for the depth and don't forget to enter a value for `interval`. 
@@ -156,6 +157,10 @@ Repeat the above example but use a different date range.
 #### `r fontawesome::fa('wand-magic-sparkles')` Answers
 ```{r}
 #| eval: false
+
+# load apadb
+load(file = 'data/apadb.RData')
+
 # dates to subset
 dts <- as.POSIXct(c("2012-07-01 00:00:00", "2012-07-07 00:00:00"), tz = 'America/Jamaica')
 

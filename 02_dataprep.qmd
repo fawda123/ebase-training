@@ -16,7 +16,7 @@ The EBASE software requires a specific format for input data that includes both 
 - Understand the data requirements for EBASE
 - Learn how to import data with SWMPr
 - Learn how to clean and combine SWMP data
-- Learn how to prepare data for EBASE analysis with other tools
+- Learn how to prepare data for EBASE with other tools
 
 ## Data requirements for EBASE {#sec-ebasedata}
 
@@ -53,16 +53,20 @@ Only five parameters are required to use EBASE, where each row represents a sing
 * `PAR`: Total photosynthetically active radiation in Watts per square meter.
 * `WSpd`: Wind speed in meters per second.
 
+:::{.callout-note}
+Make sure your data have the same units as the EBASE example file.
+:::
+
 The dissolved oxygen, water temperature, and salinity data are typically collected by a water quality sonde, while the PAR and wind speed data are typically collected at a weather station.  We'll discuss why these parameters are needed to calculate metabolism in [Lesson @sec-ebase]. These data must be combined into a single data frame to work with EBASE.  We'll do this in the next few sections. 
 
 ## Data import with SWMPr
 
 The [SWMPr](https://cran.r-project.org/web/packages/SWMPr/index.html) package was developed in 2016 to provide a bridge between the raw data from the NERR System Wide Monitoring Program (SWMP) and R [@Beck2016]. It does this with some degree of proficiency, but by far it's most useful feature is being able to import and combine time series from SWMP sites with relative ease.  In particular, the `import_local()`, `qaqc()`, and `comb()` functions allow us to quickly import, clean up, and combine datasets for follow-up analysis.  This is all we'll do with SWMPr in these lessons.
 
-The `import_local()` function is designed to work with SWMP data downloaded from the Centralized Data Management Office (CDMO) using the [Zip Downloads](http://cdmo.baruch.sc.edu/aqs/zips.cfm) feature from "zip downloads" feature of the Advanced Query System.  The files we have in our "data" folder were requested from this feature for Apalachicola Bay data from 2017 to 2019.
+The `import_local()` function is designed to work with SWMP data downloaded from the Centralized Data Management Office (CDMO) using the [Zip Downloads](http://cdmo.baruch.sc.edu/aqs/zips.cfm) feature from "zip downloads" feature of the Advanced Query System.  The files we have in our "data" folder were requested from this feature for Apalachicola Bay from 2017 to 2019.
 
 :::{.callout-note}
-Use `import_local()` to import SWMP data downloaded from the [Advanced Query System](https://cdmo.baruch.sc.edu/aqs/zips.cfm){target="_blank"}.
+Use `import_local()` to import SWMP data downloaded from the [Zip Downloads](https://cdmo.baruch.sc.edu/aqs/zips.cfm){target="_blank"} feature of the CDMO Advanced Query System.
 :::
 
 The `import_local()` function has two arguments: `path` to indicate where the data are located and `station_code` to indicate which station to import.  We first load SWMPr and then use the function to import data for the Apalachicola Dry Bar station:
@@ -80,11 +84,11 @@ dim(apadbwq)
 range(apadbwq$datetimestamp)
 ```
 
-Note that this function was able to import and combine data from multiple csv files.  We would have had to do this by hand if we were importing data with more general import functions available in R (e.g., `read.csv`).
+Note that this function was able to import and combine data from multiple csv files.  We would have had to do this manually if we were importing data with more general import functions available in R (e.g., `read.csv`).
 
 ## Cleaning and combining SWMP data
 
-Each row has data for multiple parameters at 15 minute intervals.  Each parameter also includes a column with [QAQC flags](http://cdmo.baruch.sc.edu/data/qaqc.cfm), i.e., `f_` then the parameter name.  We can use the `qaqc()` function to "screen" observations with specific QAQC flags. We'll keep all observations that have the flags 0, 1, 2, 3, 4, and 5 by indicating this information in the `qaqc_keep` argument (in practice, you may only want to keep data with a "zero" flag). You can also view a tabular summary of the flags in a dataset using the `qaqcchk` function.
+Each row of the imported data has observations for multiple parameters at 15 minute intervals.  Each parameter also includes a column with [QAQC flags](http://cdmo.baruch.sc.edu/data/qaqc.cfm), i.e., `f_` then the parameter name.  We can use the `qaqc()` function to "screen" observations with specific QAQC flags. We'll keep all observations that have the flags 0, 1, 2, 3, 4, and 5 by indicating this information in the `qaqc_keep` argument (in practice, you may only want to keep data with a "zero" flag). You can also view a tabular summary of the flags in a dataset using the `qaqcchk()` function.
 
 ```{r}
 # keep only observations that passed qaqc chekcs
@@ -99,10 +103,10 @@ range(apadbwq$datetimestamp)
 Notice that the number of rows are the same as before - no rows are removed by `qaqc()`.  Values that did not fit the screening criteria are given a `NA` value.  Also notice the flag columns are removed.
 
 :::{.callout-note}
-Use the `qaqc()` function to remove observations with specific QAQC flags.
+Use the `qaqc()` function to assign `NA` to observations with specific QAQC flags.
 :::
 
-The EBASE functions also require weather data.  We can repeat the steps above to import and clean data from the weather station at Apalachicola.
+The EBASE package also requires weather data.  We can repeat the steps above to import and clean data from the weather station at Apalachicola.
 
 ```{r}
 # import weather data, clean it up
@@ -123,7 +127,7 @@ The `comb()` function combines water quality and weather data.
 
 There are a couple of arguments to consider for the `comb()` function.  First, the `timestep` argument defines the time step for the resulting output.  Keep this at 15 to retain all of the data.  You could use a larger time step to subset the data if, for example, we wanted data every 60 minutes. Second, the `method` argument defines how two datasets with different date ranges are combined.  Use `method = 'union'` to retain the entire date range across both datasets or use `method = 'intersect'` to retain only the dates that include data from both datasets.  For our example, `union` and `intersect` produce the same results since the date ranges and time steps are the same.
 
-To speed up the examples in our lesson, we'll use a 60 minute timestep.  In practice, it's better to retain all of the data (i.e., `timestep = 15`).
+To speed up the examples in our lesson, we'll use a 60 minute timestep (i.e., `timestep = 60`).  In practice, it's better to retain all of the data (i.e., `timestep = 15`).
 
 ```{r}
 # combine water quality and weather data
@@ -140,7 +144,7 @@ range(apadb$datetimestamp)
 Repeat the above examples but do this using data for the East Bay water quality station at Apalachicola.  Import data for `apaebwq` and `abaebmet`, clean them up with `qaqc()`, and combine them with `comb()`.
 
 1. Create and name a section header in your script with `Ctrl + Shift + R`. Enter all exercise code in this section.
-1. Load the SWMPr package with the `library` function.  This should already be installed from last time (i.e., `install.packages('SWMPr')`).
+1. Load the SWMPr package with the `library` function.  This should already be installed (i.e., `install.packages('SWMPr')`).
 1. Import and clean up `apaebwq` with `import_local()` and `qaqc()`.
 1. Import and clean up `apaebmet` with `import_local()` and `qaqc()`.
 1. Combine the two with `comb()`. Use a 60 minute time step and use the `union` option.
@@ -164,7 +168,7 @@ apaeb <- comb(apaebwq, apaebmet, timestep = 60, method = 'union')
 
 ## Preparing SWMP data for EBASE
 
-There are a few more steps before we can use EBASE now that we've combined the water quality and weather data.  As with most R functions, the input formats are very specific requiring us to make sure the column names, locations of the columns, and types of columns in our data are exactly as needed.  
+There are a few more steps for the combined data before we can use EBASE.  As with most R functions, the input formats are very specific requiring us to make sure the column names, locations of the columns, and types of columns in our data are exactly as needed.  
 
 The example dataset from EBASE can be used to guide us in preparing the data. We can compare this to our Apalachicola dataset from above.
 
@@ -188,7 +192,7 @@ So, we need to do a few things to our Apalachicola dataset to match the format o
 EBASE requires specific column names (case-sensitive) and units.
 :::
 
-First we need to rename the columns and select those we want to make `apadb` look more like `exdat`.  This can all be done with the `select` function in dplyr.  Note that we'll also retain the depth column, which is not needed for EBASE but is useful to retain.
+First, we need to rename the columns and select those we want to make `apadb` look more like `exdat`.  This can all be done with the `select` function in dplyr.  Note that we'll also keep the depth column, which is not needed for EBASE but is useful to retain.
 
 ```{r}
 # load dplyr
@@ -212,13 +216,13 @@ head(apadb)
 str(apadb)
 ```
 
-We can verify the column names are the same between the two datasets.
+We can verify the column names are the same between the two datasets (excluding depth).
 
 ```{r}
 names(apadb) %in% names(exdat)
 ```
 
-The last thing we need to do is to make sure the units are correct. Looking at the requirements in @sec-ebasedata (or the help file `?exdat`) and those from the [CDMO](https://cdmo.baruch.sc.edu/data/parameters.cfm) website, all of the data are in the correct units except for PAR.  This should be in Watts per square meter, whereas the data are millimoles per square meter per 15 minute logging interval.  @morel1974 provide the following conversion factor:
+The last thing we need to do is to make sure the units are correct. Looking at the requirements in @sec-ebasedata (or the help file `?exdat`) and those from the [CDMO](https://cdmo.baruch.sc.edu/data/parameters.cfm) website, all of the data are in the correct units except for PAR.  This should be in Watts per square meter, whereas SWMP data are millimoles per square meter per 15 minute logging interval.  @morel1974 provide the following conversion factor:
 
 $$
 1 \, \mu mol \, m^{-2} \, s^{-1} = 0.2175 \, W \, m^{-2}
@@ -251,16 +255,16 @@ save(apadb, file = 'data/apadb.RData')
 A few additional exploratory analyses are worthwhile before we use these data.  Most functions in R deal with missing data by either not working at all or providing a work-around to accommodate the missing values. The functions in EBASE are in the latter category and we'll discuss how this is done in [Lesson @sec-ebase].  However, knowing how much and where missing observations occur is still important for interpreting results. 
 
 :::{.callout-note}
-Always plot your data before using it in any analysis!
+Always plot your data before any analysis!
 :::
 
-Missing data in SWMP are not uncommon and they often occur when sondes or other equipment are down for maintenance or are otherwise not working for a period of time.  Missing observations usually come in blocks where all parameters are unavailable, as opposed to only one parameter. Below, we can quickly see how many missing observations occur in column.
+Missing data in SWMP are not uncommon and they often occur when sondes or other equipment are down for maintenance or are otherwise not working for a period of time.  Missing observations usually come in blocks where all parameters are unavailable, as opposed to only one parameter. Below, we can quickly see how many missing observations occur in each column.
 
 ```{r}
 apply(apadb, 2, function(x) sum(is.na(x)))
 ```
 
-There are quite a few missing observations.  Let's create some quick plots to see where these occur. We'll use the [plotly](https://plotly.com/r/) R package that lets us dynamically interact with the data [@sievert2020].
+There are quite a few missing observations.  Let's create some quick plots to see where these occur. We'll use the [plotly](https://plotly.com/r/) R package that lets us create dynamic plots [@sievert2020].
 
 ```{r}
 library(plotly)
@@ -284,9 +288,9 @@ This brief assessment can give us information on which years of data are useful 
 Repeat the above examples but use the combined dataset for Apalachicola East Bay that you created in Exercise 1.
 
 1. Create a new section in your script using `Ctrl + Shift + R` and give it an appropriate name.
-1. Load the dplyr package with the library function.
-1. Simultaneously rename and select the columns for date/time (`DateTimeStamp = datetimestamp`), dissolved oxygen (`DO_obs = do_mgl`), water temperature (`Temp = temp`), salinity (`Sal = sal`), PAR (`PAR = par`), and wind speed (`WSpd = wspd`) with the `select` function from dplyr. Don’t forget to assign the new dataset to an object in your workspace (with <-).
-1. Convert PAR to the correct units using `mutate`.
+1. Load the dplyr package with the `library()` function.
+1. Simultaneously select and rename the columns for date/time (`DateTimeStamp = datetimestamp`), dissolved oxygen (`DO_obs = do_mgl`), water temperature (`Temp = temp`), salinity (`Sal = sal`), PAR (`PAR = par`), and wind speed (`WSpd = wspd`) with the `select()` function from dplyr. Don’t forget to assign the new dataset to an object in your workspace (with <-).
+1. Convert PAR to the correct units using `mutate()`.
 
 ::: {.callout-tip icon="false" collapse="true"}
 ### `r fontawesome::fa('wand-magic-sparkles')` Answers
@@ -318,7 +322,7 @@ Continuous monitoring data from other sources can be used with EBASE. As above, 
 EBASE can work with any continuous monitoring data.
 :::
 
-Data from Tampa Bay will be used in this example. We'll pull water quality data from a continuous monitoring platform in the lower bay and weather data from a nearby NOAA monitoring station.  
+Data from Tampa Bay will be used in this example. We'll pull water quality data from a continuous monitoring platform in the lower bay and weather data from a nearby NOAA station.  
 
 The water quality data are available [here](http://tampabay.loboviz.com/) and can be downloaded through an [API](http://tampabay.loboviz.com/cgidoc/). Take a look at the URL to see how the API is queried. 
 
@@ -330,7 +334,9 @@ head(lobo)
 str(lobo)
 ```
 
-The data are not in the right format for EBASE. We need to change the names, convert the date/time column to a POSIXct object with the correct time zone, and convert the PAR data to the correct units.  PAR is micromoles per square meter per second, so we need to convert this to Watts per square meter.  First, we select and rename the columns with `select`.
+The data are not in the right format for EBASE. We need to change the names, convert the date/time column to a POSIXct object with the correct time zone, and convert the PAR data to the correct units.  PAR is micromoles per square meter per second, so we need to convert this to Watts per square meter.  
+
+First, we select and rename the columns with `select()`.
 
 ```{r}
 lobo <- lobo |> 
@@ -343,7 +349,7 @@ lobo <- lobo |>
   )
 ```
 
-Next, we use `mutate` to convert the date/time column to a POSIXct object and the PAR data to the correct units. For date/time, we can use the `ymd_hms` function from the lubridate package with the "America/Jamaica" time zone, which is eastern time without daylight savings.  Note that this step is not needed for SWMP data since the SWMPr package automatically converts the date/time column using the correct time zone. The PAR column is converted using the same formula from above, except we don't need to convert from millimoles to micromoles and from 15 minutes to seconds. 
+Next, we use `mutate()` to convert the date/time column to a POSIXct object and the PAR data to the correct units. For date/time, we can use the `ymd_hms()` function from the lubridate package with the "America/Jamaica" time zone, which is eastern time without daylight savings.  Note that this step is not needed for SWMP data since the SWMPr package automatically converts the date/time column using the correct time zone. The PAR column is converted using the same formula from above, except we don't need to convert from millimoles to micromoles and from 15 minutes to seconds. 
 
 ```{r}
 lobo <- lobo |> 
@@ -393,7 +399,8 @@ We see that the final dataset has the same number of rows as the water quality d
 We'll want to visually evaluate the Tampa Bay data before using EBASE.  
 
 1. Create and name a section header in your script with `Ctrl + Shift + R`. Enter all exercise code in this section.
-1. Load the plotly package with the `library` function.
+1. Load the plotly package with the `library()` function.
+1. Run the code in the earlier examples to create the `tbdat` dataset.
 1. Use the plotly package to create some time series plots for variables of interest.  
 1. Look for gaps or outliers. 
 1. Look for interesting trends that might influence how you interpret metabolism.
