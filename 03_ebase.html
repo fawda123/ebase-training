@@ -936,7 +936,7 @@ Note
 </div>
 </div>
 <p>The <code>ebase()</code> function includes the <code>maxinterp</code> argument to assign <code>NA</code> values to continuously interpolated rows in the results with length greater than the value defined by <code>maxinterp</code>. This value is set to 12 hours by default and applies to the groupings defined by <code>ndays</code>, i.e., any group with a continuous set of interpolated values where the time is greater than 12 hours are assigned <code>NA</code> (except <code>Date</code> and <code>DateTimeStamp</code>). The numeric value passed to <code>maxinterp</code> is the number of time steps for the input data.</p>
-<p>Running <code>ebase()</code> on the time series with missing data shows how the interpolatd data are handled. Note that results for the long gap are removed, whereas those for the shorter gaps are retained.</p>
+<p>Running <code>ebase()</code> on the time series with missing data shows how the interpolated data are handled. Note that results for the long gap are removed, whereas those for the shorter gaps are retained.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">ebase</span>(apadbmiss, <span class="at">interval =</span> <span class="dv">3600</span>, <span class="at">Z =</span> zval)</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ebase_plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1589,7 +1589,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"closeEffect":"zoom","openEffect":"zoom","selector":".lightbox"});
 (function() {
   let previousOnload = window.onload;
   window.onload = () => {
