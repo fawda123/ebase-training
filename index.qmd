@@ -91,7 +91,7 @@ Marcus Beck is the Program Scientist for the Tampa Bay Estuary Program in St. Pe
 :::
 
 ::: {.column .p-right width="70%"}
-Jill Arriola will soon be a staff scientist with the Alliance for Aquatic Resource Monitoring (ALLARM) at Dickinson College in Carlisle, Pennsylvania. Jill has over 15 years of experience as an estuary scientist, primarily in tidal wetland biogeochemistry. She was recently a Postdoctoral Scholar at Pennsylvania State University in the Department of Meteorology and Atmospheric Science. She received her Ph.D. in Marine Science from the University of North Carolina in 2019 and a Bachelors in Environmental and Ocean Science from the University of Massachusetts in 2012.
+Jill Arriola will soon be a staff scientist with the Alliance for Aquatic Resource Monitoring (ALLARM) at Dickinson College in Carlisle, Pennsylvania. Jill has over 15 years of experience as an estuary scientist, primarily in tidal wetland biogeochemistry. She was recently a Postdoctoral Scholar at Pennsylvania State University in the Department of Meteorology and Atmospheric Science. She received her Ph.D. in Marine Science from the University of North Carolina in 2019 and a Bachelors in Environmental and Ocean Science from the University of Massachusetts in 2012. Links: [Email](mailto:jva5648@psu.edu){target="_blank"}, [GitHub](https://github.com/jmarriola){target="_blank},  [Scholar](https://scholar.google.com/citations?user=qgHOuuQAAAAJ&hl=en&authuser=2&oi=ao){target="_blank"}
 :::
 
 :::
