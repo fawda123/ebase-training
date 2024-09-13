@@ -410,7 +410,7 @@ interp_plot(apadbmiss, Z = zval, interval = 3600, param = 'DO_obs')
 
 The `ebase()` function includes the `maxinterp` argument to assign `NA` values to continuously interpolated rows in the results with length greater than the value defined by `maxinterp`.  This value is set to 12 hours by default and applies to the groupings defined by `ndays`, i.e., any group with a continuous set of interpolated values where the time is greater than 12 hours are assigned `NA` (except `Date` and `DateTimeStamp`).  The numeric value passed to `maxinterp` is the number of time steps for the input data.
 
-Running `ebase()` on the time series with missing data shows how the interpolatd data are handled.  Note that results for the long gap are removed, whereas those for the shorter gaps are retained. 
+Running `ebase()` on the time series with missing data shows how the interpolated data are handled.  Note that results for the long gap are removed, whereas those for the shorter gaps are retained. 
 
 ```{r}
 #| fig-height: 3

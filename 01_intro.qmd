@@ -54,7 +54,7 @@ Metabolism is also temporally variable.  In addition to seasonal variation, meta
 
 ![](figs/pineypoint1.png){fig-align="center"}
 
-The change in ecosystem metabolism from autototrophy to heterotrophy tells a story about the bloom. We see an increase in production followed by an increase in respiration with bloom development and senescence.  Also note the "anomalous" values for production and respiration that are negative and positive, respectively. 
+The change in ecosystem metabolism from autotrophy to heterotrophy tells a story about the bloom. We see an increase in production followed by an increase in respiration with bloom development and senescence.  Also note the "anomalous" values for production and respiration that are negative and positive, respectively. 
 
 ![](figs/pineypoint2.png){fig-align="center"}
 
